@@ -1,0 +1,22 @@
+{
+  "name": "kora-be",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon dist/server.js",
+    "start": "node dist/server.js",
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "prisma:generate": "npx prisma generate",
+    "prisma:push": "npx prisma db push",
+    "db:setup": "pnpm prisma:generate && pnpm prisma:push && pnpm dev"
+  },
+  "keywords": [],
+  "author": "Mo Amir",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
+}
