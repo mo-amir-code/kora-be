@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import { errorHandler, notFoundHandler, requestLogger } from "./shared/index.js";
-import { healthRoutes } from "./modules/index.js";
+import { healthRoutes, authRoutes } from "./modules/index.js";
 
 const app = express();
 
@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Module routes
 app.use("/api/health", healthRoutes);
+app.use("/api/auth", authRoutes);
 
 // Error handling
 app.use(notFoundHandler);

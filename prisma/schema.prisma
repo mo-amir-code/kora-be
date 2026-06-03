@@ -14,6 +14,11 @@ enum UserPlan {
   PRO
 }
 
+enum OAuthProvider {
+  GOOGLE
+  GITHUB
+}
+
 enum SocialPlatform {
   INSTAGRAM
   YOUTUBE
@@ -211,6 +216,7 @@ model User {
   id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   email           String    @unique
   fullName        String    @map("full_name")
+  password        String?
   handle          String?
   avatarUrl       String?   @map("avatar_url")
   whatsappNumber  String?   @map("whatsapp_number")
@@ -233,8 +239,40 @@ model User {
   subscription     Subscription?
   invoiceSettings  UserInvoiceSettings?
   attachments      Attachment[]
+  oauthAccounts    OAuthAccount[]
+  otps             Otp[]
 
   @@map("users")
+}
+
+model OAuthAccount {
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId       String        @map("user_id") @db.Uuid
+  provider     OAuthProvider
+  providerId   String        @map("provider_id")
+  accessToken  String?       @map("access_token")
+  refreshToken String?       @map("refresh_token")
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerId])
+  @@map("oauth_accounts")
+}
+
+model Otp {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  code      String
+  expiresAt DateTime @map("expires_at") @db.Timestamptz
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("otps")
 }
 
 model UserSocialProfile {

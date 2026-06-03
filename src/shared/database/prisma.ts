@@ -5,7 +5,7 @@ import { env } from "../../config/index.js";
 
 const prismaClientSingleton = () => {
   const pool = new Pool({
-    connectionString: env.DATABASE_URL,
+    connectionString: env.DIRECT_URL || env.DATABASE_URL,
     max: 10,                    // max connections in pool (match your Supabase plan limit)
     idleTimeoutMillis: 30_000,  // close idle connections after 30s (Supabase PgBouncer kills at 60s)
     connectionTimeoutMillis: 5_000, // fail fast if can't connect in 5s

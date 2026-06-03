@@ -9,6 +9,8 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User.js'
+export type * from './models/OAuthAccount.js'
+export type * from './models/Otp.js'
 export type * from './models/UserSocialProfile.js'
 export type * from './models/Brand.js'
 export type * from './models/BrandContact.js'

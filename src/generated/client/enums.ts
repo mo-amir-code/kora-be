@@ -17,6 +17,14 @@ export const UserPlan = {
 export type UserPlan = (typeof UserPlan)[keyof typeof UserPlan]
 
 
+export const OAuthProvider = {
+  GOOGLE: 'GOOGLE',
+  GITHUB: 'GITHUB'
+} as const
+
+export type OAuthProvider = (typeof OAuthProvider)[keyof typeof OAuthProvider]
+
+
 export const SocialPlatform = {
   INSTAGRAM: 'INSTAGRAM',
   YOUTUBE: 'YOUTUBE',

@@ -52,6 +52,8 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  OAuthAccount: 'OAuthAccount',
+  Otp: 'Otp',
   UserSocialProfile: 'UserSocialProfile',
   Brand: 'Brand',
   BrandContact: 'BrandContact',
@@ -89,6 +91,7 @@ export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   fullName: 'fullName',
+  password: 'password',
   handle: 'handle',
   avatarUrl: 'avatarUrl',
   whatsappNumber: 'whatsappNumber',
@@ -101,6 +104,31 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const OAuthAccountScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  provider: 'provider',
+  providerId: 'providerId',
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
+  createdAt: 'createdAt'
+} as const
+
+export type OAuthAccountScalarFieldEnum = (typeof OAuthAccountScalarFieldEnum)[keyof typeof OAuthAccountScalarFieldEnum]
+
+
+export const OtpScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  code: 'code',
+  expiresAt: 'expiresAt',
+  used: 'used',
+  createdAt: 'createdAt'
+} as const
+
+export type OtpScalarFieldEnum = (typeof OtpScalarFieldEnum)[keyof typeof OtpScalarFieldEnum]
 
 
 export const UserSocialProfileScalarFieldEnum = {
