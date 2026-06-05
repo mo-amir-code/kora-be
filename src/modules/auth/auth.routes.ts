@@ -1,8 +1,23 @@
 import { Router } from "express";
 import { validate, authenticate } from "../../shared/index.js";
-import { signupSendOtpController, signupVerifyOtpController, signin, forgotPassword, resetPassword, getMe } from "./auth.controller.js";
+import {
+  signupSendOtpController,
+  signupVerifyOtpController,
+  signin,
+  forgotPassword,
+  resetPassword,
+  refresh,
+  logout,
+  getMe,
+} from "./auth.controller.js";
 import { googleRedirect, googleCallback } from "./oauth.controller.js";
-import { signupSendOtpSchema, signupVerifyOtpSchema, signinSchema, forgotPasswordSchema, resetPasswordSchema } from "./auth.validation.js";
+import {
+  signupSendOtpSchema,
+  signupVerifyOtpSchema,
+  signinSchema,
+  forgotPasswordSchema,
+  resetPasswordSchema,
+} from "./auth.validation.js";
 
 const router = Router();
 
@@ -13,7 +28,11 @@ router.post("/signin", validate(signinSchema), signin);
 router.post("/forgot-password", validate(forgotPasswordSchema), forgotPassword);
 router.post("/reset-password", validate(resetPasswordSchema), resetPassword);
 
-// OAuth — Google (extensible: add more providers below)
+// Token management
+router.post("/refresh", refresh);
+router.post("/logout", logout);
+
+// OAuth — Google
 router.get("/google", googleRedirect);
 router.get("/google/callback", googleCallback);
 

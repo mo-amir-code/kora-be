@@ -66,7 +66,7 @@ export async function googleCallback(req: Request, res: Response): Promise<void>
     };
 
     // Find or create user in our DB
-    const { token } = await findOrCreateOAuthUser({
+    const { accessToken, refreshToken } = await findOrCreateOAuthUser({
       email: googleUser.email,
       fullName: googleUser.name,
       avatarUrl: googleUser.picture,
@@ -74,8 +74,17 @@ export async function googleCallback(req: Request, res: Response): Promise<void>
       providerId: googleUser.id,
     });
 
-    // Redirect to client with token
-    res.redirect(`${env.CLIENT_URL}/auth/callback?token=${token}`);
+    // Set refresh token as httpOnly cookie
+    res.cookie("kora_refresh_token", refreshToken, {
+      httpOnly: true,
+      secure: env.NODE_ENV === "production",
+      sameSite: env.NODE_ENV === "production" ? "strict" : "lax",
+      maxAge: env.REFRESH_TOKEN_EXPIRES_IN_DAYS * 24 * 60 * 60 * 1000,
+      path: "/api/auth",
+    });
+
+    // Redirect to client with access token
+    res.redirect(`${env.CLIENT_URL}/auth/callback?token=${accessToken}`);
   } catch {
     res.redirect(`${env.CLIENT_URL}/auth/error?message=oauth_failed`);
   }

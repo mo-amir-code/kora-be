@@ -9,7 +9,7 @@ import { sendOtpEmail } from "./email.service.js";
 const SALT_ROUNDS = 12;
 const OTP_EXPIRY_MINUTES = 10;
 
-// ─── SIGNUP ─────────────────────────────────────────────────────────────────────
+// ─── SIGNUP (legacy — kept for reference but unused) ────────────────────────────
 
 export async function signupUser(data: {
   email: string;
@@ -34,8 +34,8 @@ export async function signupUser(data: {
     },
   });
 
-  const token = generateToken(user.id);
-  return { user: sanitizeUser(user), token };
+  const { accessToken, refreshToken } = await generateTokenPair(user.id);
+  return { user: sanitizeUser(user), accessToken, refreshToken };
 }
 
 // ─── SIGNUP WITH OTP ────────────────────────────────────────────────────────────
@@ -53,7 +53,6 @@ export async function signupSendOtp(data: {
     throw AppError.conflict("Email already registered");
   }
 
-  // Create user (unverified — no token issued until OTP verified)
   const hashedPassword = await bcrypt.hash(data.password, SALT_ROUNDS);
 
   const user = await prisma.user.create({
@@ -64,7 +63,6 @@ export async function signupSendOtp(data: {
     },
   });
 
-  // Generate and store OTP
   const code = generateOtp();
   const expiresAt = new Date(Date.now() + OTP_EXPIRY_MINUTES * 60 * 1000);
 
@@ -76,7 +74,6 @@ export async function signupSendOtp(data: {
     },
   });
 
-  // Send OTP email
   await sendOtpEmail(user.email, user.fullName, code);
 
   return { message: "Verification code sent to your email" };
@@ -105,15 +102,13 @@ export async function signupVerifyOtp(data: { email: string; otp: string }) {
     throw AppError.badRequest("Invalid or expired OTP");
   }
 
-  // Mark OTP as used
   await prisma.otp.update({
     where: { id: otpRecord.id },
     data: { used: true },
   });
 
-  // Issue JWT token
-  const token = generateToken(user.id);
-  return { user: sanitizeUser(user), token };
+  const { accessToken, refreshToken } = await generateTokenPair(user.id);
+  return { user: sanitizeUser(user), accessToken, refreshToken };
 }
 
 // ─── SIGNIN ─────────────────────────────────────────────────────────────────────
@@ -132,8 +127,8 @@ export async function signinUser(data: { email: string; password: string }) {
     throw AppError.unauthorized("Invalid email or password");
   }
 
-  const token = generateToken(user.id);
-  return { user: sanitizeUser(user), token };
+  const { accessToken, refreshToken } = await generateTokenPair(user.id);
+  return { user: sanitizeUser(user), accessToken, refreshToken };
 }
 
 // ─── FORGOT PASSWORD ────────────────────────────────────────────────────────────
@@ -142,11 +137,9 @@ export async function forgotPasswordService(email: string) {
   const user = await prisma.user.findUnique({ where: { email } });
 
   if (!user) {
-    // Don't reveal whether email exists
     return;
   }
 
-  // Invalidate previous OTPs
   await prisma.otp.updateMany({
     where: { userId: user.id, used: false },
     data: { used: true },
@@ -218,7 +211,6 @@ export async function findOrCreateOAuthUser(data: {
   provider: "GOOGLE" | "GITHUB";
   providerId: string;
 }) {
-  // Check if OAuth account already linked
   const existingOAuth = await prisma.oAuthAccount.findUnique({
     where: {
       provider_providerId: {
@@ -230,11 +222,10 @@ export async function findOrCreateOAuthUser(data: {
   });
 
   if (existingOAuth) {
-    const token = generateToken(existingOAuth.user.id);
-    return { user: sanitizeUser(existingOAuth.user), token };
+    const { accessToken, refreshToken } = await generateTokenPair(existingOAuth.user.id);
+    return { user: sanitizeUser(existingOAuth.user), accessToken, refreshToken };
   }
 
-  // Check if user with this email exists (link OAuth to existing account)
   let user = await prisma.user.findUnique({ where: { email: data.email } });
 
   if (user) {
@@ -261,16 +252,73 @@ export async function findOrCreateOAuthUser(data: {
     });
   }
 
-  const token = generateToken(user.id);
-  return { user: sanitizeUser(user), token };
+  const { accessToken, refreshToken } = await generateTokenPair(user.id);
+  return { user: sanitizeUser(user), accessToken, refreshToken };
+}
+
+// ─── REFRESH TOKEN ──────────────────────────────────────────────────────────────
+
+export async function refreshTokenService(token: string) {
+  const record = await prisma.refreshToken.findUnique({
+    where: { token },
+    include: { user: true },
+  });
+
+  if (!record || record.revoked || record.expiresAt < new Date()) {
+    if (record && !record.revoked) {
+      // Potential token reuse — revoke all user tokens
+      await prisma.refreshToken.updateMany({
+        where: { userId: record.userId },
+        data: { revoked: true },
+      });
+    }
+    throw AppError.unauthorized("Invalid or expired refresh token");
+  }
+
+  // Rotate: revoke old, issue new pair
+  await prisma.refreshToken.update({
+    where: { id: record.id },
+    data: { revoked: true },
+  });
+
+  const { accessToken, refreshToken } = await generateTokenPair(record.userId);
+  return { accessToken, refreshToken, user: sanitizeUser(record.user) };
+}
+
+export async function logoutService(token: string) {
+  await prisma.refreshToken.updateMany({
+    where: { token, revoked: false },
+    data: { revoked: true },
+  });
 }
 
 // ─── HELPERS ────────────────────────────────────────────────────────────────────
 
-function generateToken(userId: string): string {
+function generateAccessToken(userId: string): string {
   return jwt.sign({ sub: userId }, env.JWT_SECRET as Secret, {
-    expiresIn: "7d",
+    expiresIn: env.JWT_EXPIRES_IN as string,
+  } as jwt.SignOptions);
+}
+
+async function generateRefreshToken(userId: string): Promise<string> {
+  const token = crypto.randomBytes(64).toString("hex");
+  const expiresAt = new Date(Date.now() + env.REFRESH_TOKEN_EXPIRES_IN_DAYS * 24 * 60 * 60 * 1000);
+
+  await prisma.refreshToken.create({
+    data: {
+      userId,
+      token,
+      expiresAt,
+    },
   });
+
+  return token;
+}
+
+async function generateTokenPair(userId: string) {
+  const accessToken = generateAccessToken(userId);
+  const refreshToken = await generateRefreshToken(userId);
+  return { accessToken, refreshToken };
 }
 
 function generateOtp(): string {

@@ -1,15 +1,21 @@
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import cookieParser from "cookie-parser";
 import { errorHandler, notFoundHandler, requestLogger } from "./shared/index.js";
 import { healthRoutes, authRoutes } from "./modules/index.js";
+import { env } from "./config/index.js";
 
 const app = express();
 
 // Global middleware
 app.use(requestLogger);
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: env.CLIENT_URL,
+  credentials: true,
+}));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

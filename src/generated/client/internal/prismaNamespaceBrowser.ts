@@ -54,6 +54,7 @@ export const ModelName = {
   User: 'User',
   OAuthAccount: 'OAuthAccount',
   Otp: 'Otp',
+  RefreshToken: 'RefreshToken',
   UserSocialProfile: 'UserSocialProfile',
   Brand: 'Brand',
   BrandContact: 'BrandContact',
@@ -129,6 +130,18 @@ export const OtpScalarFieldEnum = {
 } as const
 
 export type OtpScalarFieldEnum = (typeof OtpScalarFieldEnum)[keyof typeof OtpScalarFieldEnum]
+
+
+export const RefreshTokenScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  token: 'token',
+  expiresAt: 'expiresAt',
+  revoked: 'revoked',
+  createdAt: 'createdAt'
+} as const
+
+export type RefreshTokenScalarFieldEnum = (typeof RefreshTokenScalarFieldEnum)[keyof typeof RefreshTokenScalarFieldEnum]
 
 
 export const UserSocialProfileScalarFieldEnum = {

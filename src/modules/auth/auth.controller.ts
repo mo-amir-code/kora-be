@@ -1,26 +1,86 @@
+import type { Request, Response } from "express";
 import { apiController, AppOk, AppError, prisma } from "../../shared/index.js";
-import { signupUser, signupSendOtp, signupVerifyOtp, signinUser, forgotPasswordService, resetPasswordService } from "./auth.service.js";
-import type { SignupBody, SigninBody, ForgotPasswordBody, ResetPasswordBody, SignupSendOtpBody, SignupVerifyOtpBody } from "./auth.validation.js";
+import { env } from "../../config/index.js";
+import {
+  signupUser,
+  signupSendOtp,
+  signupVerifyOtp,
+  signinUser,
+  forgotPasswordService,
+  resetPasswordService,
+  refreshTokenService,
+  logoutService,
+} from "./auth.service.js";
+import type {
+  SignupBody,
+  SigninBody,
+  ForgotPasswordBody,
+  ResetPasswordBody,
+  SignupSendOtpBody,
+  SignupVerifyOtpBody,
+} from "./auth.validation.js";
 
-export const signup = apiController(async (req) => {
+// ─── COOKIE CONFIG ──────────────────────────────────────────────────────────────
+
+const REFRESH_COOKIE_NAME = "kora_refresh_token";
+
+function setRefreshCookie(res: Response, refreshToken: string) {
+  res.cookie(REFRESH_COOKIE_NAME, refreshToken, {
+    httpOnly: true,
+    secure: env.NODE_ENV === "production",
+    sameSite: env.NODE_ENV === "production" ? "strict" : "lax",
+    maxAge: env.REFRESH_TOKEN_EXPIRES_IN_DAYS * 24 * 60 * 60 * 1000,
+    path: "/api/auth",
+  });
+}
+
+function clearRefreshCookie(res: Response) {
+  res.clearCookie(REFRESH_COOKIE_NAME, {
+    httpOnly: true,
+    secure: env.NODE_ENV === "production",
+    sameSite: env.NODE_ENV === "production" ? "strict" : "lax",
+    path: "/api/auth",
+  });
+}
+
+// ─── SIGNUP (legacy) ────────────────────────────────────────────────────────────
+
+export const signup = apiController(async (req, res) => {
   const result = await signupUser(req.body as SignupBody);
-  return AppOk.created({ data: result, message: "Account created" });
+  setRefreshCookie(res, result.refreshToken);
+  return AppOk.created({
+    data: { user: result.user, accessToken: result.accessToken },
+    message: "Account created",
+  });
 });
+
+// ─── SIGNUP WITH OTP ────────────────────────────────────────────────────────────
 
 export const signupSendOtpController = apiController(async (req) => {
   const result = await signupSendOtp(req.body as SignupSendOtpBody);
   return AppOk.ok(result);
 });
 
-export const signupVerifyOtpController = apiController(async (req) => {
+export const signupVerifyOtpController = apiController(async (req, res) => {
   const result = await signupVerifyOtp(req.body as SignupVerifyOtpBody);
-  return AppOk.ok({ data: result, message: "Email verified successfully" });
+  setRefreshCookie(res, result.refreshToken);
+  return AppOk.ok({
+    data: { user: result.user, accessToken: result.accessToken },
+    message: "Email verified successfully",
+  });
 });
 
-export const signin = apiController(async (req) => {
+// ─── SIGNIN ─────────────────────────────────────────────────────────────────────
+
+export const signin = apiController(async (req, res) => {
   const result = await signinUser(req.body as SigninBody);
-  return AppOk.ok({ data: result });
+  setRefreshCookie(res, result.refreshToken);
+  return AppOk.ok({
+    data: { user: result.user, accessToken: result.accessToken },
+  });
 });
+
+// ─── FORGOT & RESET PASSWORD ────────────────────────────────────────────────────
 
 export const forgotPassword = apiController(async (req) => {
   const { email } = req.body as ForgotPasswordBody;
@@ -32,6 +92,37 @@ export const resetPassword = apiController(async (req) => {
   await resetPasswordService(req.body as ResetPasswordBody);
   return AppOk.ok({ message: "Password reset successfully" });
 });
+
+// ─── REFRESH TOKEN ──────────────────────────────────────────────────────────────
+
+export const refresh = apiController(async (req, res) => {
+  const token = req.cookies?.[REFRESH_COOKIE_NAME] as string | undefined;
+
+  if (!token) {
+    throw AppError.unauthorized("No refresh token provided");
+  }
+
+  const result = await refreshTokenService(token);
+  setRefreshCookie(res, result.refreshToken);
+  return AppOk.ok({
+    data: { user: result.user, accessToken: result.accessToken },
+  });
+});
+
+// ─── LOGOUT ─────────────────────────────────────────────────────────────────────
+
+export const logout = apiController(async (req, res) => {
+  const token = req.cookies?.[REFRESH_COOKIE_NAME] as string | undefined;
+
+  if (token) {
+    await logoutService(token);
+  }
+
+  clearRefreshCookie(res);
+  return AppOk.ok({ message: "Logged out successfully" });
+});
+
+// ─── GET ME ─────────────────────────────────────────────────────────────────────
 
 export const getMe = apiController(async (req) => {
   const userId = req.userId;

@@ -57,6 +57,11 @@ export type OAuthAccount = Prisma.OAuthAccountModel
  */
 export type Otp = Prisma.OtpModel
 /**
+ * Model RefreshToken
+ * 
+ */
+export type RefreshToken = Prisma.RefreshTokenModel
+/**
  * Model UserSocialProfile
  * 
  */

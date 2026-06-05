@@ -241,6 +241,7 @@ model User {
   attachments      Attachment[]
   oauthAccounts    OAuthAccount[]
   otps             Otp[]
+  refreshTokens    RefreshToken[]
 
   @@map("users")
 }
@@ -273,6 +274,20 @@ model Otp {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("otps")
+}
+
+model RefreshToken {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  token     String   @unique
+  expiresAt DateTime @map("expires_at") @db.Timestamptz
+  revoked   Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("refresh_tokens")
 }
 
 model UserSocialProfile {
