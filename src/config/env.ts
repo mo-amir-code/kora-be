@@ -26,6 +26,12 @@ export const env = {
 
   // Client
   CLIENT_URL: process.env["CLIENT_URL"] ?? "http://localhost:3000",
+
+  // GCP Cloud Storage
+  GCP_BUCKET_NAME: process.env["GCP_BUCKET_NAME"] ?? "",
+  GCP_PROJECT_ID: process.env["GCP_PROJECT_ID"] ?? "",
+  GCP_CLIENT_EMAIL: process.env["GCP_CLIENT_EMAIL"] ?? "",
+  GCP_PRIVATE_KEY: (process.env["GCP_PRIVATE_KEY"] ?? "").replace(/\\n/g, "\n"),
 } as const;
 
 export type Env = typeof env;
