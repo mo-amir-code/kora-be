@@ -105,10 +105,7 @@ export async function uploadFile(
     resumable: false,
   });
 
-  // Make file publicly readable
-  await file.makePublic();
-
-  // Construct public URL
+  // Public URL (bucket-level access controls visibility)
   const url = `https://storage.googleapis.com/${env.GCP_BUCKET_NAME}/${filePath}`;
 
   return {
