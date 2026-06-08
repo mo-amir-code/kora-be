@@ -63,6 +63,9 @@ export async function signupSendOtp(data: {
     },
   });
 
+  // Seed default reminder rules for new user
+  await seedDefaultReminderRules(user.id);
+
   const code = generateOtp();
   const expiresAt = new Date(Date.now() + OTP_EXPIRY_MINUTES * 60 * 1000);
 
@@ -250,6 +253,9 @@ export async function findOrCreateOAuthUser(data: {
         },
       },
     });
+
+    // Seed default reminder rules for new OAuth user
+    await seedDefaultReminderRules(user.id);
   }
 
   const { accessToken, refreshToken } = await generateTokenPair(user.id);
@@ -293,6 +299,31 @@ export async function logoutService(token: string) {
 }
 
 // ─── HELPERS ────────────────────────────────────────────────────────────────────
+
+async function seedDefaultReminderRules(userId: string) {
+  await prisma.reminderRule.createMany({
+    data: [
+      {
+        userId,
+        triggerType: "PAYMENT_DUE",
+        hoursBefore: 72,
+        channelEmail: true,
+        channelWhatsapp: false,
+        channelPush: true,
+        isActive: true,
+      },
+      {
+        userId,
+        triggerType: "PAYMENT_DUE",
+        hoursBefore: 24,
+        channelEmail: true,
+        channelWhatsapp: false,
+        channelPush: true,
+        isActive: true,
+      },
+    ],
+  });
+}
 
 function generateAccessToken(userId: string): string {
   return jwt.sign({ sub: userId }, env.JWT_SECRET as Secret, {
