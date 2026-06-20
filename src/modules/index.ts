@@ -4,3 +4,4 @@ export { brandRoutes } from "./brand/index.js";
 export { uploadRoutes } from "./upload/index.js";
 export { dealRoutes } from "./deal/index.js";
 export { reminderRoutes } from "./reminder/index.js";
+export { userRoutes } from "./user/index.js";
