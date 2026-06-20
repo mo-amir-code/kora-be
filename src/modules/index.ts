@@ -5,3 +5,4 @@ export { uploadRoutes } from "./upload/index.js";
 export { dealRoutes } from "./deal/index.js";
 export { reminderRoutes } from "./reminder/index.js";
 export { userRoutes } from "./user/index.js";
+export { invoiceRoutes } from "./invoice/index.js";

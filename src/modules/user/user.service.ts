@@ -18,6 +18,7 @@ export const userService = {
         plan: true,
         onboardingDone: true,
         createdAt: true,
+        invoiceSettings: true,
       },
     });
 
@@ -66,5 +67,16 @@ export const userService = {
     });
 
     return updated;
+  },
+
+  /**
+   * Update or create invoice settings for a user
+   */
+  async updateInvoiceSettings(userId: string, data: any) {
+    return prisma.userInvoiceSettings.upsert({
+      where: { userId },
+      create: { ...data, userId },
+      update: data,
+    });
   },
 };

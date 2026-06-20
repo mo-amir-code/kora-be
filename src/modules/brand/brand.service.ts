@@ -55,7 +55,10 @@ export async function getBrandById(userId: string, brandId: string) {
     include: {
       contacts: true,
       deals: {
-        select: { stage: true, amount: true },
+        include: {
+          invoices: true,
+        },
+        orderBy: { createdAt: "desc" },
       },
     },
   });
@@ -68,8 +71,7 @@ export async function getBrandById(userId: string, brandId: string) {
   const activeDeals = brand.deals.filter((d) => activeStages.includes(d.stage));
   const totalValue = activeDeals.reduce((sum, d) => sum + Number(d.amount ?? 0), 0);
 
-  const { deals: _deals, ...rest } = brand;
-  return { ...rest, activeDeals: activeDeals.length, totalValue };
+  return { ...brand, activeDeals: activeDeals.length, totalValue };
 }
 
 export async function updateBrand(userId: string, brandId: string, data: UpdateBrandBody) {

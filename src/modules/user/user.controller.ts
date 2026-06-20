@@ -10,3 +10,8 @@ export const updateMe = apiController(async (req) => {
   const updated = await userService.updateMe(req.userId!, req.body);
   return AppOk.ok({ data: updated, message: "Profile updated successfully" });
 });
+
+export const updateInvoiceSettings = apiController(async (req) => {
+  const settings = await userService.updateInvoiceSettings(req.userId!, req.body);
+  return AppOk.ok({ data: settings, message: "Invoice settings updated" });
+});

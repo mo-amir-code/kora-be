@@ -3,7 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import { errorHandler, notFoundHandler, requestLogger } from "./shared/index.js";
-import { healthRoutes, authRoutes, brandRoutes, uploadRoutes, dealRoutes, reminderRoutes, userRoutes } from "./modules/index.js";
+import { healthRoutes, authRoutes, brandRoutes, uploadRoutes, dealRoutes, reminderRoutes, userRoutes, invoiceRoutes } from "./modules/index.js";
 import { env } from "./config/index.js";
 
 const app = express();
@@ -27,6 +27,7 @@ app.use("/api/upload", uploadRoutes);
 app.use("/api/deals", dealRoutes);
 app.use("/api/reminders", reminderRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/invoice", invoiceRoutes);
 
 // Error handling
 app.use(notFoundHandler);
