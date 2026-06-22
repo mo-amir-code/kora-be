@@ -7,3 +7,4 @@ export { reminderRoutes } from "./reminder/index.js";
 export { userRoutes } from "./user/index.js";
 export { invoiceRoutes } from "./invoice/index.js";
 export { calendarRoutes } from "./calendar/index.js";
+export { messageTemplateRoutes } from "./messageTemplate/index.js";
