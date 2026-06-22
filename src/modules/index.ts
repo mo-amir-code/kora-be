@@ -8,3 +8,4 @@ export { userRoutes } from "./user/index.js";
 export { invoiceRoutes } from "./invoice/index.js";
 export { calendarRoutes } from "./calendar/index.js";
 export { messageTemplateRoutes } from "./messageTemplate/index.js";
+export { paymentRoutes } from "./payment/index.js";

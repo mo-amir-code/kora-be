@@ -8,7 +8,7 @@ const prismaClientSingleton = () => {
     connectionString: env.DATABASE_URL,
     max: 10,
     idleTimeoutMillis: 30_000,
-    connectionTimeoutMillis: 10_000, // 10s — Supabase can be slow on cold start
+    connectionTimeoutMillis: 30_000, // 30s — Supabase/slow databases need more time
   });
   const adapter = new PrismaPg(pool);
   return new PrismaClient({ adapter });
