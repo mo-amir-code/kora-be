@@ -27,6 +27,9 @@ export const env = {
   // Client
   CLIENT_URL: process.env["CLIENT_URL"] ?? "http://localhost:3000",
 
+  // Currency conversion used by financial dashboards
+  USD_TO_INR_RATE: parseFloat(process.env["USD_TO_INR_RATE"] ?? "85"),
+
   // GCP Cloud Storage
   GCP_BUCKET_NAME: process.env["GCP_BUCKET_NAME"] ?? "",
   GCP_PROJECT_ID: process.env["GCP_PROJECT_ID"] ?? "",
