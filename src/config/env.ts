@@ -18,6 +18,7 @@ export const env = {
   // Resend
   RESEND_API_KEY: process.env["RESEND_API_KEY"] ?? "",
   EMAIL_FROM: process.env["EMAIL_FROM"] ?? "noreply@yourdomain.com",
+  MAIL_TO: process.env["MAIL_TO"] ?? "",
 
   // Google OAuth
   GOOGLE_CLIENT_ID: process.env["GOOGLE_CLIENT_ID"] ?? "",
