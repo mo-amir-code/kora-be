@@ -306,7 +306,8 @@ async function seedDefaultReminderRules(userId: string) {
       {
         userId,
         triggerType: "PAYMENT_DUE",
-        hoursBefore: 72,
+        offsetValue: 72,
+        offsetUnit: "hours",
         channelEmail: true,
         channelWhatsapp: false,
         channelPush: true,
@@ -315,7 +316,8 @@ async function seedDefaultReminderRules(userId: string) {
       {
         userId,
         triggerType: "PAYMENT_DUE",
-        hoursBefore: 24,
+        offsetValue: 24,
+        offsetUnit: "hours",
         channelEmail: true,
         channelWhatsapp: false,
         channelPush: true,

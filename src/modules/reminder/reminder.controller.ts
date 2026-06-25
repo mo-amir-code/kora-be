@@ -10,8 +10,12 @@ export const list = apiController(async (req) => {
 export const create = apiController(async (req) => {
   if (!req.userId) throw AppError.unauthorized("Not authenticated");
   const rule = await createReminderRule(req.userId, req.body as {
+    name?: string;
     triggerType: string;
-    hoursBefore: number;
+    offsetValue: number;
+    offsetUnit: string;
+    nextFollowUps?: string[];
+    messageTemplate?: string;
     channelEmail?: boolean;
     channelWhatsapp?: boolean;
     channelPush?: boolean;

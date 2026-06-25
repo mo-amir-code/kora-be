@@ -293,12 +293,17 @@ export type PaymentEventScalarFieldEnum = (typeof PaymentEventScalarFieldEnum)[k
 export const ReminderRuleScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  name: 'name',
   triggerType: 'triggerType',
-  hoursBefore: 'hoursBefore',
+  offsetValue: 'offsetValue',
+  offsetUnit: 'offsetUnit',
+  nextFollowUps: 'nextFollowUps',
+  messageTemplate: 'messageTemplate',
   channelEmail: 'channelEmail',
   channelWhatsapp: 'channelWhatsapp',
   channelPush: 'channelPush',
-  isActive: 'isActive'
+  isActive: 'isActive',
+  createdAt: 'createdAt'
 } as const
 
 export type ReminderRuleScalarFieldEnum = (typeof ReminderRuleScalarFieldEnum)[keyof typeof ReminderRuleScalarFieldEnum]

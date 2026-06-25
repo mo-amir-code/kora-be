@@ -141,11 +141,11 @@ enum PaymentEventType {
 }
 
 enum ReminderTriggerType {
-  DELIVERABLE_DUE
-  INVOICE_DUE
+  DELIVERABLE_DUE_SOON
+  DELIVERABLE_OVERDUE
   PAYMENT_DUE
-  EXCLUSIVITY_ENDING
-  FOLLOW_UP
+  PAYMENT_OVERDUE
+  MISSING_INVOICE
 }
 
 enum NotificationType {
@@ -481,12 +481,17 @@ model PaymentEvent {
 model ReminderRule {
   id              String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId          String              @map("user_id") @db.Uuid
+  name            String?
   triggerType     ReminderTriggerType @map("trigger_type")
-  hoursBefore     Int                 @map("hours_before")
+  offsetValue     Int                 @map("offset_value")
+  offsetUnit      String              @map("offset_unit") @default("hours")
+  nextFollowUps   String[]            @map("next_follow_ups")
+  messageTemplate String?             @map("message_template")
   channelEmail    Boolean             @default(true) @map("channel_email")
   channelWhatsapp Boolean             @default(false) @map("channel_whatsapp")
   channelPush     Boolean             @default(true) @map("channel_push")
   isActive        Boolean             @default(true) @map("is_active")
+  createdAt       DateTime            @default(now()) @map("created_at") @db.Timestamptz
 
   // Relations
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

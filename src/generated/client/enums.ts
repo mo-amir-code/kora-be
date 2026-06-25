@@ -177,11 +177,11 @@ export type PaymentEventType = (typeof PaymentEventType)[keyof typeof PaymentEve
 
 
 export const ReminderTriggerType = {
-  DELIVERABLE_DUE: 'DELIVERABLE_DUE',
-  INVOICE_DUE: 'INVOICE_DUE',
+  DELIVERABLE_DUE_SOON: 'DELIVERABLE_DUE_SOON',
+  DELIVERABLE_OVERDUE: 'DELIVERABLE_OVERDUE',
   PAYMENT_DUE: 'PAYMENT_DUE',
-  EXCLUSIVITY_ENDING: 'EXCLUSIVITY_ENDING',
-  FOLLOW_UP: 'FOLLOW_UP'
+  PAYMENT_OVERDUE: 'PAYMENT_OVERDUE',
+  MISSING_INVOICE: 'MISSING_INVOICE'
 } as const
 
 export type ReminderTriggerType = (typeof ReminderTriggerType)[keyof typeof ReminderTriggerType]

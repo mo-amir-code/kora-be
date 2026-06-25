@@ -25,7 +25,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/brands", brandRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/deals", dealRoutes);
-app.use("/api/reminders", reminderRoutes);
+app.use("/api/reminder", reminderRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/invoice", invoiceRoutes);
 app.use("/api/calendar", calendarRoutes);
