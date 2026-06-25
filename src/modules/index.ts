@@ -10,3 +10,4 @@ export { calendarRoutes } from "./calendar/index.js";
 export { messageTemplateRoutes } from "./messageTemplate/index.js";
 export { paymentRoutes } from "./payment/index.js";
 export { earningsRoutes } from "./earnings/index.js";
+export { default as dashboardRoutes } from "./dashboard/dashboard.routes.js";
