@@ -58,3 +58,36 @@ export async function deleteReminderRule(userId: string, ruleId: string) {
 
   await prisma.reminderRule.delete({ where: { id: ruleId } });
 }
+
+export async function updateReminderRule(userId: string, ruleId: string, data: {
+  name?: string;
+  triggerType?: string;
+  offsetValue?: number;
+  offsetUnit?: string;
+  nextFollowUps?: string[];
+  messageTemplate?: string;
+  channelEmail?: boolean;
+  channelWhatsapp?: boolean;
+  channelPush?: boolean;
+}) {
+  const rule = await prisma.reminderRule.findFirst({
+    where: { id: ruleId, userId },
+  });
+
+  if (!rule) throw AppError.notFound("Reminder rule not found");
+
+  return prisma.reminderRule.update({
+    where: { id: ruleId },
+    data: {
+      name: data.name !== undefined ? data.name : rule.name,
+      triggerType: data.triggerType !== undefined ? (data.triggerType as any) : rule.triggerType,
+      offsetValue: data.offsetValue !== undefined ? data.offsetValue : rule.offsetValue,
+      offsetUnit: data.offsetUnit !== undefined ? data.offsetUnit : rule.offsetUnit,
+      nextFollowUps: data.nextFollowUps !== undefined ? data.nextFollowUps : rule.nextFollowUps,
+      messageTemplate: data.messageTemplate !== undefined ? data.messageTemplate : rule.messageTemplate,
+      channelEmail: data.channelEmail !== undefined ? data.channelEmail : rule.channelEmail,
+      channelWhatsapp: data.channelWhatsapp !== undefined ? data.channelWhatsapp : rule.channelWhatsapp,
+      channelPush: data.channelPush !== undefined ? data.channelPush : rule.channelPush,
+    },
+  });
+}

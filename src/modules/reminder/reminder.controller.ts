@@ -1,5 +1,5 @@
 import { apiController, AppOk, AppError } from "../../shared/index.js";
-import { getReminderRules, createReminderRule, toggleReminderRule, deleteReminderRule } from "./reminder.service.js";
+import { getReminderRules, createReminderRule, toggleReminderRule, deleteReminderRule, updateReminderRule } from "./reminder.service.js";
 
 export const list = apiController(async (req) => {
   if (!req.userId) throw AppError.unauthorized("Not authenticated");
@@ -36,4 +36,21 @@ export const remove = apiController(async (req) => {
   const ruleId = req.params["ruleId"] as string;
   await deleteReminderRule(req.userId, ruleId);
   return AppOk.noContent();
+});
+
+export const update = apiController(async (req) => {
+  if (!req.userId) throw AppError.unauthorized("Not authenticated");
+  const ruleId = req.params["ruleId"] as string;
+  const rule = await updateReminderRule(req.userId, ruleId, req.body as {
+    name?: string;
+    triggerType?: string;
+    offsetValue?: number;
+    offsetUnit?: string;
+    nextFollowUps?: string[];
+    messageTemplate?: string;
+    channelEmail?: boolean;
+    channelWhatsapp?: boolean;
+    channelPush?: boolean;
+  });
+  return AppOk.ok({ data: rule, message: "Reminder updated" });
 });
