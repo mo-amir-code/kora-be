@@ -15,6 +15,7 @@ export const create = apiController(async (req) => {
     offsetValue: number;
     offsetUnit: string;
     nextFollowUps?: string[];
+    recipients?: string[];
     messageTemplate?: string;
     channelEmail?: boolean;
     channelWhatsapp?: boolean;
@@ -47,6 +48,7 @@ export const update = apiController(async (req) => {
     offsetValue?: number;
     offsetUnit?: string;
     nextFollowUps?: string[];
+    recipients?: string[];
     messageTemplate?: string;
     channelEmail?: boolean;
     channelWhatsapp?: boolean;

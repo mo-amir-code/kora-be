@@ -14,6 +14,7 @@ export async function createReminderRule(userId: string, data: {
   offsetValue: number;
   offsetUnit: string;
   nextFollowUps?: string[];
+  recipients?: string[];
   messageTemplate?: string;
   channelEmail?: boolean;
   channelWhatsapp?: boolean;
@@ -27,6 +28,7 @@ export async function createReminderRule(userId: string, data: {
       offsetValue: data.offsetValue,
       offsetUnit: data.offsetUnit,
       nextFollowUps: data.nextFollowUps ?? [],
+      recipients: data.recipients ?? [],
       messageTemplate: data.messageTemplate ?? null,
       channelEmail: data.channelEmail ?? true,
       channelWhatsapp: data.channelWhatsapp ?? false,
@@ -65,6 +67,7 @@ export async function updateReminderRule(userId: string, ruleId: string, data: {
   offsetValue?: number;
   offsetUnit?: string;
   nextFollowUps?: string[];
+  recipients?: string[];
   messageTemplate?: string;
   channelEmail?: boolean;
   channelWhatsapp?: boolean;
@@ -84,6 +87,7 @@ export async function updateReminderRule(userId: string, ruleId: string, data: {
       offsetValue: data.offsetValue !== undefined ? data.offsetValue : rule.offsetValue,
       offsetUnit: data.offsetUnit !== undefined ? data.offsetUnit : rule.offsetUnit,
       nextFollowUps: data.nextFollowUps !== undefined ? data.nextFollowUps : rule.nextFollowUps,
+      recipients: data.recipients !== undefined ? data.recipients : rule.recipients,
       messageTemplate: data.messageTemplate !== undefined ? data.messageTemplate : rule.messageTemplate,
       channelEmail: data.channelEmail !== undefined ? data.channelEmail : rule.channelEmail,
       channelWhatsapp: data.channelWhatsapp !== undefined ? data.channelWhatsapp : rule.channelWhatsapp,

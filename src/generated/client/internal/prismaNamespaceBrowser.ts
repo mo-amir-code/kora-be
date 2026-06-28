@@ -298,6 +298,7 @@ export const ReminderRuleScalarFieldEnum = {
   offsetValue: 'offsetValue',
   offsetUnit: 'offsetUnit',
   nextFollowUps: 'nextFollowUps',
+  recipients: 'recipients',
   messageTemplate: 'messageTemplate',
   channelEmail: 'channelEmail',
   channelWhatsapp: 'channelWhatsapp',

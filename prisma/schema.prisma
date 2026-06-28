@@ -486,6 +486,7 @@ model ReminderRule {
   offsetValue     Int                 @map("offset_value")
   offsetUnit      String              @map("offset_unit") @default("hours")
   nextFollowUps   String[]            @map("next_follow_ups")
+  recipients      String[]            @default([]) @map("recipients")
   messageTemplate String?             @map("message_template")
   channelEmail    Boolean             @default(true) @map("channel_email")
   channelWhatsapp Boolean             @default(false) @map("channel_whatsapp")
