@@ -2,7 +2,7 @@ import { prisma, AppError } from "../../shared/index.js";
 
 export const userService = {
   /**
-   * Get current user profile
+   * Get current user profile with settings & invoice settings
    */
   async getMe(userId: string) {
     const user = await prisma.user.findUnique({
@@ -14,10 +14,10 @@ export const userService = {
         handle: true,
         avatarUrl: true,
         whatsappNumber: true,
-        timezone: true,
         plan: true,
         onboardingDone: true,
         createdAt: true,
+        settings: true,
         invoiceSettings: true,
       },
     });
@@ -38,7 +38,6 @@ export const userService = {
     whatsappNumber?: string;
     avatarUrl?: string;
   }) {
-    // Check if handle is already taken by someone else
     if (data.handle) {
       const existing = await prisma.user.findFirst({
         where: {
@@ -67,6 +66,17 @@ export const userService = {
     });
 
     return updated;
+  },
+
+  /**
+   * Update or create general settings (timezone, baseCurrency) for a user
+   */
+  async updateUserSettings(userId: string, data: { timezone?: string; baseCurrency?: string }) {
+    return prisma.userSettings.upsert({
+      where: { userId },
+      create: { ...data, userId },
+      update: data,
+    });
   },
 
   /**

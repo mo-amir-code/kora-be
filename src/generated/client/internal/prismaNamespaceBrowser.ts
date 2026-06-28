@@ -69,6 +69,7 @@ export const ModelName = {
   MessageTemplate: 'MessageTemplate',
   Subscription: 'Subscription',
   UserInvoiceSettings: 'UserInvoiceSettings',
+  UserSettings: 'UserSettings',
   Attachment: 'Attachment'
 } as const
 
@@ -96,7 +97,6 @@ export const UserScalarFieldEnum = {
   handle: 'handle',
   avatarUrl: 'avatarUrl',
   whatsappNumber: 'whatsappNumber',
-  timezone: 'timezone',
   plan: 'plan',
   planExpiresAt: 'planExpiresAt',
   onboardingDone: 'onboardingDone',
@@ -370,6 +370,16 @@ export const UserInvoiceSettingsScalarFieldEnum = {
 } as const
 
 export type UserInvoiceSettingsScalarFieldEnum = (typeof UserInvoiceSettingsScalarFieldEnum)[keyof typeof UserInvoiceSettingsScalarFieldEnum]
+
+
+export const UserSettingsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  timezone: 'timezone',
+  baseCurrency: 'baseCurrency'
+} as const
+
+export type UserSettingsScalarFieldEnum = (typeof UserSettingsScalarFieldEnum)[keyof typeof UserSettingsScalarFieldEnum]
 
 
 export const AttachmentScalarFieldEnum = {

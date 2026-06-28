@@ -32,7 +32,6 @@ export type UserMinAggregateOutputType = {
   handle: string | null
   avatarUrl: string | null
   whatsappNumber: string | null
-  timezone: string | null
   plan: $Enums.UserPlan | null
   planExpiresAt: Date | null
   onboardingDone: boolean | null
@@ -48,7 +47,6 @@ export type UserMaxAggregateOutputType = {
   handle: string | null
   avatarUrl: string | null
   whatsappNumber: string | null
-  timezone: string | null
   plan: $Enums.UserPlan | null
   planExpiresAt: Date | null
   onboardingDone: boolean | null
@@ -64,7 +62,6 @@ export type UserCountAggregateOutputType = {
   handle: number
   avatarUrl: number
   whatsappNumber: number
-  timezone: number
   plan: number
   planExpiresAt: number
   onboardingDone: number
@@ -82,7 +79,6 @@ export type UserMinAggregateInputType = {
   handle?: true
   avatarUrl?: true
   whatsappNumber?: true
-  timezone?: true
   plan?: true
   planExpiresAt?: true
   onboardingDone?: true
@@ -98,7 +94,6 @@ export type UserMaxAggregateInputType = {
   handle?: true
   avatarUrl?: true
   whatsappNumber?: true
-  timezone?: true
   plan?: true
   planExpiresAt?: true
   onboardingDone?: true
@@ -114,7 +109,6 @@ export type UserCountAggregateInputType = {
   handle?: true
   avatarUrl?: true
   whatsappNumber?: true
-  timezone?: true
   plan?: true
   planExpiresAt?: true
   onboardingDone?: true
@@ -203,7 +197,6 @@ export type UserGroupByOutputType = {
   handle: string | null
   avatarUrl: string | null
   whatsappNumber: string | null
-  timezone: string | null
   plan: $Enums.UserPlan
   planExpiresAt: Date | null
   onboardingDone: boolean
@@ -240,7 +233,6 @@ export type UserWhereInput = {
   handle?: Prisma.StringNullableFilter<"User"> | string | null
   avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
   whatsappNumber?: Prisma.StringNullableFilter<"User"> | string | null
-  timezone?: Prisma.StringNullableFilter<"User"> | string | null
   plan?: Prisma.EnumUserPlanFilter<"User"> | $Enums.UserPlan
   planExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   onboardingDone?: Prisma.BoolFilter<"User"> | boolean
@@ -255,6 +247,7 @@ export type UserWhereInput = {
   reminderRules?: Prisma.ReminderRuleListRelationFilter
   messageTemplates?: Prisma.MessageTemplateListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
+  settings?: Prisma.XOR<Prisma.UserSettingsNullableScalarRelationFilter, Prisma.UserSettingsWhereInput> | null
   invoiceSettings?: Prisma.XOR<Prisma.UserInvoiceSettingsNullableScalarRelationFilter, Prisma.UserInvoiceSettingsWhereInput> | null
   attachments?: Prisma.AttachmentListRelationFilter
   oauthAccounts?: Prisma.OAuthAccountListRelationFilter
@@ -270,7 +263,6 @@ export type UserOrderByWithRelationInput = {
   handle?: Prisma.SortOrderInput | Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   whatsappNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  timezone?: Prisma.SortOrderInput | Prisma.SortOrder
   plan?: Prisma.SortOrder
   planExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   onboardingDone?: Prisma.SortOrder
@@ -285,6 +277,7 @@ export type UserOrderByWithRelationInput = {
   reminderRules?: Prisma.ReminderRuleOrderByRelationAggregateInput
   messageTemplates?: Prisma.MessageTemplateOrderByRelationAggregateInput
   subscription?: Prisma.SubscriptionOrderByWithRelationInput
+  settings?: Prisma.UserSettingsOrderByWithRelationInput
   invoiceSettings?: Prisma.UserInvoiceSettingsOrderByWithRelationInput
   attachments?: Prisma.AttachmentOrderByRelationAggregateInput
   oauthAccounts?: Prisma.OAuthAccountOrderByRelationAggregateInput
@@ -303,7 +296,6 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   handle?: Prisma.StringNullableFilter<"User"> | string | null
   avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
   whatsappNumber?: Prisma.StringNullableFilter<"User"> | string | null
-  timezone?: Prisma.StringNullableFilter<"User"> | string | null
   plan?: Prisma.EnumUserPlanFilter<"User"> | $Enums.UserPlan
   planExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   onboardingDone?: Prisma.BoolFilter<"User"> | boolean
@@ -318,6 +310,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   reminderRules?: Prisma.ReminderRuleListRelationFilter
   messageTemplates?: Prisma.MessageTemplateListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
+  settings?: Prisma.XOR<Prisma.UserSettingsNullableScalarRelationFilter, Prisma.UserSettingsWhereInput> | null
   invoiceSettings?: Prisma.XOR<Prisma.UserInvoiceSettingsNullableScalarRelationFilter, Prisma.UserInvoiceSettingsWhereInput> | null
   attachments?: Prisma.AttachmentListRelationFilter
   oauthAccounts?: Prisma.OAuthAccountListRelationFilter
@@ -333,7 +326,6 @@ export type UserOrderByWithAggregationInput = {
   handle?: Prisma.SortOrderInput | Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   whatsappNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  timezone?: Prisma.SortOrderInput | Prisma.SortOrder
   plan?: Prisma.SortOrder
   planExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   onboardingDone?: Prisma.SortOrder
@@ -355,7 +347,6 @@ export type UserScalarWhereWithAggregatesInput = {
   handle?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   avatarUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   whatsappNumber?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  timezone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   plan?: Prisma.EnumUserPlanWithAggregatesFilter<"User"> | $Enums.UserPlan
   planExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   onboardingDone?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
@@ -371,7 +362,6 @@ export type UserCreateInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -386,6 +376,7 @@ export type UserCreateInput = {
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
@@ -401,7 +392,6 @@ export type UserUncheckedCreateInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -416,6 +406,7 @@ export type UserUncheckedCreateInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
@@ -431,7 +422,6 @@ export type UserUpdateInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -446,6 +436,7 @@ export type UserUpdateInput = {
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
@@ -461,7 +452,6 @@ export type UserUncheckedUpdateInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -476,6 +466,7 @@ export type UserUncheckedUpdateInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
@@ -491,7 +482,6 @@ export type UserCreateManyInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -507,7 +497,6 @@ export type UserUpdateManyMutationInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -523,7 +512,6 @@ export type UserUncheckedUpdateManyInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -539,7 +527,6 @@ export type UserCountOrderByAggregateInput = {
   handle?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
   whatsappNumber?: Prisma.SortOrder
-  timezone?: Prisma.SortOrder
   plan?: Prisma.SortOrder
   planExpiresAt?: Prisma.SortOrder
   onboardingDone?: Prisma.SortOrder
@@ -555,7 +542,6 @@ export type UserMaxOrderByAggregateInput = {
   handle?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
   whatsappNumber?: Prisma.SortOrder
-  timezone?: Prisma.SortOrder
   plan?: Prisma.SortOrder
   planExpiresAt?: Prisma.SortOrder
   onboardingDone?: Prisma.SortOrder
@@ -571,7 +557,6 @@ export type UserMinOrderByAggregateInput = {
   handle?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
   whatsappNumber?: Prisma.SortOrder
-  timezone?: Prisma.SortOrder
   plan?: Prisma.SortOrder
   planExpiresAt?: Prisma.SortOrder
   onboardingDone?: Prisma.SortOrder
@@ -790,6 +775,20 @@ export type UserUpdateOneRequiredWithoutInvoiceSettingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutInvoiceSettingsInput, Prisma.UserUpdateWithoutInvoiceSettingsInput>, Prisma.UserUncheckedUpdateWithoutInvoiceSettingsInput>
 }
 
+export type UserCreateNestedOneWithoutSettingsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSettingsInput, Prisma.UserUncheckedCreateWithoutSettingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSettingsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSettingsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSettingsInput, Prisma.UserUncheckedCreateWithoutSettingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSettingsInput
+  upsert?: Prisma.UserUpsertWithoutSettingsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSettingsInput, Prisma.UserUpdateWithoutSettingsInput>, Prisma.UserUncheckedUpdateWithoutSettingsInput>
+}
+
 export type UserCreateNestedOneWithoutAttachmentsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutAttachmentsInput, Prisma.UserUncheckedCreateWithoutAttachmentsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutAttachmentsInput
@@ -812,7 +811,6 @@ export type UserCreateWithoutOauthAccountsInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -827,6 +825,7 @@ export type UserCreateWithoutOauthAccountsInput = {
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
   otps?: Prisma.OtpCreateNestedManyWithoutUserInput
@@ -841,7 +840,6 @@ export type UserUncheckedCreateWithoutOauthAccountsInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -856,6 +854,7 @@ export type UserUncheckedCreateWithoutOauthAccountsInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
   otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
@@ -886,7 +885,6 @@ export type UserUpdateWithoutOauthAccountsInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -901,6 +899,7 @@ export type UserUpdateWithoutOauthAccountsInput = {
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
   otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
@@ -915,7 +914,6 @@ export type UserUncheckedUpdateWithoutOauthAccountsInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -930,6 +928,7 @@ export type UserUncheckedUpdateWithoutOauthAccountsInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
   otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
@@ -944,7 +943,6 @@ export type UserCreateWithoutOtpsInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -959,6 +957,7 @@ export type UserCreateWithoutOtpsInput = {
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
@@ -973,7 +972,6 @@ export type UserUncheckedCreateWithoutOtpsInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -988,6 +986,7 @@ export type UserUncheckedCreateWithoutOtpsInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
@@ -1018,7 +1017,6 @@ export type UserUpdateWithoutOtpsInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1033,6 +1031,7 @@ export type UserUpdateWithoutOtpsInput = {
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
@@ -1047,7 +1046,6 @@ export type UserUncheckedUpdateWithoutOtpsInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1062,6 +1060,7 @@ export type UserUncheckedUpdateWithoutOtpsInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
@@ -1076,7 +1075,6 @@ export type UserCreateWithoutRefreshTokensInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -1091,6 +1089,7 @@ export type UserCreateWithoutRefreshTokensInput = {
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
@@ -1105,7 +1104,6 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -1120,6 +1118,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
@@ -1150,7 +1149,6 @@ export type UserUpdateWithoutRefreshTokensInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1165,6 +1163,7 @@ export type UserUpdateWithoutRefreshTokensInput = {
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
@@ -1179,7 +1178,6 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1194,6 +1192,7 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
@@ -1208,7 +1207,6 @@ export type UserCreateWithoutSocialProfilesInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -1222,6 +1220,7 @@ export type UserCreateWithoutSocialProfilesInput = {
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
@@ -1237,7 +1236,6 @@ export type UserUncheckedCreateWithoutSocialProfilesInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -1251,6 +1249,7 @@ export type UserUncheckedCreateWithoutSocialProfilesInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
@@ -1282,7 +1281,6 @@ export type UserUpdateWithoutSocialProfilesInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1296,6 +1294,7 @@ export type UserUpdateWithoutSocialProfilesInput = {
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
@@ -1311,7 +1310,6 @@ export type UserUncheckedUpdateWithoutSocialProfilesInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1325,6 +1323,7 @@ export type UserUncheckedUpdateWithoutSocialProfilesInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
@@ -1340,7 +1339,6 @@ export type UserCreateWithoutBrandsInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -1354,6 +1352,7 @@ export type UserCreateWithoutBrandsInput = {
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
@@ -1369,7 +1368,6 @@ export type UserUncheckedCreateWithoutBrandsInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -1383,6 +1381,7 @@ export type UserUncheckedCreateWithoutBrandsInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
@@ -1414,7 +1413,6 @@ export type UserUpdateWithoutBrandsInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1428,6 +1426,7 @@ export type UserUpdateWithoutBrandsInput = {
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
@@ -1443,7 +1442,6 @@ export type UserUncheckedUpdateWithoutBrandsInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1457,6 +1455,7 @@ export type UserUncheckedUpdateWithoutBrandsInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
@@ -1472,7 +1471,6 @@ export type UserCreateWithoutDealsInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -1486,6 +1484,7 @@ export type UserCreateWithoutDealsInput = {
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
@@ -1501,7 +1500,6 @@ export type UserUncheckedCreateWithoutDealsInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -1515,6 +1513,7 @@ export type UserUncheckedCreateWithoutDealsInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
@@ -1546,7 +1545,6 @@ export type UserUpdateWithoutDealsInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1560,6 +1558,7 @@ export type UserUpdateWithoutDealsInput = {
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
@@ -1575,7 +1574,6 @@ export type UserUncheckedUpdateWithoutDealsInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1589,6 +1587,7 @@ export type UserUncheckedUpdateWithoutDealsInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
@@ -1604,7 +1603,6 @@ export type UserCreateWithoutDealActivitiesInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -1618,6 +1616,7 @@ export type UserCreateWithoutDealActivitiesInput = {
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
@@ -1633,7 +1632,6 @@ export type UserUncheckedCreateWithoutDealActivitiesInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -1647,6 +1645,7 @@ export type UserUncheckedCreateWithoutDealActivitiesInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
@@ -1678,7 +1677,6 @@ export type UserUpdateWithoutDealActivitiesInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1692,6 +1690,7 @@ export type UserUpdateWithoutDealActivitiesInput = {
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
@@ -1707,7 +1706,6 @@ export type UserUncheckedUpdateWithoutDealActivitiesInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1721,6 +1719,7 @@ export type UserUncheckedUpdateWithoutDealActivitiesInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
@@ -1736,7 +1735,6 @@ export type UserCreateWithoutInvoicesInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -1750,6 +1748,7 @@ export type UserCreateWithoutInvoicesInput = {
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
@@ -1765,7 +1764,6 @@ export type UserUncheckedCreateWithoutInvoicesInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -1779,6 +1777,7 @@ export type UserUncheckedCreateWithoutInvoicesInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
@@ -1810,7 +1809,6 @@ export type UserUpdateWithoutInvoicesInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1824,6 +1822,7 @@ export type UserUpdateWithoutInvoicesInput = {
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
@@ -1839,7 +1838,6 @@ export type UserUncheckedUpdateWithoutInvoicesInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1853,6 +1851,7 @@ export type UserUncheckedUpdateWithoutInvoicesInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
@@ -1868,7 +1867,6 @@ export type UserCreateWithoutReminderRulesInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -1882,6 +1880,7 @@ export type UserCreateWithoutReminderRulesInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
@@ -1897,7 +1896,6 @@ export type UserUncheckedCreateWithoutReminderRulesInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -1911,6 +1909,7 @@ export type UserUncheckedCreateWithoutReminderRulesInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
@@ -1942,7 +1941,6 @@ export type UserUpdateWithoutReminderRulesInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1956,6 +1954,7 @@ export type UserUpdateWithoutReminderRulesInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
@@ -1971,7 +1970,6 @@ export type UserUncheckedUpdateWithoutReminderRulesInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1985,6 +1983,7 @@ export type UserUncheckedUpdateWithoutReminderRulesInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
@@ -2000,7 +1999,6 @@ export type UserCreateWithoutNotificationsInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -2014,6 +2012,7 @@ export type UserCreateWithoutNotificationsInput = {
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
@@ -2029,7 +2028,6 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -2043,6 +2041,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
@@ -2074,7 +2073,6 @@ export type UserUpdateWithoutNotificationsInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2088,6 +2086,7 @@ export type UserUpdateWithoutNotificationsInput = {
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
@@ -2103,7 +2102,6 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2117,6 +2115,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
@@ -2132,7 +2131,6 @@ export type UserCreateWithoutMessageTemplatesInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -2146,6 +2144,7 @@ export type UserCreateWithoutMessageTemplatesInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
@@ -2161,7 +2160,6 @@ export type UserUncheckedCreateWithoutMessageTemplatesInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -2175,6 +2173,7 @@ export type UserUncheckedCreateWithoutMessageTemplatesInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
@@ -2206,7 +2205,6 @@ export type UserUpdateWithoutMessageTemplatesInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2220,6 +2218,7 @@ export type UserUpdateWithoutMessageTemplatesInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
@@ -2235,7 +2234,6 @@ export type UserUncheckedUpdateWithoutMessageTemplatesInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2249,6 +2247,7 @@ export type UserUncheckedUpdateWithoutMessageTemplatesInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
@@ -2264,7 +2263,6 @@ export type UserCreateWithoutSubscriptionInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -2278,6 +2276,7 @@ export type UserCreateWithoutSubscriptionInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
+  settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
@@ -2293,7 +2292,6 @@ export type UserUncheckedCreateWithoutSubscriptionInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -2307,6 +2305,7 @@ export type UserUncheckedCreateWithoutSubscriptionInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
+  settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
@@ -2338,7 +2337,6 @@ export type UserUpdateWithoutSubscriptionInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2352,6 +2350,7 @@ export type UserUpdateWithoutSubscriptionInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
@@ -2367,7 +2366,6 @@ export type UserUncheckedUpdateWithoutSubscriptionInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2381,6 +2379,7 @@ export type UserUncheckedUpdateWithoutSubscriptionInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
@@ -2396,7 +2395,6 @@ export type UserCreateWithoutInvoiceSettingsInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -2411,6 +2409,7 @@ export type UserCreateWithoutInvoiceSettingsInput = {
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpCreateNestedManyWithoutUserInput
@@ -2425,7 +2424,6 @@ export type UserUncheckedCreateWithoutInvoiceSettingsInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -2440,6 +2438,7 @@ export type UserUncheckedCreateWithoutInvoiceSettingsInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
@@ -2470,7 +2469,6 @@ export type UserUpdateWithoutInvoiceSettingsInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2485,6 +2483,7 @@ export type UserUpdateWithoutInvoiceSettingsInput = {
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
@@ -2499,7 +2498,6 @@ export type UserUncheckedUpdateWithoutInvoiceSettingsInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2514,13 +2512,14 @@ export type UserUncheckedUpdateWithoutInvoiceSettingsInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserCreateWithoutAttachmentsInput = {
+export type UserCreateWithoutSettingsInput = {
   id?: string
   email: string
   fullName: string
@@ -2528,7 +2527,6 @@ export type UserCreateWithoutAttachmentsInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -2544,12 +2542,13 @@ export type UserCreateWithoutAttachmentsInput = {
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsCreateNestedOneWithoutUserInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutAttachmentsInput = {
+export type UserUncheckedCreateWithoutSettingsInput = {
   id?: string
   email: string
   fullName: string
@@ -2557,7 +2556,6 @@ export type UserUncheckedCreateWithoutAttachmentsInput = {
   handle?: string | null
   avatarUrl?: string | null
   whatsappNumber?: string | null
-  timezone?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   onboardingDone?: boolean
@@ -2572,6 +2570,139 @@ export type UserUncheckedCreateWithoutAttachmentsInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedCreateNestedOneWithoutUserInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
+  oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
+  otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutSettingsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSettingsInput, Prisma.UserUncheckedCreateWithoutSettingsInput>
+}
+
+export type UserUpsertWithoutSettingsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSettingsInput, Prisma.UserUncheckedUpdateWithoutSettingsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSettingsInput, Prisma.UserUncheckedCreateWithoutSettingsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSettingsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSettingsInput, Prisma.UserUncheckedUpdateWithoutSettingsInput>
+}
+
+export type UserUpdateWithoutSettingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
+  planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  socialProfiles?: Prisma.UserSocialProfileUpdateManyWithoutUserNestedInput
+  brands?: Prisma.BrandUpdateManyWithoutUserNestedInput
+  deals?: Prisma.DealUpdateManyWithoutUserNestedInput
+  dealActivities?: Prisma.DealActivityUpdateManyWithoutUserNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
+  messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  invoiceSettings?: Prisma.UserInvoiceSettingsUpdateOneWithoutUserNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
+  oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
+  otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSettingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
+  planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  socialProfiles?: Prisma.UserSocialProfileUncheckedUpdateManyWithoutUserNestedInput
+  brands?: Prisma.BrandUncheckedUpdateManyWithoutUserNestedInput
+  deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
+  dealActivities?: Prisma.DealActivityUncheckedUpdateManyWithoutUserNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
+  messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedUpdateOneWithoutUserNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
+  oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
+  otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAttachmentsInput = {
+  id?: string
+  email: string
+  fullName: string
+  password?: string | null
+  handle?: string | null
+  avatarUrl?: string | null
+  whatsappNumber?: string | null
+  plan?: $Enums.UserPlan
+  planExpiresAt?: Date | string | null
+  onboardingDone?: boolean
+  createdAt?: Date | string
+  deletedAt?: Date | string | null
+  socialProfiles?: Prisma.UserSocialProfileCreateNestedManyWithoutUserInput
+  brands?: Prisma.BrandCreateNestedManyWithoutUserInput
+  deals?: Prisma.DealCreateNestedManyWithoutUserInput
+  dealActivities?: Prisma.DealActivityCreateNestedManyWithoutUserInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
+  messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
+  invoiceSettings?: Prisma.UserInvoiceSettingsCreateNestedOneWithoutUserInput
+  oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
+  otps?: Prisma.OtpCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAttachmentsInput = {
+  id?: string
+  email: string
+  fullName: string
+  password?: string | null
+  handle?: string | null
+  avatarUrl?: string | null
+  whatsappNumber?: string | null
+  plan?: $Enums.UserPlan
+  planExpiresAt?: Date | string | null
+  onboardingDone?: boolean
+  createdAt?: Date | string
+  deletedAt?: Date | string | null
+  socialProfiles?: Prisma.UserSocialProfileUncheckedCreateNestedManyWithoutUserInput
+  brands?: Prisma.BrandUncheckedCreateNestedManyWithoutUserInput
+  deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
+  dealActivities?: Prisma.DealActivityUncheckedCreateNestedManyWithoutUserInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
+  messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedCreateNestedOneWithoutUserInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
@@ -2602,7 +2733,6 @@ export type UserUpdateWithoutAttachmentsInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2617,6 +2747,7 @@ export type UserUpdateWithoutAttachmentsInput = {
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUpdateOneWithoutUserNestedInput
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
@@ -2631,7 +2762,6 @@ export type UserUncheckedUpdateWithoutAttachmentsInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2646,6 +2776,7 @@ export type UserUncheckedUpdateWithoutAttachmentsInput = {
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedUpdateOneWithoutUserNestedInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
@@ -2790,7 +2921,6 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   handle?: boolean
   avatarUrl?: boolean
   whatsappNumber?: boolean
-  timezone?: boolean
   plan?: boolean
   planExpiresAt?: boolean
   onboardingDone?: boolean
@@ -2805,6 +2935,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   reminderRules?: boolean | Prisma.User$reminderRulesArgs<ExtArgs>
   messageTemplates?: boolean | Prisma.User$messageTemplatesArgs<ExtArgs>
   subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
+  settings?: boolean | Prisma.User$settingsArgs<ExtArgs>
   invoiceSettings?: boolean | Prisma.User$invoiceSettingsArgs<ExtArgs>
   attachments?: boolean | Prisma.User$attachmentsArgs<ExtArgs>
   oauthAccounts?: boolean | Prisma.User$oauthAccountsArgs<ExtArgs>
@@ -2821,7 +2952,6 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   handle?: boolean
   avatarUrl?: boolean
   whatsappNumber?: boolean
-  timezone?: boolean
   plan?: boolean
   planExpiresAt?: boolean
   onboardingDone?: boolean
@@ -2837,7 +2967,6 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   handle?: boolean
   avatarUrl?: boolean
   whatsappNumber?: boolean
-  timezone?: boolean
   plan?: boolean
   planExpiresAt?: boolean
   onboardingDone?: boolean
@@ -2853,7 +2982,6 @@ export type UserSelectScalar = {
   handle?: boolean
   avatarUrl?: boolean
   whatsappNumber?: boolean
-  timezone?: boolean
   plan?: boolean
   planExpiresAt?: boolean
   onboardingDone?: boolean
@@ -2861,7 +2989,7 @@ export type UserSelectScalar = {
   deletedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "fullName" | "password" | "handle" | "avatarUrl" | "whatsappNumber" | "timezone" | "plan" | "planExpiresAt" | "onboardingDone" | "createdAt" | "deletedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "fullName" | "password" | "handle" | "avatarUrl" | "whatsappNumber" | "plan" | "planExpiresAt" | "onboardingDone" | "createdAt" | "deletedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   socialProfiles?: boolean | Prisma.User$socialProfilesArgs<ExtArgs>
   brands?: boolean | Prisma.User$brandsArgs<ExtArgs>
@@ -2872,6 +3000,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   reminderRules?: boolean | Prisma.User$reminderRulesArgs<ExtArgs>
   messageTemplates?: boolean | Prisma.User$messageTemplatesArgs<ExtArgs>
   subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
+  settings?: boolean | Prisma.User$settingsArgs<ExtArgs>
   invoiceSettings?: boolean | Prisma.User$invoiceSettingsArgs<ExtArgs>
   attachments?: boolean | Prisma.User$attachmentsArgs<ExtArgs>
   oauthAccounts?: boolean | Prisma.User$oauthAccountsArgs<ExtArgs>
@@ -2894,6 +3023,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     reminderRules: Prisma.$ReminderRulePayload<ExtArgs>[]
     messageTemplates: Prisma.$MessageTemplatePayload<ExtArgs>[]
     subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
+    settings: Prisma.$UserSettingsPayload<ExtArgs> | null
     invoiceSettings: Prisma.$UserInvoiceSettingsPayload<ExtArgs> | null
     attachments: Prisma.$AttachmentPayload<ExtArgs>[]
     oauthAccounts: Prisma.$OAuthAccountPayload<ExtArgs>[]
@@ -2908,7 +3038,6 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     handle: string | null
     avatarUrl: string | null
     whatsappNumber: string | null
-    timezone: string | null
     plan: $Enums.UserPlan
     planExpiresAt: Date | null
     onboardingDone: boolean
@@ -3317,6 +3446,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   reminderRules<T extends Prisma.User$reminderRulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reminderRulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReminderRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   messageTemplates<T extends Prisma.User$messageTemplatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$messageTemplatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessageTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscription<T extends Prisma.User$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$subscriptionArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  settings<T extends Prisma.User$settingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$settingsArgs<ExtArgs>>): Prisma.Prisma__UserSettingsClient<runtime.Types.Result.GetResult<Prisma.$UserSettingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   invoiceSettings<T extends Prisma.User$invoiceSettingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$invoiceSettingsArgs<ExtArgs>>): Prisma.Prisma__UserInvoiceSettingsClient<runtime.Types.Result.GetResult<Prisma.$UserInvoiceSettingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   attachments<T extends Prisma.User$attachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$attachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   oauthAccounts<T extends Prisma.User$oauthAccountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$oauthAccountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OAuthAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3358,7 +3488,6 @@ export interface UserFieldRefs {
   readonly handle: Prisma.FieldRef<"User", 'String'>
   readonly avatarUrl: Prisma.FieldRef<"User", 'String'>
   readonly whatsappNumber: Prisma.FieldRef<"User", 'String'>
-  readonly timezone: Prisma.FieldRef<"User", 'String'>
   readonly plan: Prisma.FieldRef<"User", 'UserPlan'>
   readonly planExpiresAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly onboardingDone: Prisma.FieldRef<"User", 'Boolean'>
@@ -3965,6 +4094,25 @@ export type User$subscriptionArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   include?: Prisma.SubscriptionInclude<ExtArgs> | null
   where?: Prisma.SubscriptionWhereInput
+}
+
+/**
+ * User.settings
+ */
+export type User$settingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserSettings
+   */
+  select?: Prisma.UserSettingsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserSettings
+   */
+  omit?: Prisma.UserSettingsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserSettingsInclude<ExtArgs> | null
+  where?: Prisma.UserSettingsWhereInput
 }
 
 /**

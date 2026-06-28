@@ -108,6 +108,11 @@ export type Subscription = Prisma.SubscriptionModel
  */
 export type UserInvoiceSettings = Prisma.UserInvoiceSettingsModel
 /**
+ * Model UserSettings
+ * 
+ */
+export type UserSettings = Prisma.UserSettingsModel
+/**
  * Model Attachment
  * 
  */

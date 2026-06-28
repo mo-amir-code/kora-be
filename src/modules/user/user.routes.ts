@@ -7,6 +7,7 @@ const router = Router();
 
 router.get("/me", authenticate, userController.getMe);
 router.patch("/me", authenticate, validate(updateMeSchema), userController.updateMe);
+router.patch("/settings/general", authenticate, userController.updateUserSettings);
 router.patch("/settings/invoice", authenticate, userController.updateInvoiceSettings);
 
 export { router as userRoutes };
