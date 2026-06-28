@@ -9,5 +9,6 @@ router.use(authenticate);
 
 router.get("/", validate(paymentFilterSchema), controller.list);
 router.get("/stats", controller.stats);
+router.post("/events", controller.createEvent);
 
 export default router;
