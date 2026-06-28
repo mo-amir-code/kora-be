@@ -74,8 +74,8 @@ export async function getDeals(userId: string, stage?: string) {
   const deals = await prisma.deal.findMany({
     where,
     include: {
-      brand: { select: { id: true, name: true, logoUrl: true } },
-      contact: { select: { id: true, name: true } },
+      brand: { select: { id: true, name: true, logoUrl: true, gstin: true, contacts: true } },
+      contact: { select: { id: true, name: true, email: true, role: true } },
       deliverables: true,
     },
     orderBy: { createdAt: "desc" },
@@ -88,7 +88,7 @@ export async function getDealById(userId: string, dealId: string) {
   const deal = await prisma.deal.findFirst({
     where: { id: dealId, userId },
     include: {
-      brand: { select: { id: true, name: true, logoUrl: true, category: true } },
+      brand: { select: { id: true, name: true, logoUrl: true, category: true, gstin: true, contacts: true } },
       contact: true,
       deliverables: true,
       activities: { orderBy: { createdAt: "desc" } },

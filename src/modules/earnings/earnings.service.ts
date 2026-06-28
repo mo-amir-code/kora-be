@@ -1,18 +1,63 @@
 import { prisma } from "../../shared/index.js";
 import type { EarningsQuery } from "./earnings.validation.js";
-import { convertCurrency, getUsdToInrRate } from "./earnings-currency.util.js";
 
 const ACTIVE_INVOICE_STATUSES = ["SENT", "VIEWED", "PARTIALLY_PAID", "PAID", "OVERDUE"] as const;
 const POSITIVE_PAYMENT_TYPES = new Set(["PAYMENT_RECEIVED", "PARTIAL_PAYMENT", "ADJUSTMENT"]);
 const UNPAID_INVOICE_STATUSES = ["SENT", "VIEWED", "PARTIALLY_PAID", "OVERDUE"] as const;
 
-function monthRange(month: string) {
+function getTimezoneOffsetMs(date: Date, timezone: string): number {
+  try {
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone: timezone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    });
+    const parts = formatter.formatToParts(date);
+    const getPart = (type: string) => Number(parts.find((p) => p.type === type)?.value || 0);
+    let hour = getPart("hour");
+    if (hour === 24) hour = 0;
+    const targetUtc = Date.UTC(getPart("year"), getPart("month") - 1, getPart("day"), hour, getPart("minute"), getPart("second"));
+    return targetUtc - date.getTime();
+  } catch {
+    return 0;
+  }
+}
+
+function getZonedDateTime(year: number, monthIndex: number, day: number, hour = 0, minute = 0, second = 0, timezone = "UTC"): Date {
+  const utcApprox = new Date(Date.UTC(year, monthIndex, day, hour, minute, second));
+  const offset = getTimezoneOffsetMs(utcApprox, timezone);
+  return new Date(utcApprox.getTime() - offset);
+}
+
+function monthRange(month: string, timezone: string) {
   const [yearText, monthText] = month.split("-");
   const year = Number(yearText);
   const monthIndex = Number(monthText) - 1;
-  const start = new Date(Date.UTC(year, monthIndex, 1));
-  const end = new Date(Date.UTC(year, monthIndex + 1, 1));
+  const start = getZonedDateTime(year, monthIndex, 1, 0, 0, 0, timezone);
+  const end = getZonedDateTime(year, monthIndex + 1, 1, 0, 0, 0, timezone);
   return { year, monthIndex, start, end };
+}
+
+function getTodayInTimezone(timezone: string): Date {
+  const now = new Date();
+  try {
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone: timezone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+    const parts = formatter.formatToParts(now);
+    const getPart = (type: string) => Number(parts.find((p) => p.type === type)?.value || 0);
+    return getZonedDateTime(getPart("year"), getPart("month") - 1, getPart("day"), 0, 0, 0, timezone);
+  } catch {
+    return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  }
 }
 
 function netPayment(events: Array<{ type: string; amount: unknown }>) {
@@ -47,14 +92,15 @@ function platformFromDeliverable(type: string) {
 }
 
 export async function getEarningsDashboard(userId: string, query: EarningsQuery) {
-  const exchangeRate = await getUsdToInrRate();
-  const { year, monthIndex, start, end } = monthRange(query.month);
-  const now = new Date();
-  const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
-  const yearStart = new Date(Date.UTC(year, 0, 1));
-  const previousYearStart = new Date(Date.UTC(year - 1, 0, 1));
-  const previousYearEnd = new Date(Date.UTC(year - 1, monthIndex + 1, 1));
-  const comparisonStart = new Date(Date.UTC(year, monthIndex - 1, 1));
+  const userSettings = await prisma.userSettings.findUnique({ where: { userId } });
+  const timezone = userSettings?.timezone || "UTC";
+
+  const { year, monthIndex, start, end } = monthRange(query.month, timezone);
+  const today = getTodayInTimezone(timezone);
+  const yearStart = getZonedDateTime(year, 0, 1, 0, 0, 0, timezone);
+  const previousYearStart = getZonedDateTime(year - 1, 0, 1, 0, 0, 0, timezone);
+  const previousYearEnd = getZonedDateTime(year - 1, monthIndex + 1, 1, 0, 0, 0, timezone);
+  const comparisonStart = getZonedDateTime(year, monthIndex - 1, 1, 0, 0, 0, timezone);
 
   const [tableDeals, invoices, paymentEvents] = await Promise.all([
     prisma.deal.findMany({
@@ -63,8 +109,10 @@ export async function getEarningsDashboard(userId: string, query: EarningsQuery)
         archivedAt: null,
         OR: [
           { createdAt: { gte: start, lt: end } },
+          { paymentDueDate: { gte: start, lt: end } },
           { paymentEvents: { some: { paidAt: { gte: start, lt: end } } } },
           { invoices: { some: { dueDate: { gte: start, lt: end } } } },
+          { paymentDueDate: { lt: today } },
           {
             invoices: {
               some: {
@@ -106,8 +154,6 @@ export async function getEarningsDashboard(userId: string, query: EarningsQuery)
     }),
   ]);
 
-  // Older records may have been marked PAID before payment events were introduced.
-  // Use the invoice total only when no linked event exists, so revenue is never counted twice.
   const invoiceFallbackPayments = invoices.flatMap((invoice) => {
     if (invoice.status !== "PAID" || invoice.paymentEvents.length > 0) return [];
     return [{
@@ -124,57 +170,61 @@ export async function getEarningsDashboard(userId: string, query: EarningsQuery)
     .filter((event) => event.paidAt >= rangeStart && event.paidAt < rangeEnd)
     .reduce((total, event) => {
       const signedAmount = POSITIVE_PAYMENT_TYPES.has(event.type) ? Number(event.amount) : -Number(event.amount);
-      return total + convertCurrency(signedAmount, event.deal.currency, query.currency, exchangeRate.usdToInr);
+      return total + signedAmount;
     }, 0);
 
-  const earned = earnedForRange(start, end);
-  const previousMonthEarned = earnedForRange(comparisonStart, start);
+  const visibleDeals = tableDeals;
 
-  const selectedInvoices = invoices.filter((invoice) => invoice.dueDate >= start && invoice.dueDate < end);
-  let pending = 0;
-  let overdue = 0;
-  let pendingInvoiceCount = 0;
+  const processedDeals = visibleDeals.map((deal) => {
+    const dealAmount = Number(deal.amount ?? 0);
+    const paidRaw = Math.max(Number(deal.amountPaid ?? 0), netPayment(deal.paymentEvents.filter((event) => event.paidAt < end)));
+    const remainingRaw = Math.max(0, dealAmount - paidRaw);
 
-  for (const invoice of selectedInvoices) {
-    if (invoice.status === "PAID") continue;
-    const eventsBeforeEnd = invoice.paymentEvents.filter((event) => event.paidAt < end);
-    const outstanding = outstandingBalance(invoice.total, eventsBeforeEnd);
-    if (outstanding === 0) continue;
+    const isDealOverdue = deal.paymentDueDate ? (deal.paymentDueDate < today && dealAmount > paidRaw) : false;
+    const overdueInvoice = deal.invoices.find((invoice) => (
+      UNPAID_INVOICE_STATUSES.includes(invoice.status as typeof UNPAID_INVOICE_STATUSES[number])
+      && invoice.dueDate < today
+      && outstandingBalance(invoice.total, invoice.paymentEvents.filter((event) => event.paidAt < today)) > 0
+    ));
+    const status = dealAmount > 0 && paidRaw >= dealAmount
+      ? "PAID"
+      : isDealOverdue || overdueInvoice || deal.paymentStatus === "OVERDUE"
+        ? "OVERDUE"
+        : deal.stage === "COMPLETED"
+          ? "DELIVERED"
+          : "PENDING";
 
-    const convertedOutstanding = convertCurrency(outstanding, invoice.deal.currency, query.currency, exchangeRate.usdToInr);
-    if (invoice.dueDate < today) overdue += convertedOutstanding;
-    else {
-      pending += convertedOutstanding;
-      pendingInvoiceCount += 1;
-    }
-  }
+    const paidEvent = deal.paymentEvents.find((event) => POSITIVE_PAYMENT_TYPES.has(event.type));
+    const platforms = [...new Set([
+      ...deal.platforms,
+      ...deal.deliverables.map((deliverable) => deliverable.platform ?? platformFromDeliverable(deliverable.type)),
+    ].filter((platform) => platform.trim().length > 0))];
 
-  const visibleDeals = tableDeals.filter((deal) => {
-    switch (query.filter) {
-      case "expected":
-        return deal.invoices.some((invoice) => invoice.dueDate >= start && invoice.dueDate < end);
-      case "paid":
-        return deal.paymentEvents.some((event) => event.paidAt >= start && event.paidAt < end);
-      case "created":
-        return deal.createdAt >= start && deal.createdAt < end;
-      case "overdue":
-        return deal.invoices.some((invoice) => (
-          UNPAID_INVOICE_STATUSES.includes(invoice.status as typeof UNPAID_INVOICE_STATUSES[number])
-          && invoice.dueDate < today
-          && outstandingBalance(invoice.total, invoice.paymentEvents.filter((event) => event.paidAt < today)) > 0
-        ));
-      case "all":
-      default:
-        return true;
-    }
+    return {
+      deal,
+      dealAmount,
+      remainingRaw,
+      paidConverted: paidRaw,
+      remainingConverted: remainingRaw,
+      dealAmountConverted: dealAmount,
+      status,
+      paidEvent,
+      platforms,
+    };
   });
 
-  const dealValues = visibleDeals.flatMap((deal) => deal.amount === null
-    ? []
-    : [convertCurrency(Number(deal.amount), deal.currency, query.currency, exchangeRate.usdToInr)],
-  );
-  const averageDealValue = dealValues.length
-    ? dealValues.reduce((sum, amount) => sum + amount, 0) / dealValues.length
+  const earned = processedDeals.reduce((sum, d) => sum + d.paidConverted, 0);
+  const previousMonthEarned = earnedForRange(comparisonStart, start);
+
+  const pendingDeals = processedDeals.filter((d) => d.status === "PENDING" || d.status === "DELIVERED");
+  const pending = pendingDeals.reduce((sum, d) => sum + d.remainingConverted, 0);
+  const pendingInvoiceCount = pendingDeals.length;
+
+  const overdueDeals = processedDeals.filter((d) => d.status === "OVERDUE");
+  const overdue = overdueDeals.reduce((sum, d) => sum + d.remainingConverted, 0);
+
+  const averageDealValue = processedDeals.length
+    ? processedDeals.reduce((sum, d) => sum + d.dealAmountConverted, 0) / processedDeals.length
     : 0;
 
   const breakdownValues = { paid: earned, pending, overdue };
@@ -186,19 +236,19 @@ export async function getEarningsDashboard(userId: string, query: EarningsQuery)
   }));
 
   const trend = Array.from({ length: 6 }, (_, index) => {
-    const itemStart = new Date(Date.UTC(year, monthIndex - index, 1));
-    const itemEnd = new Date(Date.UTC(year, monthIndex - index + 1, 1));
+    const itemStart = getZonedDateTime(year, monthIndex - index, 1, 0, 0, 0, timezone);
+    const itemEnd = getZonedDateTime(year, monthIndex - index + 1, 1, 0, 0, 0, timezone);
     const itemPending = invoices
       .filter((invoice) => invoice.status !== "PAID" && invoice.dueDate >= itemStart && invoice.dueDate < itemEnd)
       .reduce((sum, invoice) => {
         const paidByMonthEnd = netPayment(invoice.paymentEvents.filter((event) => event.paidAt < itemEnd));
         const outstanding = outstandingBalance(invoice.total, [{ type: "PAYMENT_RECEIVED", amount: paidByMonthEnd }]);
-        return sum + convertCurrency(outstanding, invoice.deal.currency, query.currency, exchangeRate.usdToInr);
+        return sum + outstanding;
       }, 0);
 
     return {
-      month: itemStart.toLocaleDateString("en-US", { month: "short", timeZone: "UTC" }),
-      monthKey: itemStart.toISOString().slice(0, 7),
+      month: itemStart.toLocaleDateString("en-US", { month: "short", timeZone: timezone }),
+      monthKey: `${itemStart.getFullYear()}-${String(itemStart.getMonth() + 1).padStart(2, "0")}`,
       paid: earnedForRange(itemStart, itemEnd),
       pending: itemPending,
     };
@@ -207,46 +257,25 @@ export async function getEarningsDashboard(userId: string, query: EarningsQuery)
   const yearToDate = earnedForRange(yearStart, end);
   const previousYearToDate = earnedForRange(previousYearStart, previousYearEnd);
 
-  const recentDeals = visibleDeals.map((deal) => {
-    const paid = netPayment(deal.paymentEvents.filter((event) => event.paidAt < end));
-    const amount = Number(deal.amount ?? 0);
-    const overdueInvoice = deal.invoices.find((invoice) => (
-      UNPAID_INVOICE_STATUSES.includes(invoice.status as typeof UNPAID_INVOICE_STATUSES[number])
-      && invoice.dueDate < today
-      && outstandingBalance(invoice.total, invoice.paymentEvents.filter((event) => event.paidAt < today)) > 0
-    ));
-    const status = amount > 0 && paid >= amount
-      ? "PAID"
-      : overdueInvoice
-        ? "OVERDUE"
-        : deal.stage === "COMPLETED"
-          ? "DELIVERED"
-          : "PENDING";
-    const paidEvent = deal.paymentEvents.find((event) => POSITIVE_PAYMENT_TYPES.has(event.type));
-    const platforms = [...new Set([
-      ...deal.platforms,
-      ...deal.deliverables.map((deliverable) => deliverable.platform ?? platformFromDeliverable(deliverable.type)),
-    ].filter((platform) => platform.trim().length > 0))];
-
-    return {
-      id: deal.id,
-      brandName: deal.brand.name,
-      brandLogo: deal.brand.logoUrl,
-      dealTitle: deal.title,
-      value: amount,
-      currency: deal.currency,
-      platforms,
-      status,
-      paidDate: paidEvent?.paidAt ?? null,
-    };
-  });
+  const recentDeals = processedDeals.map(({ deal, dealAmount, remainingRaw, status, paidEvent, platforms }) => ({
+    id: deal.id,
+    brandName: deal.brand.name,
+    brandLogo: deal.brand.logoUrl,
+    dealTitle: deal.title,
+    value: dealAmount,
+    remaining: remainingRaw,
+    currency: deal.currency,
+    platforms,
+    status,
+    paidDate: paidEvent?.paidAt ?? null,
+  }));
 
   return {
     period: query.month,
-    currency: query.currency,
+    currency: "USD",
     filter: query.filter,
-    exchangeRate: exchangeRate.usdToInr,
-    exchangeRateSource: exchangeRate.source,
+    exchangeRate: 1,
+    exchangeRateSource: "fixed",
     metrics: {
       earned,
       earnedChangePercentage: percentChange(earned, previousMonthEarned),
@@ -254,7 +283,7 @@ export async function getEarningsDashboard(userId: string, query: EarningsQuery)
       pendingInvoiceCount,
       overdue,
       averageDealValue,
-      dealCount: dealValues.length,
+      dealCount: processedDeals.length,
     },
     breakdown: { total: breakdownTotal, items: breakdown },
     trend,

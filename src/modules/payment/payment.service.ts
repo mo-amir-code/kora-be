@@ -4,35 +4,30 @@ import type { PaymentFilterQuery } from "./payment.validation.js";
 
 export interface PaymentItem {
   id: string;
-  type: "INVOICE" | "PAYMENT_EVENT";
+  type: "DEAL" | "PAYMENT_EVENT";
   brandName: string;
   brandLogo: string | null;
   dealTitle: string;
   amount: number;
+  remaining: number;
   currency: string;
   dueDate: Date | null;
   status: "PAID" | "PENDING" | "OVERDUE";
-  referenceId: string; // The original ID (Invoice or Event)
-  sourceId: string;    // The ID for navigation (Invoice ID or Deal ID)
+  referenceId: string; // The original ID (Deal or Event)
+  sourceId: string;    // The ID for navigation (Deal ID)
 }
 
 export async function getPayments(userId: string, filters: PaymentFilterQuery) {
   const now = new Date();
 
-  // 1. Get Invoices
-  const invoices = await prisma.invoice.findMany({
+  // 1. Get Deals
+  const deals = await prisma.deal.findMany({
     where: {
       userId,
-      ...(filters.status === "PAID" && { status: "PAID" }),
-      ...(filters.status === "PENDING" && { status: { not: "PAID" }, dueDate: { gte: now } }),
-      ...(filters.status === "OVERDUE" && { status: { not: "PAID" }, dueDate: { lt: now } }),
+      archivedAt: null,
     },
     include: {
-      deal: {
-        include: {
-          brand: { select: { name: true, logoUrl: true } },
-        },
-      },
+      brand: { select: { name: true, logoUrl: true } },
     },
   });
 
@@ -40,7 +35,6 @@ export async function getPayments(userId: string, filters: PaymentFilterQuery) {
   const paymentEvents = await prisma.paymentEvent.findMany({
     where: {
       deal: { userId },
-      invoiceId: null,
     },
     include: {
       deal: {
@@ -52,19 +46,28 @@ export async function getPayments(userId: string, filters: PaymentFilterQuery) {
   });
 
   const paymentItems: PaymentItem[] = [
-    ...invoices.map((inv) => ({
-      id: inv.id,
-      type: "INVOICE" as const,
-      brandName: inv.deal.brand.name,
-      brandLogo: inv.deal.brand.logoUrl,
-      dealTitle: inv.deal.title,
-      amount: Number(inv.total),
-      currency: inv.deal.currency,
-      dueDate: inv.dueDate,
-      status: inv.status === "PAID" ? "PAID" : (inv.dueDate < now ? "OVERDUE" : "PENDING") as any,
-      referenceId: inv.id,
-      sourceId: inv.id,
-    })),
+    ...deals.map((deal) => {
+      const amount = Number(deal.amount ?? 0);
+      const paid = Number(deal.amountPaid ?? 0);
+      const remaining = Math.max(0, amount - paid);
+      const isPaid = amount > 0 && paid >= amount;
+      const isOverdue = !isPaid && Boolean(deal.paymentDueDate && deal.paymentDueDate < now);
+      const status: "PAID" | "PENDING" | "OVERDUE" = isPaid ? "PAID" : isOverdue ? "OVERDUE" : "PENDING";
+      return {
+        id: deal.id,
+        type: "DEAL" as const,
+        brandName: deal.brand.name,
+        brandLogo: deal.brand.logoUrl,
+        dealTitle: deal.title,
+        amount,
+        remaining,
+        currency: deal.currency,
+        dueDate: deal.paymentDueDate,
+        status,
+        referenceId: deal.id,
+        sourceId: deal.id,
+      };
+    }),
     ...paymentEvents.map((evt) => ({
       id: evt.id,
       type: "PAYMENT_EVENT" as const,
@@ -72,6 +75,7 @@ export async function getPayments(userId: string, filters: PaymentFilterQuery) {
       brandLogo: evt.deal.brand.logoUrl,
       dealTitle: evt.deal.title,
       amount: Number(evt.amount),
+      remaining: 0,
       currency: evt.deal.currency,
       dueDate: evt.paidAt,
       status: "PAID" as const,
@@ -92,68 +96,54 @@ export async function getPaymentStats(userId: string) {
   const now = new Date();
   const thirtyDaysLater = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
 
-  // Legacy calculations (for backwards compatibility)
-  const invoiceStats = await prisma.invoice.groupBy({
-    by: ["status"],
-    where: { userId },
-    _sum: { total: true },
+  const deals = await prisma.deal.findMany({
+    where: { userId, archivedAt: null },
+    include: { paymentEvents: true },
   });
 
-  const overdueInvoices = await prisma.invoice.aggregate({
-    where: { userId, status: { not: "PAID" }, dueDate: { lt: now } },
-    _sum: { total: true },
-    _count: { id: true }
-  });
+  let received = 0;
+  let pending = 0;
+  let overdue = 0;
+  let totalDealsAmount = 0;
 
-  const eventStats = await prisma.paymentEvent.aggregate({
-    where: { deal: { userId } },
-    _sum: { amount: true },
-  });
-
-  const received = (invoiceStats.find(s => s.status === "PAID")?._sum.total?.toNumber() || 0) + 
-                   (eventStats._sum.amount?.toNumber() || 0);
-  
-  const pending = invoiceStats.filter(s => s.status !== "PAID").reduce((acc, s) => acc + (s._sum.total?.toNumber() || 0), 0) - 
-                  (overdueInvoices._sum.total?.toNumber() || 0);
-
-  const overdue = overdueInvoices._sum.total?.toNumber() || 0;
-
-  // New Operational Metrics
-  // 1. Expected next 30 days
-  const expectedNext30 = await prisma.invoice.aggregate({
-    where: {
-      userId,
-      status: { in: ["SENT", "VIEWED", "PARTIALLY_PAID"] },
-      dueDate: { gte: now, lte: thirtyDaysLater }
-    },
-    _sum: { total: true },
-    _count: { id: true }
-  });
-
-  // 2. Average collection speed (days from issuedDate to paidAt for paid invoices)
-  const paidInvoices = await prisma.invoice.findMany({
-    where: { userId, status: "PAID", paidAt: { not: null } },
-    select: { issuedDate: true, paidAt: true }
-  });
-
+  let expectedNext30Amount = 0;
+  let expectedNext30Count = 0;
+  let overdueCount = 0;
   let totalCollectionDays = 0;
-  paidInvoices.forEach(inv => {
-    if (inv.paidAt) {
-      const diffMs = inv.paidAt.getTime() - inv.issuedDate.getTime();
+  let paidDealCount = 0;
+
+  deals.forEach((deal) => {
+    const dealAmount = Number(deal.amount ?? 0);
+    const dealPaid = Number(deal.amountPaid ?? 0);
+    const remaining = Math.max(0, dealAmount - dealPaid);
+
+    totalDealsAmount += dealAmount;
+    received += dealPaid;
+
+    const isPaid = dealAmount > 0 && dealPaid >= dealAmount;
+    const isOverdue = !isPaid && Boolean(deal.paymentDueDate && deal.paymentDueDate < now);
+
+    if (isPaid) {
+      paidDealCount++;
+      const lastPayment = deal.paymentEvents[0]?.paidAt ?? deal.createdAt;
+      const diffMs = lastPayment.getTime() - deal.createdAt.getTime();
       const diffDays = Math.max(1, Math.ceil(diffMs / (1000 * 60 * 60 * 24)));
       totalCollectionDays += diffDays;
+    } else if (isOverdue) {
+      overdue += remaining;
+      overdueCount++;
+    } else {
+      pending += remaining;
+    }
+
+    if (!isPaid && deal.paymentDueDate && deal.paymentDueDate >= now && deal.paymentDueDate <= thirtyDaysLater) {
+      expectedNext30Amount += remaining;
+      expectedNext30Count++;
     }
   });
-  const avgCollectionDays = paidInvoices.length > 0 ? Math.round(totalCollectionDays / paidInvoices.length) : 14;
 
-  // 3. Collection Rate
-  const totalBilledAgg = await prisma.invoice.aggregate({
-    where: { userId, status: { notIn: ["DRAFT", "VOID", "CANCELLED"] } },
-    _sum: { total: true }
-  });
-  const totalBilled = totalBilledAgg._sum.total?.toNumber() || 0;
-  const totalPaid = received;
-  const collectionRatePercentage = totalBilled > 0 ? Math.min(100, Math.round((totalPaid / totalBilled) * 100)) : 100;
+  const avgCollectionDays = paidDealCount > 0 ? Math.round(totalCollectionDays / paidDealCount) : 14;
+  const collectionRatePercentage = totalDealsAmount > 0 ? Math.min(100, Math.round((received / totalDealsAmount) * 100)) : 100;
 
   return {
     received,
@@ -161,23 +151,23 @@ export async function getPaymentStats(userId: string) {
     overdue,
     total: received + pending + overdue,
 
-    // Rich Operational Metrics
     expectedNext30Days: {
-      amount: expectedNext30._sum.total?.toNumber() || 0,
-      invoiceCount: expectedNext30._count.id || 0
+      amount: expectedNext30Amount,
+      invoiceCount: expectedNext30Count, // map for backward compatibility
+      dealCount: expectedNext30Count,
     },
     avgCollectionDays: {
-      days: avgCollectionDays
+      days: avgCollectionDays,
     },
     actionRequired: {
       overdueAmount: overdue,
-      overdueCount: overdueInvoices._count.id || 0
+      overdueCount,
     },
     collectionRate: {
       percentage: collectionRatePercentage,
-      collectedAmount: totalPaid,
-      totalBilledAmount: totalBilled
-    }
+      collectedAmount: received,
+      totalBilledAmount: totalDealsAmount,
+    },
   };
 }
 

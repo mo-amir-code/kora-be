@@ -28,7 +28,8 @@ export class InvoiceService {
         lineItems: true,
         deal: {
           include: {
-            brand: true,
+            brand: { include: { contacts: true } },
+            contact: true,
           },
         },
       },
@@ -55,6 +56,10 @@ export class InvoiceService {
         });
       }
 
+      if (invoiceData.status === "PAID" && !(invoiceData as any).paidAt) {
+        (invoiceData as any).paidAt = new Date();
+      }
+
       return tx.invoice.update({
         where: { id, userId },
         data: invoiceData,
@@ -62,7 +67,8 @@ export class InvoiceService {
           lineItems: true,
           deal: {
             include: {
-              brand: true,
+              brand: { include: { contacts: true } },
+              contact: true,
             },
           },
         },
@@ -76,7 +82,8 @@ export class InvoiceService {
       include: {
         deal: {
           include: {
-            brand: true,
+            brand: { include: { contacts: true } },
+            contact: true,
           },
         },
         lineItems: true,
@@ -94,7 +101,8 @@ export class InvoiceService {
         lineItems: true,
         deal: {
           include: {
-            brand: true,
+            brand: { include: { contacts: true } },
+            contact: true,
           },
         },
       },

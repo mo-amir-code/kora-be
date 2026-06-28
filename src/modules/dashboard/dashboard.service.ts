@@ -72,22 +72,68 @@ export class DashboardService {
       (a: any, b: any) => a.dueDate.getTime() - b.dueDate.getTime()
     );
 
-    // 3. Earnings Statistics
-    const allInvoices = await prisma.invoice.findMany({
-      where: { userId },
-      select: { status: true, total: true }
+    // 3. Earnings & Operational Statistics (30-day rolling metrics & active collaborations)
+    const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+    const thirtyDaysLater = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+    // Total Earned in last 30 days (from payment events & paid invoices)
+    const recentEvents = await prisma.paymentEvent.findMany({
+      where: { deal: { userId }, paidAt: { gte: thirtyDaysAgo } },
+      select: { amount: true, invoiceId: true }
+    });
+    const recentEventsTotal = recentEvents.reduce((sum, pe) => sum + Number(pe.amount), 0);
+
+    const recentPaidInvoices = await prisma.invoice.findMany({
+      where: {
+        userId,
+        status: 'PAID',
+        paidAt: { gte: thirtyDaysAgo },
+        id: { notIn: recentEvents.map(e => e.invoiceId).filter(Boolean) as string[] }
+      },
+      select: { total: true }
+    });
+    const recentInvoicesTotal = recentPaidInvoices.reduce((sum, inv) => sum + Number(inv.total), 0);
+
+    const totalEarnedLast30 = recentEventsTotal + recentInvoicesTotal;
+
+    // Pending Cash in next 30 days (from deals)
+    const deals = await prisma.deal.findMany({
+      where: { userId, archivedAt: null },
+      select: { amount: true, amountPaid: true, paymentDueDate: true }
+    });
+
+    let pendingCashNext30 = 0;
+    let totalPendingAllTime = 0;
+
+    deals.forEach((deal) => {
+      const dealAmount = Number(deal.amount ?? 0);
+      const dealPaid = Number(deal.amountPaid ?? 0);
+      const remaining = Math.max(0, dealAmount - dealPaid);
+      if (remaining > 0) {
+        totalPendingAllTime += remaining;
+        if (deal.paymentDueDate && deal.paymentDueDate >= now && deal.paymentDueDate <= thirtyDaysLater) {
+          pendingCashNext30 += remaining;
+        }
+      }
+    });
+
+    if (pendingCashNext30 === 0 && totalPendingAllTime > 0) {
+      pendingCashNext30 = totalPendingAllTime;
+    }
+
+    // Active Collaborations count
+    const activeCollaborationsCount = await prisma.deal.count({
+      where: {
+        userId,
+        archivedAt: null,
+        stage: { notIn: ['COMPLETED', 'LOST', 'CANCELLED'] }
+      }
     });
 
     const stats = {
-      totalEarned: allInvoices
-        .filter(inv => inv.status === 'PAID')
-        .reduce((sum, inv) => sum + Number(inv.total), 0),
-      pendingPayments: allInvoices
-        .filter(inv => ['SENT', 'VIEWED', 'PARTIALLY_PAID'].includes(inv.status))
-        .reduce((sum, inv) => sum + Number(inv.total), 0),
-      overdue: allInvoices
-        .filter(inv => inv.status === 'OVERDUE')
-        .reduce((sum, inv) => sum + Number(inv.total), 0)
+      totalEarnedLast30,
+      pendingCashNext30,
+      activeCollaborationsCount,
     };
 
     // 4. Active Deals (Top 5)
@@ -133,6 +179,7 @@ export class DashboardService {
     return {
       user: { name: user?.fullName.split(' ')[0] || "User" },
       deadlines,
+      deadlinesGrouped: groupedDeadlinesMap,
       stats,
       activeDeals: formattedActiveDeals,
       activities

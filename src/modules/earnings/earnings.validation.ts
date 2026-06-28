@@ -7,7 +7,7 @@ const earningsFilterEnum = z.enum(["expected", "paid", "created", "overdue", "al
 export const earningsQuerySchema = z.object({
   query: z.object({
     month: z.string().regex(monthPattern, "Month must use YYYY-MM format"),
-    currency: z.nativeEnum(DealCurrency).optional().default(DealCurrency.INR),
+    currency: z.nativeEnum(DealCurrency).optional().default(DealCurrency.USD),
     filter: earningsFilterEnum.optional().default("expected"),
   }),
 });
