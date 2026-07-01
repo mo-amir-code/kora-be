@@ -103,6 +103,11 @@ export type MessageTemplate = Prisma.MessageTemplateModel
  */
 export type Subscription = Prisma.SubscriptionModel
 /**
+ * Model Transaction
+ * 
+ */
+export type Transaction = Prisma.TransactionModel
+/**
  * Model UserInvoiceSettings
  * 
  */

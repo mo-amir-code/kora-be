@@ -246,6 +246,7 @@ export type SubscriptionPlan = (typeof SubscriptionPlan)[keyof typeof Subscripti
 
 export const BillingCycle = {
   MONTHLY: 'MONTHLY',
+  QUARTERLY: 'QUARTERLY',
   YEARLY: 'YEARLY'
 } as const
 
@@ -261,6 +262,24 @@ export const SubscriptionStatus = {
 } as const
 
 export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus]
+
+
+export const TransactionType = {
+  CHARGE: 'CHARGE',
+  REFUND: 'REFUND',
+  CHARGEBACK: 'CHARGEBACK'
+} as const
+
+export type TransactionType = (typeof TransactionType)[keyof typeof TransactionType]
+
+
+export const TransactionStatus = {
+  PENDING: 'PENDING',
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED'
+} as const
+
+export type TransactionStatus = (typeof TransactionStatus)[keyof typeof TransactionStatus]
 
 
 export const AttachmentEntityType = {

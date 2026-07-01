@@ -12,3 +12,5 @@ export { paymentRoutes } from "./payment/index.js";
 export { earningsRoutes } from "./earnings/index.js";
 export { default as dashboardRoutes } from "./dashboard/dashboard.routes.js";
 export { supportRoutes } from "./support/index.js";
+export { billingRoutes } from "./billing/index.js";
+

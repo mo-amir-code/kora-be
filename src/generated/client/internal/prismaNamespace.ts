@@ -401,6 +401,7 @@ export const ModelName = {
   Notification: 'Notification',
   MessageTemplate: 'MessageTemplate',
   Subscription: 'Subscription',
+  Transaction: 'Transaction',
   UserInvoiceSettings: 'UserInvoiceSettings',
   UserSettings: 'UserSettings',
   Attachment: 'Attachment'
@@ -419,7 +420,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "oAuthAccount" | "otp" | "refreshToken" | "userSocialProfile" | "brand" | "brandContact" | "deal" | "deliverable" | "dealActivity" | "invoice" | "invoiceLineItem" | "paymentEvent" | "reminderRule" | "notification" | "messageTemplate" | "subscription" | "userInvoiceSettings" | "userSettings" | "attachment"
+    modelProps: "user" | "oAuthAccount" | "otp" | "refreshToken" | "userSocialProfile" | "brand" | "brandContact" | "deal" | "deliverable" | "dealActivity" | "invoice" | "invoiceLineItem" | "paymentEvent" | "reminderRule" | "notification" | "messageTemplate" | "subscription" | "transaction" | "userInvoiceSettings" | "userSettings" | "attachment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1681,6 +1682,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Transaction: {
+      payload: Prisma.$TransactionPayload<ExtArgs>
+      fields: Prisma.TransactionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TransactionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TransactionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>
+        }
+        findFirst: {
+          args: Prisma.TransactionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TransactionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>
+        }
+        findMany: {
+          args: Prisma.TransactionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>[]
+        }
+        create: {
+          args: Prisma.TransactionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>
+        }
+        createMany: {
+          args: Prisma.TransactionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TransactionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>[]
+        }
+        delete: {
+          args: Prisma.TransactionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>
+        }
+        update: {
+          args: Prisma.TransactionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>
+        }
+        deleteMany: {
+          args: Prisma.TransactionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TransactionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TransactionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>[]
+        }
+        upsert: {
+          args: Prisma.TransactionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>
+        }
+        aggregate: {
+          args: Prisma.TransactionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTransaction>
+        }
+        groupBy: {
+          args: Prisma.TransactionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TransactionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TransactionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TransactionCountAggregateOutputType> | number
+        }
+      }
+    }
     UserInvoiceSettings: {
       payload: Prisma.$UserInvoiceSettingsPayload<ExtArgs>
       fields: Prisma.UserInvoiceSettingsFieldRefs
@@ -1952,6 +2027,7 @@ export const UserScalarFieldEnum = {
   whatsappNumber: 'whatsappNumber',
   plan: 'plan',
   planExpiresAt: 'planExpiresAt',
+  providerCustomerId: 'providerCustomerId',
   onboardingDone: 'onboardingDone',
   createdAt: 'createdAt',
   deletedAt: 'deletedAt'
@@ -2200,13 +2276,36 @@ export const SubscriptionScalarFieldEnum = {
   plan: 'plan',
   billingCycle: 'billingCycle',
   status: 'status',
-  trialEndsAt: 'trialEndsAt',
+  trialStartsAt: 'trialStartsAt',
+  currentPeriodStart: 'currentPeriodStart',
   currentPeriodEnd: 'currentPeriodEnd',
-  razorpaySubId: 'razorpaySubId',
-  amountPaid: 'amountPaid'
+  providerSubscriptionId: 'providerSubscriptionId',
+  providerProductId: 'providerProductId',
+  cancelAtPeriodEnd: 'cancelAtPeriodEnd',
+  cancelledAt: 'cancelledAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
+
+
+export const TransactionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  subscriptionId: 'subscriptionId',
+  providerPaymentId: 'providerPaymentId',
+  providerInvoiceId: 'providerInvoiceId',
+  providerSubscriptionId: 'providerSubscriptionId',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  type: 'type',
+  paidAt: 'paidAt',
+  createdAt: 'createdAt'
+} as const
+
+export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
 
 
 export const UserInvoiceSettingsScalarFieldEnum = {
@@ -2655,6 +2754,34 @@ export type ListEnumSubscriptionStatusFieldRefInput<$PrismaModel> = FieldRefInpu
 
 
 /**
+ * Reference to a field of type 'TransactionStatus'
+ */
+export type EnumTransactionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'TransactionStatus[]'
+ */
+export type ListEnumTransactionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TransactionType'
+ */
+export type EnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionType'>
+    
+
+
+/**
+ * Reference to a field of type 'TransactionType[]'
+ */
+export type ListEnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionType[]'>
+    
+
+
+/**
  * Reference to a field of type 'AttachmentEntityType'
  */
 export type EnumAttachmentEntityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttachmentEntityType'>
@@ -2822,6 +2949,7 @@ export type GlobalOmitConfig = {
   notification?: Prisma.NotificationOmit
   messageTemplate?: Prisma.MessageTemplateOmit
   subscription?: Prisma.SubscriptionOmit
+  transaction?: Prisma.TransactionOmit
   userInvoiceSettings?: Prisma.UserInvoiceSettingsOmit
   userSettings?: Prisma.UserSettingsOmit
   attachment?: Prisma.AttachmentOmit

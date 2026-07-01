@@ -36,6 +36,14 @@ export const env = {
   GCP_PROJECT_ID: process.env["GCP_PROJECT_ID"] ?? "",
   GCP_CLIENT_EMAIL: process.env["GCP_CLIENT_EMAIL"] ?? "",
   GCP_PRIVATE_KEY: (process.env["GCP_PRIVATE_KEY"] ?? "").replace(/\\n/g, "\n"),
+
+  // Billing & Subscription (Provider)
+  PROVIDER_API_KEY: process.env["PROVIDER_API_KEY"] ?? "",
+  PROVIDER_WEBHOOK_KEY: process.env["PROVIDER_WEBHOOK_KEY"] ?? "",
+  PROVIDER_PRO_MONTHLY_PRODUCT_ID: process.env["PROVIDER_PRO_MONTHLY_PRODUCT_ID"] ?? "prod_monthly_id",
+  PROVIDER_PRO_QUARTERLY_PRODUCT_ID: process.env["PROVIDER_PRO_QUARTERLY_PRODUCT_ID"] ?? "prod_quarterly_id",
+  PROVIDER_PRO_YEARLY_PRODUCT_ID: process.env["PROVIDER_PRO_YEARLY_PRODUCT_ID"] ?? "prod_yearly_id",
+  ADMIN_SECRET_KEY: process.env["ADMIN_SECRET_KEY"] ?? "admin-secret-key-change-me",
 } as const;
 
 export type Env = typeof env;

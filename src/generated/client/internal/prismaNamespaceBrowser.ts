@@ -68,6 +68,7 @@ export const ModelName = {
   Notification: 'Notification',
   MessageTemplate: 'MessageTemplate',
   Subscription: 'Subscription',
+  Transaction: 'Transaction',
   UserInvoiceSettings: 'UserInvoiceSettings',
   UserSettings: 'UserSettings',
   Attachment: 'Attachment'
@@ -99,6 +100,7 @@ export const UserScalarFieldEnum = {
   whatsappNumber: 'whatsappNumber',
   plan: 'plan',
   planExpiresAt: 'planExpiresAt',
+  providerCustomerId: 'providerCustomerId',
   onboardingDone: 'onboardingDone',
   createdAt: 'createdAt',
   deletedAt: 'deletedAt'
@@ -347,13 +349,36 @@ export const SubscriptionScalarFieldEnum = {
   plan: 'plan',
   billingCycle: 'billingCycle',
   status: 'status',
-  trialEndsAt: 'trialEndsAt',
+  trialStartsAt: 'trialStartsAt',
+  currentPeriodStart: 'currentPeriodStart',
   currentPeriodEnd: 'currentPeriodEnd',
-  razorpaySubId: 'razorpaySubId',
-  amountPaid: 'amountPaid'
+  providerSubscriptionId: 'providerSubscriptionId',
+  providerProductId: 'providerProductId',
+  cancelAtPeriodEnd: 'cancelAtPeriodEnd',
+  cancelledAt: 'cancelledAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
+
+
+export const TransactionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  subscriptionId: 'subscriptionId',
+  providerPaymentId: 'providerPaymentId',
+  providerInvoiceId: 'providerInvoiceId',
+  providerSubscriptionId: 'providerSubscriptionId',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  type: 'type',
+  paidAt: 'paidAt',
+  createdAt: 'createdAt'
+} as const
+
+export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
 
 
 export const UserInvoiceSettingsScalarFieldEnum = {

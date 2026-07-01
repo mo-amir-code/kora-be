@@ -34,6 +34,7 @@ export type UserMinAggregateOutputType = {
   whatsappNumber: string | null
   plan: $Enums.UserPlan | null
   planExpiresAt: Date | null
+  providerCustomerId: string | null
   onboardingDone: boolean | null
   createdAt: Date | null
   deletedAt: Date | null
@@ -49,6 +50,7 @@ export type UserMaxAggregateOutputType = {
   whatsappNumber: string | null
   plan: $Enums.UserPlan | null
   planExpiresAt: Date | null
+  providerCustomerId: string | null
   onboardingDone: boolean | null
   createdAt: Date | null
   deletedAt: Date | null
@@ -64,6 +66,7 @@ export type UserCountAggregateOutputType = {
   whatsappNumber: number
   plan: number
   planExpiresAt: number
+  providerCustomerId: number
   onboardingDone: number
   createdAt: number
   deletedAt: number
@@ -81,6 +84,7 @@ export type UserMinAggregateInputType = {
   whatsappNumber?: true
   plan?: true
   planExpiresAt?: true
+  providerCustomerId?: true
   onboardingDone?: true
   createdAt?: true
   deletedAt?: true
@@ -96,6 +100,7 @@ export type UserMaxAggregateInputType = {
   whatsappNumber?: true
   plan?: true
   planExpiresAt?: true
+  providerCustomerId?: true
   onboardingDone?: true
   createdAt?: true
   deletedAt?: true
@@ -111,6 +116,7 @@ export type UserCountAggregateInputType = {
   whatsappNumber?: true
   plan?: true
   planExpiresAt?: true
+  providerCustomerId?: true
   onboardingDone?: true
   createdAt?: true
   deletedAt?: true
@@ -199,6 +205,7 @@ export type UserGroupByOutputType = {
   whatsappNumber: string | null
   plan: $Enums.UserPlan
   planExpiresAt: Date | null
+  providerCustomerId: string | null
   onboardingDone: boolean
   createdAt: Date
   deletedAt: Date | null
@@ -235,6 +242,7 @@ export type UserWhereInput = {
   whatsappNumber?: Prisma.StringNullableFilter<"User"> | string | null
   plan?: Prisma.EnumUserPlanFilter<"User"> | $Enums.UserPlan
   planExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  providerCustomerId?: Prisma.StringNullableFilter<"User"> | string | null
   onboardingDone?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -253,6 +261,7 @@ export type UserWhereInput = {
   oauthAccounts?: Prisma.OAuthAccountListRelationFilter
   otps?: Prisma.OtpListRelationFilter
   refreshTokens?: Prisma.RefreshTokenListRelationFilter
+  transactions?: Prisma.TransactionListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -265,6 +274,7 @@ export type UserOrderByWithRelationInput = {
   whatsappNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   plan?: Prisma.SortOrder
   planExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  providerCustomerId?: Prisma.SortOrderInput | Prisma.SortOrder
   onboardingDone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -283,11 +293,13 @@ export type UserOrderByWithRelationInput = {
   oauthAccounts?: Prisma.OAuthAccountOrderByRelationAggregateInput
   otps?: Prisma.OtpOrderByRelationAggregateInput
   refreshTokens?: Prisma.RefreshTokenOrderByRelationAggregateInput
+  transactions?: Prisma.TransactionOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
+  providerCustomerId?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
@@ -316,7 +328,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   oauthAccounts?: Prisma.OAuthAccountListRelationFilter
   otps?: Prisma.OtpListRelationFilter
   refreshTokens?: Prisma.RefreshTokenListRelationFilter
-}, "id" | "email">
+  transactions?: Prisma.TransactionListRelationFilter
+}, "id" | "email" | "providerCustomerId">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -328,6 +341,7 @@ export type UserOrderByWithAggregationInput = {
   whatsappNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   plan?: Prisma.SortOrder
   planExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  providerCustomerId?: Prisma.SortOrderInput | Prisma.SortOrder
   onboardingDone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -349,6 +363,7 @@ export type UserScalarWhereWithAggregatesInput = {
   whatsappNumber?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   plan?: Prisma.EnumUserPlanWithAggregatesFilter<"User"> | $Enums.UserPlan
   planExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  providerCustomerId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   onboardingDone?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
@@ -364,6 +379,7 @@ export type UserCreateInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -382,6 +398,7 @@ export type UserCreateInput = {
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -394,6 +411,7 @@ export type UserUncheckedCreateInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -412,6 +430,7 @@ export type UserUncheckedCreateInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -424,6 +443,7 @@ export type UserUpdateInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -442,6 +462,7 @@ export type UserUpdateInput = {
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -454,6 +475,7 @@ export type UserUncheckedUpdateInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -472,6 +494,7 @@ export type UserUncheckedUpdateInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -484,6 +507,7 @@ export type UserCreateManyInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -499,6 +523,7 @@ export type UserUpdateManyMutationInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -514,6 +539,7 @@ export type UserUncheckedUpdateManyInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -529,6 +555,7 @@ export type UserCountOrderByAggregateInput = {
   whatsappNumber?: Prisma.SortOrder
   plan?: Prisma.SortOrder
   planExpiresAt?: Prisma.SortOrder
+  providerCustomerId?: Prisma.SortOrder
   onboardingDone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -544,6 +571,7 @@ export type UserMaxOrderByAggregateInput = {
   whatsappNumber?: Prisma.SortOrder
   plan?: Prisma.SortOrder
   planExpiresAt?: Prisma.SortOrder
+  providerCustomerId?: Prisma.SortOrder
   onboardingDone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -559,6 +587,7 @@ export type UserMinOrderByAggregateInput = {
   whatsappNumber?: Prisma.SortOrder
   plan?: Prisma.SortOrder
   planExpiresAt?: Prisma.SortOrder
+  providerCustomerId?: Prisma.SortOrder
   onboardingDone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -761,6 +790,20 @@ export type UserUpdateOneRequiredWithoutSubscriptionNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSubscriptionInput, Prisma.UserUpdateWithoutSubscriptionInput>, Prisma.UserUncheckedUpdateWithoutSubscriptionInput>
 }
 
+export type UserCreateNestedOneWithoutTransactionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTransactionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutTransactionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTransactionsInput
+  upsert?: Prisma.UserUpsertWithoutTransactionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTransactionsInput, Prisma.UserUpdateWithoutTransactionsInput>, Prisma.UserUncheckedUpdateWithoutTransactionsInput>
+}
+
 export type UserCreateNestedOneWithoutInvoiceSettingsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutInvoiceSettingsInput, Prisma.UserUncheckedCreateWithoutInvoiceSettingsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutInvoiceSettingsInput
@@ -813,6 +856,7 @@ export type UserCreateWithoutOauthAccountsInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -830,6 +874,7 @@ export type UserCreateWithoutOauthAccountsInput = {
   attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
   otps?: Prisma.OtpCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOauthAccountsInput = {
@@ -842,6 +887,7 @@ export type UserUncheckedCreateWithoutOauthAccountsInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -859,6 +905,7 @@ export type UserUncheckedCreateWithoutOauthAccountsInput = {
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
   otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOauthAccountsInput = {
@@ -887,6 +934,7 @@ export type UserUpdateWithoutOauthAccountsInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -904,6 +952,7 @@ export type UserUpdateWithoutOauthAccountsInput = {
   attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
   otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOauthAccountsInput = {
@@ -916,6 +965,7 @@ export type UserUncheckedUpdateWithoutOauthAccountsInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -933,6 +983,7 @@ export type UserUncheckedUpdateWithoutOauthAccountsInput = {
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
   otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOtpsInput = {
@@ -945,6 +996,7 @@ export type UserCreateWithoutOtpsInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -962,6 +1014,7 @@ export type UserCreateWithoutOtpsInput = {
   attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOtpsInput = {
@@ -974,6 +1027,7 @@ export type UserUncheckedCreateWithoutOtpsInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -991,6 +1045,7 @@ export type UserUncheckedCreateWithoutOtpsInput = {
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOtpsInput = {
@@ -1019,6 +1074,7 @@ export type UserUpdateWithoutOtpsInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1036,6 +1092,7 @@ export type UserUpdateWithoutOtpsInput = {
   attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOtpsInput = {
@@ -1048,6 +1105,7 @@ export type UserUncheckedUpdateWithoutOtpsInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1065,6 +1123,7 @@ export type UserUncheckedUpdateWithoutOtpsInput = {
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRefreshTokensInput = {
@@ -1077,6 +1136,7 @@ export type UserCreateWithoutRefreshTokensInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -1094,6 +1154,7 @@ export type UserCreateWithoutRefreshTokensInput = {
   attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRefreshTokensInput = {
@@ -1106,6 +1167,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -1123,6 +1185,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRefreshTokensInput = {
@@ -1151,6 +1214,7 @@ export type UserUpdateWithoutRefreshTokensInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1168,6 +1232,7 @@ export type UserUpdateWithoutRefreshTokensInput = {
   attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRefreshTokensInput = {
@@ -1180,6 +1245,7 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1197,6 +1263,7 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSocialProfilesInput = {
@@ -1209,6 +1276,7 @@ export type UserCreateWithoutSocialProfilesInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -1226,6 +1294,7 @@ export type UserCreateWithoutSocialProfilesInput = {
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSocialProfilesInput = {
@@ -1238,6 +1307,7 @@ export type UserUncheckedCreateWithoutSocialProfilesInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -1255,6 +1325,7 @@ export type UserUncheckedCreateWithoutSocialProfilesInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSocialProfilesInput = {
@@ -1283,6 +1354,7 @@ export type UserUpdateWithoutSocialProfilesInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1300,6 +1372,7 @@ export type UserUpdateWithoutSocialProfilesInput = {
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSocialProfilesInput = {
@@ -1312,6 +1385,7 @@ export type UserUncheckedUpdateWithoutSocialProfilesInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1329,6 +1403,7 @@ export type UserUncheckedUpdateWithoutSocialProfilesInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutBrandsInput = {
@@ -1341,6 +1416,7 @@ export type UserCreateWithoutBrandsInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -1358,6 +1434,7 @@ export type UserCreateWithoutBrandsInput = {
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutBrandsInput = {
@@ -1370,6 +1447,7 @@ export type UserUncheckedCreateWithoutBrandsInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -1387,6 +1465,7 @@ export type UserUncheckedCreateWithoutBrandsInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutBrandsInput = {
@@ -1415,6 +1494,7 @@ export type UserUpdateWithoutBrandsInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1432,6 +1512,7 @@ export type UserUpdateWithoutBrandsInput = {
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBrandsInput = {
@@ -1444,6 +1525,7 @@ export type UserUncheckedUpdateWithoutBrandsInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1461,6 +1543,7 @@ export type UserUncheckedUpdateWithoutBrandsInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutDealsInput = {
@@ -1473,6 +1556,7 @@ export type UserCreateWithoutDealsInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -1490,6 +1574,7 @@ export type UserCreateWithoutDealsInput = {
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDealsInput = {
@@ -1502,6 +1587,7 @@ export type UserUncheckedCreateWithoutDealsInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -1519,6 +1605,7 @@ export type UserUncheckedCreateWithoutDealsInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDealsInput = {
@@ -1547,6 +1634,7 @@ export type UserUpdateWithoutDealsInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1564,6 +1652,7 @@ export type UserUpdateWithoutDealsInput = {
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDealsInput = {
@@ -1576,6 +1665,7 @@ export type UserUncheckedUpdateWithoutDealsInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1593,6 +1683,7 @@ export type UserUncheckedUpdateWithoutDealsInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutDealActivitiesInput = {
@@ -1605,6 +1696,7 @@ export type UserCreateWithoutDealActivitiesInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -1622,6 +1714,7 @@ export type UserCreateWithoutDealActivitiesInput = {
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDealActivitiesInput = {
@@ -1634,6 +1727,7 @@ export type UserUncheckedCreateWithoutDealActivitiesInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -1651,6 +1745,7 @@ export type UserUncheckedCreateWithoutDealActivitiesInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDealActivitiesInput = {
@@ -1679,6 +1774,7 @@ export type UserUpdateWithoutDealActivitiesInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1696,6 +1792,7 @@ export type UserUpdateWithoutDealActivitiesInput = {
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDealActivitiesInput = {
@@ -1708,6 +1805,7 @@ export type UserUncheckedUpdateWithoutDealActivitiesInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1725,6 +1823,7 @@ export type UserUncheckedUpdateWithoutDealActivitiesInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutInvoicesInput = {
@@ -1737,6 +1836,7 @@ export type UserCreateWithoutInvoicesInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -1754,6 +1854,7 @@ export type UserCreateWithoutInvoicesInput = {
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutInvoicesInput = {
@@ -1766,6 +1867,7 @@ export type UserUncheckedCreateWithoutInvoicesInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -1783,6 +1885,7 @@ export type UserUncheckedCreateWithoutInvoicesInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutInvoicesInput = {
@@ -1811,6 +1914,7 @@ export type UserUpdateWithoutInvoicesInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1828,6 +1932,7 @@ export type UserUpdateWithoutInvoicesInput = {
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutInvoicesInput = {
@@ -1840,6 +1945,7 @@ export type UserUncheckedUpdateWithoutInvoicesInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1857,6 +1963,7 @@ export type UserUncheckedUpdateWithoutInvoicesInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutReminderRulesInput = {
@@ -1869,6 +1976,7 @@ export type UserCreateWithoutReminderRulesInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -1886,6 +1994,7 @@ export type UserCreateWithoutReminderRulesInput = {
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReminderRulesInput = {
@@ -1898,6 +2007,7 @@ export type UserUncheckedCreateWithoutReminderRulesInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -1915,6 +2025,7 @@ export type UserUncheckedCreateWithoutReminderRulesInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReminderRulesInput = {
@@ -1943,6 +2054,7 @@ export type UserUpdateWithoutReminderRulesInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1960,6 +2072,7 @@ export type UserUpdateWithoutReminderRulesInput = {
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReminderRulesInput = {
@@ -1972,6 +2085,7 @@ export type UserUncheckedUpdateWithoutReminderRulesInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1989,6 +2103,7 @@ export type UserUncheckedUpdateWithoutReminderRulesInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -2001,6 +2116,7 @@ export type UserCreateWithoutNotificationsInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -2018,6 +2134,7 @@ export type UserCreateWithoutNotificationsInput = {
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -2030,6 +2147,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -2047,6 +2165,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -2075,6 +2194,7 @@ export type UserUpdateWithoutNotificationsInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2092,6 +2212,7 @@ export type UserUpdateWithoutNotificationsInput = {
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -2104,6 +2225,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2121,6 +2243,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutMessageTemplatesInput = {
@@ -2133,6 +2256,7 @@ export type UserCreateWithoutMessageTemplatesInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -2150,6 +2274,7 @@ export type UserCreateWithoutMessageTemplatesInput = {
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMessageTemplatesInput = {
@@ -2162,6 +2287,7 @@ export type UserUncheckedCreateWithoutMessageTemplatesInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -2179,6 +2305,7 @@ export type UserUncheckedCreateWithoutMessageTemplatesInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMessageTemplatesInput = {
@@ -2207,6 +2334,7 @@ export type UserUpdateWithoutMessageTemplatesInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2224,6 +2352,7 @@ export type UserUpdateWithoutMessageTemplatesInput = {
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMessageTemplatesInput = {
@@ -2236,6 +2365,7 @@ export type UserUncheckedUpdateWithoutMessageTemplatesInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2253,6 +2383,7 @@ export type UserUncheckedUpdateWithoutMessageTemplatesInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSubscriptionInput = {
@@ -2265,6 +2396,7 @@ export type UserCreateWithoutSubscriptionInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -2282,6 +2414,7 @@ export type UserCreateWithoutSubscriptionInput = {
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSubscriptionInput = {
@@ -2294,6 +2427,7 @@ export type UserUncheckedCreateWithoutSubscriptionInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -2311,6 +2445,7 @@ export type UserUncheckedCreateWithoutSubscriptionInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSubscriptionInput = {
@@ -2339,6 +2474,7 @@ export type UserUpdateWithoutSubscriptionInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2356,6 +2492,7 @@ export type UserUpdateWithoutSubscriptionInput = {
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubscriptionInput = {
@@ -2368,6 +2505,7 @@ export type UserUncheckedUpdateWithoutSubscriptionInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2379,6 +2517,147 @@ export type UserUncheckedUpdateWithoutSubscriptionInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
+  invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedUpdateOneWithoutUserNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
+  oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
+  otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutTransactionsInput = {
+  id?: string
+  email: string
+  fullName: string
+  password?: string | null
+  handle?: string | null
+  avatarUrl?: string | null
+  whatsappNumber?: string | null
+  plan?: $Enums.UserPlan
+  planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
+  onboardingDone?: boolean
+  createdAt?: Date | string
+  deletedAt?: Date | string | null
+  socialProfiles?: Prisma.UserSocialProfileCreateNestedManyWithoutUserInput
+  brands?: Prisma.BrandCreateNestedManyWithoutUserInput
+  deals?: Prisma.DealCreateNestedManyWithoutUserInput
+  dealActivities?: Prisma.DealActivityCreateNestedManyWithoutUserInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
+  messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
+  invoiceSettings?: Prisma.UserInvoiceSettingsCreateNestedOneWithoutUserInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
+  oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
+  otps?: Prisma.OtpCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutTransactionsInput = {
+  id?: string
+  email: string
+  fullName: string
+  password?: string | null
+  handle?: string | null
+  avatarUrl?: string | null
+  whatsappNumber?: string | null
+  plan?: $Enums.UserPlan
+  planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
+  onboardingDone?: boolean
+  createdAt?: Date | string
+  deletedAt?: Date | string | null
+  socialProfiles?: Prisma.UserSocialProfileUncheckedCreateNestedManyWithoutUserInput
+  brands?: Prisma.BrandUncheckedCreateNestedManyWithoutUserInput
+  deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
+  dealActivities?: Prisma.DealActivityUncheckedCreateNestedManyWithoutUserInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
+  messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
+  invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedCreateNestedOneWithoutUserInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
+  oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
+  otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutTransactionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>
+}
+
+export type UserUpsertWithoutTransactionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTransactionsInput, Prisma.UserUncheckedUpdateWithoutTransactionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTransactionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTransactionsInput, Prisma.UserUncheckedUpdateWithoutTransactionsInput>
+}
+
+export type UserUpdateWithoutTransactionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
+  planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  socialProfiles?: Prisma.UserSocialProfileUpdateManyWithoutUserNestedInput
+  brands?: Prisma.BrandUpdateManyWithoutUserNestedInput
+  deals?: Prisma.DealUpdateManyWithoutUserNestedInput
+  dealActivities?: Prisma.DealActivityUpdateManyWithoutUserNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
+  messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
+  invoiceSettings?: Prisma.UserInvoiceSettingsUpdateOneWithoutUserNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
+  oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
+  otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTransactionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
+  planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  socialProfiles?: Prisma.UserSocialProfileUncheckedUpdateManyWithoutUserNestedInput
+  brands?: Prisma.BrandUncheckedUpdateManyWithoutUserNestedInput
+  deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
+  dealActivities?: Prisma.DealActivityUncheckedUpdateManyWithoutUserNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
+  messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
   settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedUpdateOneWithoutUserNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
@@ -2397,6 +2676,7 @@ export type UserCreateWithoutInvoiceSettingsInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -2414,6 +2694,7 @@ export type UserCreateWithoutInvoiceSettingsInput = {
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutInvoiceSettingsInput = {
@@ -2426,6 +2707,7 @@ export type UserUncheckedCreateWithoutInvoiceSettingsInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -2443,6 +2725,7 @@ export type UserUncheckedCreateWithoutInvoiceSettingsInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutInvoiceSettingsInput = {
@@ -2471,6 +2754,7 @@ export type UserUpdateWithoutInvoiceSettingsInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2488,6 +2772,7 @@ export type UserUpdateWithoutInvoiceSettingsInput = {
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutInvoiceSettingsInput = {
@@ -2500,6 +2785,7 @@ export type UserUncheckedUpdateWithoutInvoiceSettingsInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2517,6 +2803,7 @@ export type UserUncheckedUpdateWithoutInvoiceSettingsInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSettingsInput = {
@@ -2529,6 +2816,7 @@ export type UserCreateWithoutSettingsInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -2546,6 +2834,7 @@ export type UserCreateWithoutSettingsInput = {
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSettingsInput = {
@@ -2558,6 +2847,7 @@ export type UserUncheckedCreateWithoutSettingsInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -2575,6 +2865,7 @@ export type UserUncheckedCreateWithoutSettingsInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSettingsInput = {
@@ -2603,6 +2894,7 @@ export type UserUpdateWithoutSettingsInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2620,6 +2912,7 @@ export type UserUpdateWithoutSettingsInput = {
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSettingsInput = {
@@ -2632,6 +2925,7 @@ export type UserUncheckedUpdateWithoutSettingsInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2649,6 +2943,7 @@ export type UserUncheckedUpdateWithoutSettingsInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAttachmentsInput = {
@@ -2661,6 +2956,7 @@ export type UserCreateWithoutAttachmentsInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -2678,6 +2974,7 @@ export type UserCreateWithoutAttachmentsInput = {
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAttachmentsInput = {
@@ -2690,6 +2987,7 @@ export type UserUncheckedCreateWithoutAttachmentsInput = {
   whatsappNumber?: string | null
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
+  providerCustomerId?: string | null
   onboardingDone?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
@@ -2707,6 +3005,7 @@ export type UserUncheckedCreateWithoutAttachmentsInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAttachmentsInput = {
@@ -2735,6 +3034,7 @@ export type UserUpdateWithoutAttachmentsInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2752,6 +3052,7 @@ export type UserUpdateWithoutAttachmentsInput = {
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAttachmentsInput = {
@@ -2764,6 +3065,7 @@ export type UserUncheckedUpdateWithoutAttachmentsInput = {
   whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2781,6 +3083,7 @@ export type UserUncheckedUpdateWithoutAttachmentsInput = {
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -2801,6 +3104,7 @@ export type UserCountOutputType = {
   oauthAccounts: number
   otps: number
   refreshTokens: number
+  transactions: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2816,6 +3120,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   oauthAccounts?: boolean | UserCountOutputTypeCountOauthAccountsArgs
   otps?: boolean | UserCountOutputTypeCountOtpsArgs
   refreshTokens?: boolean | UserCountOutputTypeCountRefreshTokensArgs
+  transactions?: boolean | UserCountOutputTypeCountTransactionsArgs
 }
 
 /**
@@ -2912,6 +3217,13 @@ export type UserCountOutputTypeCountRefreshTokensArgs<ExtArgs extends runtime.Ty
   where?: Prisma.RefreshTokenWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TransactionWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2923,6 +3235,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   whatsappNumber?: boolean
   plan?: boolean
   planExpiresAt?: boolean
+  providerCustomerId?: boolean
   onboardingDone?: boolean
   createdAt?: boolean
   deletedAt?: boolean
@@ -2941,6 +3254,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   oauthAccounts?: boolean | Prisma.User$oauthAccountsArgs<ExtArgs>
   otps?: boolean | Prisma.User$otpsArgs<ExtArgs>
   refreshTokens?: boolean | Prisma.User$refreshTokensArgs<ExtArgs>
+  transactions?: boolean | Prisma.User$transactionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2954,6 +3268,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   whatsappNumber?: boolean
   plan?: boolean
   planExpiresAt?: boolean
+  providerCustomerId?: boolean
   onboardingDone?: boolean
   createdAt?: boolean
   deletedAt?: boolean
@@ -2969,6 +3284,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   whatsappNumber?: boolean
   plan?: boolean
   planExpiresAt?: boolean
+  providerCustomerId?: boolean
   onboardingDone?: boolean
   createdAt?: boolean
   deletedAt?: boolean
@@ -2984,12 +3300,13 @@ export type UserSelectScalar = {
   whatsappNumber?: boolean
   plan?: boolean
   planExpiresAt?: boolean
+  providerCustomerId?: boolean
   onboardingDone?: boolean
   createdAt?: boolean
   deletedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "fullName" | "password" | "handle" | "avatarUrl" | "whatsappNumber" | "plan" | "planExpiresAt" | "onboardingDone" | "createdAt" | "deletedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "fullName" | "password" | "handle" | "avatarUrl" | "whatsappNumber" | "plan" | "planExpiresAt" | "providerCustomerId" | "onboardingDone" | "createdAt" | "deletedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   socialProfiles?: boolean | Prisma.User$socialProfilesArgs<ExtArgs>
   brands?: boolean | Prisma.User$brandsArgs<ExtArgs>
@@ -3006,6 +3323,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   oauthAccounts?: boolean | Prisma.User$oauthAccountsArgs<ExtArgs>
   otps?: boolean | Prisma.User$otpsArgs<ExtArgs>
   refreshTokens?: boolean | Prisma.User$refreshTokensArgs<ExtArgs>
+  transactions?: boolean | Prisma.User$transactionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -3029,6 +3347,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     oauthAccounts: Prisma.$OAuthAccountPayload<ExtArgs>[]
     otps: Prisma.$OtpPayload<ExtArgs>[]
     refreshTokens: Prisma.$RefreshTokenPayload<ExtArgs>[]
+    transactions: Prisma.$TransactionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3040,6 +3359,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     whatsappNumber: string | null
     plan: $Enums.UserPlan
     planExpiresAt: Date | null
+    providerCustomerId: string | null
     onboardingDone: boolean
     createdAt: Date
     deletedAt: Date | null
@@ -3452,6 +3772,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   oauthAccounts<T extends Prisma.User$oauthAccountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$oauthAccountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OAuthAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   otps<T extends Prisma.User$otpsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$otpsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OtpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   refreshTokens<T extends Prisma.User$refreshTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$refreshTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  transactions<T extends Prisma.User$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3490,6 +3811,7 @@ export interface UserFieldRefs {
   readonly whatsappNumber: Prisma.FieldRef<"User", 'String'>
   readonly plan: Prisma.FieldRef<"User", 'UserPlan'>
   readonly planExpiresAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly providerCustomerId: Prisma.FieldRef<"User", 'String'>
   readonly onboardingDone: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"User", 'DateTime'>
@@ -4228,6 +4550,30 @@ export type User$refreshTokensArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.RefreshTokenScalarFieldEnum | Prisma.RefreshTokenScalarFieldEnum[]
+}
+
+/**
+ * User.transactions
+ */
+export type User$transactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Transaction
+   */
+  select?: Prisma.TransactionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Transaction
+   */
+  omit?: Prisma.TransactionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TransactionInclude<ExtArgs> | null
+  where?: Prisma.TransactionWhereInput
+  orderBy?: Prisma.TransactionOrderByWithRelationInput | Prisma.TransactionOrderByWithRelationInput[]
+  cursor?: Prisma.TransactionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TransactionScalarFieldEnum | Prisma.TransactionScalarFieldEnum[]
 }
 
 /**
