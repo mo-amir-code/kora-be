@@ -19,6 +19,115 @@ export const PRODUCT_ID_TO_BILLING_CYCLE: Record<string, BillingCycle> = {
 
 export class BillingService {
   /**
+   * Helper: Resolves target user by parsing webhook customer and metadata identifiers.
+   */
+  private async findUserByPayload(data: any) {
+    const customerId = data.customer?.customer_id;
+    const email = data.customer?.email;
+    const userId = data.metadata?.userId || null;
+
+    return prisma.user.findFirst({
+      where: {
+        OR: [
+          ...(customerId ? [{ providerCustomerId: customerId }] : []),
+          ...(email ? [{ email }] : []),
+          ...(userId ? [{ id: userId }] : []),
+        ],
+      },
+    });
+  }
+
+  /**
+   * Helper: Converts raw provider payment amounts (cents/paisa) to standard decimal currency units.
+   */
+  private convertAmount(amountInCents: number): number {
+    return amountInCents / 100;
+  }
+
+  /**
+   * Helper: Resolves or creates a stub subscription record linked to the user.
+   */
+  private async getOrCreateSubscriptionStub(userId: string) {
+    return prisma.subscription.upsert({
+      where: { userId },
+      update: {},
+      create: {
+        userId,
+        plan: SubscriptionPlan.FREE,
+        billingCycle: BillingCycle.MONTHLY,
+        status: SubscriptionStatus.EXPIRED,
+      },
+    });
+  }
+
+  /**
+   * Helper: Idempotently creates a Transaction history record.
+   */
+  private async recordTransaction(params: {
+    userId: string;
+    subscriptionId: string;
+    providerPaymentId: string | null;
+    providerInvoiceId: string | null;
+    providerSubscriptionId: string | null;
+    amount: number;
+    currency: string;
+    status: TransactionStatus;
+    type: TransactionType;
+    paidAt: Date | null;
+  }) {
+    if (params.providerPaymentId) {
+      const existing = await prisma.transaction.findFirst({
+        where: { providerPaymentId: params.providerPaymentId },
+      });
+      if (existing) {
+        console.log(`[Webhook] Duplicate transaction detection: Payment ID ${params.providerPaymentId} already recorded. Skipping.`);
+        return;
+      }
+    }
+
+    await prisma.transaction.create({
+      data: {
+        userId: params.userId,
+        subscriptionId: params.subscriptionId,
+        providerPaymentId: params.providerPaymentId,
+        providerInvoiceId: params.providerInvoiceId,
+        providerSubscriptionId: params.providerSubscriptionId,
+        amount: params.amount,
+        currency: params.currency,
+        status: params.status,
+        type: params.type,
+        paidAt: params.paidAt,
+      },
+    });
+  }
+
+  /**
+   * Helper: Maps provider status strings to SubscriptionStatus.
+   */
+  private mapProviderStatus(status: string): SubscriptionStatus {
+    switch (status) {
+      case "active":
+        return SubscriptionStatus.ACTIVE;
+      case "cancelled":
+        return SubscriptionStatus.CANCELLED;
+      case "on_hold":
+        return SubscriptionStatus.PAST_DUE;
+      case "expired":
+      case "failed":
+        return SubscriptionStatus.EXPIRED;
+      default:
+        return SubscriptionStatus.EXPIRED;
+    }
+  }
+
+  /**
+   * Helper: Maps product ID to BillingCycle.
+   */
+  private mapProductIdToCycle(productId: string): BillingCycle {
+    return PRODUCT_ID_TO_BILLING_CYCLE[productId] || BillingCycle.MONTHLY;
+  }
+
+  /**
    * Creates a checkout session for upgrading to PRO.
    */
   async createCheckoutSession(userId: string, billingCycle: BillingCycle) {
@@ -192,173 +301,137 @@ export class BillingService {
     }
 
     switch (event.type) {
+      // =========================================================================
+      // ACCOUNTING WEBHOOKS (Never update User plan access)
+      // =========================================================================
       case "payment.succeeded": {
         const payment = event.data;
-        const customerId = payment.customer.customer_id;
-        const email = payment.customer.email;
-        const userId = payment.metadata?.userId || null;
-
-        const user = await prisma.user.findFirst({
-          where: {
-            OR: [
-              { providerCustomerId: customerId },
-              { email },
-              ...(userId ? [{ id: userId }] : []),
-            ],
-          },
-        });
-
+        const user = await this.findUserByPayload(payment);
         if (!user) {
           console.warn(`[Webhook] User not found for payment: ${payment.payment_id}`);
           break;
         }
 
-        const targetUser = user;
+        if (!user.providerCustomerId && payment.customer.customer_id) {
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { providerCustomerId: payment.customer.customer_id },
+          });
+        }
 
-        await prisma.$transaction(async (tx) => {
-          if (!targetUser.providerCustomerId) {
-            await tx.user.update({
-              where: { id: targetUser.id },
-              data: { providerCustomerId: customerId },
-            });
-          }
+        const subscription = await this.getOrCreateSubscriptionStub(user.id);
 
-          if (payment.subscription_id) {
-            const productId = payment.product_cart?.[0]?.product_id || "";
-            const billingCycle = PRODUCT_ID_TO_BILLING_CYCLE[productId] || BillingCycle.MONTHLY;
-
-            const currentPeriodStart = new Date();
-            const currentPeriodEnd = new Date();
-            if (billingCycle === BillingCycle.MONTHLY) {
-              currentPeriodEnd.setMonth(currentPeriodEnd.getMonth() + 1);
-            } else if (billingCycle === BillingCycle.QUARTERLY) {
-              currentPeriodEnd.setMonth(currentPeriodEnd.getMonth() + 3);
-            } else if (billingCycle === BillingCycle.YEARLY) {
-              currentPeriodEnd.setFullYear(currentPeriodEnd.getFullYear() + 1);
-            }
-
-            const subscription = await tx.subscription.upsert({
-              where: { userId: targetUser.id },
-              update: {
-                plan: SubscriptionPlan.PRO,
-                billingCycle,
-                status: SubscriptionStatus.ACTIVE,
-                currentPeriodStart,
-                currentPeriodEnd,
-                providerSubscriptionId: payment.subscription_id,
-                providerProductId: productId,
-                cancelAtPeriodEnd: false,
-                cancelledAt: null,
-              },
-              create: {
-                userId: targetUser.id,
-                plan: SubscriptionPlan.PRO,
-                billingCycle,
-                status: SubscriptionStatus.ACTIVE,
-                currentPeriodStart,
-                currentPeriodEnd,
-                providerSubscriptionId: payment.subscription_id,
-                providerProductId: productId,
-              },
-            });
-
-            await tx.user.update({
-              where: { id: targetUser.id },
-              data: {
-                plan: UserPlan.PRO,
-                planExpiresAt: currentPeriodEnd,
-              },
-            });
-
-            await tx.transaction.create({
-              data: {
-                userId: targetUser.id,
-                subscriptionId: subscription.id,
-                providerPaymentId: payment.payment_id,
-                providerInvoiceId: payment.invoice_id || null,
-                providerSubscriptionId: payment.subscription_id,
-                amount: payment.total_amount / 100,
-                currency: payment.currency,
-                status: TransactionStatus.SUCCESS,
-                type: TransactionType.CHARGE,
-                paidAt: payment.created_at ? new Date(payment.created_at) : new Date(),
-              },
-            });
-          } else {
-            const freeSub = await tx.subscription.upsert({
-              where: { userId: targetUser.id },
-              update: {},
-              create: {
-                userId: targetUser.id,
-                plan: SubscriptionPlan.FREE,
-                billingCycle: BillingCycle.MONTHLY,
-                status: SubscriptionStatus.EXPIRED,
-              },
-            });
-
-            await tx.transaction.create({
-              data: {
-                userId: targetUser.id,
-                subscriptionId: freeSub.id,
-                providerPaymentId: payment.payment_id,
-                providerInvoiceId: payment.invoice_id || null,
-                amount: payment.total_amount / 100,
-                currency: payment.currency,
-                status: TransactionStatus.SUCCESS,
-                type: TransactionType.CHARGE,
-                paidAt: payment.created_at ? new Date(payment.created_at) : new Date(),
-              },
-            });
-          }
+        await this.recordTransaction({
+          userId: user.id,
+          subscriptionId: subscription.id,
+          providerPaymentId: payment.payment_id,
+          providerInvoiceId: payment.invoice_id || null,
+          providerSubscriptionId: payment.subscription_id || null,
+          amount: this.convertAmount(payment.total_amount),
+          currency: payment.currency,
+          status: TransactionStatus.SUCCESS,
+          type: TransactionType.CHARGE,
+          paidAt: payment.created_at ? new Date(payment.created_at) : new Date(),
         });
         break;
       }
 
-      case "subscription.active":
-      case "subscription.renewed":
-      case "subscription.updated": {
-        const subData = event.data;
-        const customerId = subData.customer.customer_id;
-        const email = subData.customer.email;
-        const userId = subData.metadata?.userId || null;
+      case "payment.failed": {
+        const payment = event.data;
+        const user = await this.findUserByPayload(payment);
+        if (!user) {
+          console.warn(`[Webhook] User not found for failed payment: ${payment.payment_id}`);
+          break;
+        }
 
-        const user = await prisma.user.findFirst({
-          where: {
-            OR: [
-              { providerCustomerId: customerId },
-              { email },
-              ...(userId ? [{ id: userId }] : []),
-            ],
-          },
+        const subscription = await this.getOrCreateSubscriptionStub(user.id);
+
+        await this.recordTransaction({
+          userId: user.id,
+          subscriptionId: subscription.id,
+          providerPaymentId: payment.payment_id,
+          providerInvoiceId: payment.invoice_id || null,
+          providerSubscriptionId: payment.subscription_id || null,
+          amount: this.convertAmount(payment.total_amount),
+          currency: payment.currency,
+          status: TransactionStatus.FAILED,
+          type: TransactionType.CHARGE,
+          paidAt: null,
         });
+        break;
+      }
+
+      case "refund.succeeded": {
+        const refund = event.data;
+        let user = await this.findUserByPayload(refund);
 
         if (!user) {
-          console.warn(`[Webhook] User not found for subscription: ${subData.subscription_id}`);
+          const originalTx = await prisma.transaction.findFirst({
+            where: { providerPaymentId: refund.payment_id },
+            include: { user: true },
+          });
+          if (originalTx) {
+            user = originalTx.user;
+          }
+        }
+
+        if (!user) {
+          console.warn(`[Webhook] User not found for refund: ${refund.refund_id}`);
+          break;
+        }
+
+        const subscription = await this.getOrCreateSubscriptionStub(user.id);
+
+        await this.recordTransaction({
+          userId: user.id,
+          subscriptionId: subscription.id,
+          providerPaymentId: refund.payment_id,
+          providerInvoiceId: refund.refund_id,
+          providerSubscriptionId: null,
+          amount: this.convertAmount(refund.amount),
+          currency: refund.currency,
+          status: TransactionStatus.SUCCESS,
+          type: TransactionType.REFUND,
+          paidAt: refund.created_at ? new Date(refund.created_at) : new Date(),
+        });
+        break;
+      }
+
+      case "payment.processing":
+        // Quietly acknowledge
+        break;
+
+      // =========================================================================
+      // ENTITLEMENT WEBHOOKS (Never write Transaction entries)
+      // =========================================================================
+      case "subscription.active":
+      case "subscription.renewed":
+      case "subscription.updated":
+      case "subscription.plan_changed": {
+        const subData = event.data;
+        const user = await this.findUserByPayload(subData);
+        if (!user) {
+          console.warn(`[Webhook] User not found for subscription update: ${subData.subscription_id}`);
           break;
         }
 
         const targetUser = user;
 
         await prisma.$transaction(async (tx) => {
-          if (!targetUser.providerCustomerId) {
+          if (!targetUser.providerCustomerId && subData.customer.customer_id) {
             await tx.user.update({
               where: { id: targetUser.id },
-              data: { providerCustomerId: customerId },
+              data: { providerCustomerId: subData.customer.customer_id },
             });
           }
 
           const productId = subData.product_id;
-          const billingCycle = PRODUCT_ID_TO_BILLING_CYCLE[productId] || BillingCycle.MONTHLY;
+          const billingCycle = this.mapProductIdToCycle(productId);
           const nextBilling = subData.next_billing_date ? new Date(subData.next_billing_date) : null;
           const prevBilling = subData.previous_billing_date ? new Date(subData.previous_billing_date) : new Date();
+          const status = this.mapProviderStatus(subData.status);
 
-          let status: SubscriptionStatus = SubscriptionStatus.ACTIVE;
-          if (subData.status === "cancelled") status = SubscriptionStatus.CANCELLED;
-          if (subData.status === "expired") status = SubscriptionStatus.EXPIRED;
-          if (subData.status === "on_hold") status = SubscriptionStatus.PAST_DUE;
-          if (subData.status === "failed") status = SubscriptionStatus.EXPIRED;
-
-          const subscription = await tx.subscription.upsert({
+          await tx.subscription.upsert({
             where: { userId: targetUser.id },
             update: {
               plan: SubscriptionPlan.PRO,
@@ -402,20 +475,7 @@ export class BillingService {
       case "subscription.expired":
       case "subscription.failed": {
         const subData = event.data;
-        const customerId = subData.customer.customer_id;
-        const email = subData.customer.email;
-        const userId = subData.metadata?.userId || null;
-
-        const user = await prisma.user.findFirst({
-          where: {
-            OR: [
-              { providerCustomerId: customerId },
-              { email },
-              ...(userId ? [{ id: userId }] : []),
-            ],
-          },
-        });
-
+        const user = await this.findUserByPayload(subData);
         if (!user) {
           console.warn(`[Webhook] User not found for subscription transition: ${subData.subscription_id}`);
           break;
@@ -425,20 +485,34 @@ export class BillingService {
 
         let status: SubscriptionStatus = SubscriptionStatus.EXPIRED;
         if (event.type === "subscription.cancelled") status = SubscriptionStatus.CANCELLED;
-        if (event.type === "subscription.expired") status = SubscriptionStatus.EXPIRED;
-        if (event.type === "subscription.failed") status = SubscriptionStatus.EXPIRED;
+
+        const productId = subData.product_id;
+        const billingCycle = this.mapProductIdToCycle(productId);
+        const nextBilling = subData.next_billing_date ? new Date(subData.next_billing_date) : null;
+        const prevBilling = subData.previous_billing_date ? new Date(subData.previous_billing_date) : new Date();
 
         await prisma.$transaction(async (tx) => {
-          await tx.subscription.update({
+          await tx.subscription.upsert({
             where: { userId: targetUser.id },
-            data: {
+            update: {
               status,
               cancelledAt: subData.cancelled_at ? new Date(subData.cancelled_at) : new Date(),
               cancelAtPeriodEnd: subData.cancel_at_next_billing_date || false,
             },
+            create: {
+              userId: targetUser.id,
+              plan: SubscriptionPlan.PRO,
+              billingCycle,
+              status,
+              currentPeriodStart: prevBilling,
+              currentPeriodEnd: nextBilling,
+              providerSubscriptionId: subData.subscription_id,
+              providerProductId: productId,
+              cancelAtPeriodEnd: subData.cancel_at_next_billing_date || false,
+              cancelledAt: subData.cancelled_at ? new Date(subData.cancelled_at) : new Date(),
+            },
           });
 
-          const nextBilling = subData.next_billing_date ? new Date(subData.next_billing_date) : null;
           const isUserPro = status === SubscriptionStatus.CANCELLED && nextBilling && nextBilling > new Date();
 
           await tx.user.update({
@@ -449,60 +523,6 @@ export class BillingService {
             },
           });
         });
-        break;
-      }
-
-      case "refund.succeeded": {
-        const refund = event.data;
-        const customerId = refund.customer?.customer_id;
-        const email = refund.customer?.email;
-
-        let user;
-        if (customerId || email) {
-          user = await prisma.user.findFirst({
-            where: {
-              OR: [
-                ...(customerId ? [{ providerCustomerId: customerId }] : []),
-                ...(email ? [{ email }] : []),
-              ],
-            },
-          });
-        }
-
-        if (!user) {
-          const originalTx = await prisma.transaction.findFirst({
-            where: { providerPaymentId: refund.payment_id },
-            include: { user: true },
-          });
-          if (originalTx) {
-            user = originalTx.user;
-          }
-        }
-
-        if (!user) {
-          console.warn(`[Webhook] User not found for refund: ${refund.refund_id}`);
-          break;
-        }
-
-        const userSub = await prisma.subscription.findFirst({
-          where: { userId: user.id },
-        });
-
-        if (userSub) {
-          await prisma.transaction.create({
-            data: {
-              userId: user.id,
-              subscriptionId: userSub.id,
-              providerPaymentId: refund.payment_id,
-              providerInvoiceId: refund.refund_id,
-              amount: refund.amount / 100,
-              currency: refund.currency,
-              status: TransactionStatus.SUCCESS,
-              type: TransactionType.REFUND,
-              paidAt: refund.created_at ? new Date(refund.created_at) : new Date(),
-            },
-          });
-        }
         break;
       }
 

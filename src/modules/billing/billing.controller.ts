@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import { apiController, AppError } from "../../shared/index.js";
 import { env } from "../../config/index.js";
 import { billingService } from "./billing.service.js";
@@ -30,13 +31,25 @@ export const cancelSubscription = apiController(async (req) => {
 
 export const grantPromoAccess = apiController(async (req) => {
   const adminKey = req.headers["x-admin-key"];
-  if (!adminKey || adminKey !== env.ADMIN_SECRET_KEY) {
+  if (typeof adminKey !== "string") {
     throw AppError.forbidden("Invalid or missing admin secret key");
   }
+
+  const keyBuffer = Buffer.from(adminKey);
+  const secretBuffer = Buffer.from(env.ADMIN_SECRET_KEY);
+
+  if (
+    keyBuffer.length !== secretBuffer.length ||
+    !crypto.timingSafeEqual(keyBuffer, secretBuffer)
+  ) {
+    throw AppError.forbidden("Invalid or missing admin secret key");
+  }
+
   const { targetUserId, plan, durationDays } = req.body;
   const result = await billingService.grantPromoAccess(targetUserId, plan, durationDays);
   return { data: result, message: "Promotional access granted successfully" };
 });
+
 
 export const handleWebhook = apiController(async (req) => {
   const rawBody = (req as any).rawBody?.toString("utf8");
