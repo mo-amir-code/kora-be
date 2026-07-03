@@ -32,7 +32,7 @@ export const cancelSubscription = apiController(async (req) => {
 export const grantPromoAccess = apiController(async (req) => {
   const adminKey = req.headers["x-admin-key"];
   if (typeof adminKey !== "string") {
-    throw AppError.forbidden("Invalid or missing admin secret key");
+    throw AppError.forbidden("Invalid request");
   }
 
   const keyBuffer = Buffer.from(adminKey);
@@ -42,7 +42,7 @@ export const grantPromoAccess = apiController(async (req) => {
     keyBuffer.length !== secretBuffer.length ||
     !crypto.timingSafeEqual(keyBuffer, secretBuffer)
   ) {
-    throw AppError.forbidden("Invalid or missing admin secret key");
+    throw AppError.forbidden("Invalid request");
   }
 
   const { targetUserId, plan, durationDays } = req.body;

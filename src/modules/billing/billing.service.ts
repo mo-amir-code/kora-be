@@ -336,11 +336,12 @@ export class BillingService {
         break;
       }
 
-      case "payment.failed": {
+      case "payment.failed":
+      case "payment.cancelled": {
         const payment = event.data;
         const user = await this.findUserByPayload(payment);
         if (!user) {
-          console.warn(`[Webhook] User not found for failed payment: ${payment.payment_id}`);
+          console.warn(`[Webhook] User not found for failed/cancelled payment: ${payment.payment_id}`);
           break;
         }
 
