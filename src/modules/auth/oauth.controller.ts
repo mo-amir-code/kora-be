@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { env } from "../../config/index.js";
+import { env, APP_NAME } from "../../config/index.js";
 import { findOrCreateOAuthUser } from "./auth.service.js";
 
 // ─── GOOGLE ─────────────────────────────────────────────────────────────────────
@@ -75,7 +75,7 @@ export async function googleCallback(req: Request, res: Response): Promise<void>
     });
 
     // Set refresh token as httpOnly cookie
-    res.cookie("kora_refresh_token", refreshToken, {
+    res.cookie(`${APP_NAME.toLowerCase()}_refresh_token`, refreshToken, {
       httpOnly: true,
       secure: env.NODE_ENV === "production",
       sameSite: env.NODE_ENV === "production" ? "strict" : "lax",

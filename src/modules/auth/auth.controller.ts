@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { apiController, AppOk, AppError, prisma } from "../../shared/index.js";
-import { env } from "../../config/index.js";
+import { env, APP_NAME } from "../../config/index.js";
 import {
   signupUser,
   signupSendOtp,
@@ -22,7 +22,7 @@ import type {
 
 // ─── COOKIE CONFIG ──────────────────────────────────────────────────────────────
 
-const REFRESH_COOKIE_NAME = "kora_refresh_token";
+const REFRESH_COOKIE_NAME = `${APP_NAME.toLowerCase()}_refresh_token`;
 
 function setRefreshCookie(res: Response, refreshToken: string) {
   res.cookie(REFRESH_COOKIE_NAME, refreshToken, {
