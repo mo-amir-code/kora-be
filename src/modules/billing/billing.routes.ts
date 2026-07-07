@@ -5,7 +5,8 @@ import {
   changePlan,
   cancelSubscription,
   grantPromoAccess,
-  handleWebhook
+  handleWebhook,
+  getCurrentPlan
 } from "./billing.controller.js";
 import {
   createCheckoutSessionSchema,
@@ -15,6 +16,7 @@ import {
 
 const router = Router();
 
+router.get("/current-plan", authenticate, getCurrentPlan);
 router.post("/checkout", authenticate, validate(createCheckoutSessionSchema), createCheckoutSession);
 router.post("/change-plan", authenticate, validate(changePlanSchema), changePlan);
 router.post("/cancel", authenticate, cancelSubscription);

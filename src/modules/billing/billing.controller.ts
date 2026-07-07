@@ -60,3 +60,11 @@ export const handleWebhook = apiController(async (req) => {
   await billingService.handleWebhook(rawBody, headers);
   return { message: "Webhook processed successfully" };
 });
+
+export const getCurrentPlan = apiController(async (req) => {
+  if (!req.userId) {
+    throw AppError.unauthorized("Not authenticated");
+  }
+  const result = await billingService.getCurrentPlan(req.userId);
+  return { data: result, message: "Current subscription plan retrieved successfully" };
+});

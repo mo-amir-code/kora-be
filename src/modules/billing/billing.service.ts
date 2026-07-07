@@ -153,8 +153,8 @@ export class BillingService {
       metadata: {
         userId: user.id,
       },
-      return_url: `${env.CLIENT_URL}/dashboard/billing/success`,
-      cancel_url: `${env.CLIENT_URL}/dashboard/billing`,
+      return_url: `${env.CLIENT_URL}/subscription?status=success`,
+      cancel_url: `${env.CLIENT_URL}/subscription?status=cancel`,
     };
 
     if (user.providerCustomerId) {
@@ -531,6 +531,35 @@ export class BillingService {
         console.log(`[Webhook] Unhandled webhook event: ${event.type}`);
         break;
     }
+  }
+
+  async getCurrentPlan(userId: string) {
+    const subscription = await prisma.subscription.findUnique({
+      where: { userId },
+    });
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { plan: true, planExpiresAt: true },
+    });
+
+    if (
+      !subscription ||
+      subscription.plan === SubscriptionPlan.FREE ||
+      subscription.status === SubscriptionStatus.EXPIRED
+    ) {
+      return {
+        plan: "FREE",
+        billingCycle: null,
+        planExpiresAt: null,
+      };
+    }
+
+    return {
+      plan: subscription.plan,
+      billingCycle: subscription.billingCycle,
+      planExpiresAt: subscription.currentPeriodEnd || user?.planExpiresAt || null,
+      status: subscription.status,
+    };
   }
 }
 
