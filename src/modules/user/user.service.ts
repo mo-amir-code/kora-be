@@ -1,4 +1,4 @@
-import { prisma, AppError } from "../../shared/index.js";
+import { prisma, AppError, checkInvoiceBrandingLimit } from "../../shared/index.js";
 
 export const userService = {
   /**
@@ -83,6 +83,8 @@ export const userService = {
    * Update or create invoice settings for a user
    */
   async updateInvoiceSettings(userId: string, data: any) {
+    await checkInvoiceBrandingLimit(userId, data);
+
     return prisma.userInvoiceSettings.upsert({
       where: { userId },
       create: { ...data, userId },

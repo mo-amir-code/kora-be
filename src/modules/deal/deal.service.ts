@@ -1,5 +1,4 @@
-import { prisma } from "../../shared/index.js";
-import { AppError } from "../../shared/index.js";
+import { prisma, AppError, checkDealLimit } from "../../shared/index.js";
 import type { CreateDealBody, UpdateDealBody } from "./deal.validation.js";
 
 // ─── ACTIVITY LOGGER ────────────────────────────────────────────────────────────
@@ -16,6 +15,9 @@ async function logActivity(dealId: string, userId: string, type: string, body?: 
 }
 
 export async function createDeal(userId: string, data: CreateDealBody) {
+  // Check user plan limit (max 3 deals total for FREE users)
+  await checkDealLimit(userId);
+
   // Verify brand belongs to user
   const brand = await prisma.brand.findFirst({
     where: { id: data.brandId, userId },
