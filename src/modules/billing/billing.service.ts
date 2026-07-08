@@ -225,6 +225,12 @@ export class BillingService {
       await providerClient.subscriptions.update(subscription.providerSubscriptionId, {
         cancel_at_next_billing_date: true,
       });
+      await prisma.subscription.update({
+        where: { userId },
+        data: {
+          cancelAtPeriodEnd: true,
+        },
+      });
       return { message: "Subscription scheduled for cancellation at the next billing date" };
     } catch (err: any) {
       throw AppError.internal(`Failed to cancel subscription: ${err.message}`);
@@ -551,6 +557,7 @@ export class BillingService {
         plan: "FREE",
         billingCycle: null,
         planExpiresAt: null,
+        cancelAtPeriodEnd: false,
       };
     }
 
@@ -559,6 +566,7 @@ export class BillingService {
       billingCycle: subscription.billingCycle,
       planExpiresAt: subscription.currentPeriodEnd || user?.planExpiresAt || null,
       status: subscription.status,
+      cancelAtPeriodEnd: subscription.cancelAtPeriodEnd,
     };
   }
 }
