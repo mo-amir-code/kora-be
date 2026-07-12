@@ -5,6 +5,8 @@ import { prisma } from "../../shared/index.js";
 import { env } from "../../config/index.js";
 import { AppError } from "../../shared/index.js";
 import { sendOtpEmail } from "./email.service.js";
+import { billingService } from "../billing/billing.service.js";
+import { UserPlan } from "../../generated/client/enums.js";
 
 const SALT_ROUNDS = 12;
 const OTP_EXPIRY_MINUTES = 10;
@@ -92,7 +94,10 @@ export async function signupSendOtp(data: {
   return { message: "Verification code sent to your email" };
 }
 
-export async function signupVerifyOtp(data: { email: string; otp: string }) {
+export async function signupVerifyOtp(
+  data: { email: string; otp: string },
+  metadata?: { userAgent?: string | undefined; ipAddress?: string | undefined }
+) {
   const user = await prisma.user.findUnique({
     where: { email: data.email },
   });
@@ -126,13 +131,28 @@ export async function signupVerifyOtp(data: { email: string; otp: string }) {
     }),
   ]);
 
-  const { accessToken, refreshToken } = await generateTokenPair(user.id);
-  return { user: sanitizeUser(updatedUser), accessToken, refreshToken };
+  const verifiedCount = await prisma.user.count({
+    where: { verified: true },
+  });
+
+  let finalUser = updatedUser;
+  if (verifiedCount <= env.PRO_PLAN_PROMOTION_LIMIT) {
+    await billingService.grantPromoAccess(user.id, UserPlan.PRO, 90);
+    finalUser = await prisma.user.findUniqueOrThrow({
+      where: { id: user.id },
+    });
+  }
+
+  const { accessToken, refreshToken } = await generateTokenPair(user.id, metadata);
+  return { user: sanitizeUser(finalUser), accessToken, refreshToken };
 }
 
 // ─── SIGNIN ─────────────────────────────────────────────────────────────────────
 
-export async function signinUser(data: { email: string; password: string }) {
+export async function signinUser(
+  data: { email: string; password: string },
+  metadata?: { userAgent?: string | undefined; ipAddress?: string | undefined }
+) {
   const user = await prisma.user.findUnique({
     where: { email: data.email },
   });
@@ -146,7 +166,7 @@ export async function signinUser(data: { email: string; password: string }) {
     throw AppError.unauthorized("Invalid email or password");
   }
 
-  const { accessToken, refreshToken } = await generateTokenPair(user.id);
+  const { accessToken, refreshToken } = await generateTokenPair(user.id, metadata);
   return { user: sanitizeUser(user), accessToken, refreshToken };
 }
 
@@ -223,13 +243,16 @@ export async function resetPasswordService(data: {
 
 // ─── OAUTH ──────────────────────────────────────────────────────────────────────
 
-export async function findOrCreateOAuthUser(data: {
-  email: string;
-  fullName: string;
-  avatarUrl?: string | undefined;
-  provider: "GOOGLE" | "GITHUB";
-  providerId: string;
-}) {
+export async function findOrCreateOAuthUser(
+  data: {
+    email: string;
+    fullName: string;
+    avatarUrl?: string | undefined;
+    provider: "GOOGLE" | "GITHUB";
+    providerId: string;
+  },
+  metadata?: { userAgent?: string | undefined; ipAddress?: string | undefined }
+) {
   const existingOAuth = await prisma.oAuthAccount.findUnique({
     where: {
       provider_providerId: {
@@ -248,7 +271,7 @@ export async function findOrCreateOAuthUser(data: {
         data: { verified: true },
       });
     }
-    const { accessToken, refreshToken } = await generateTokenPair(user.id);
+    const { accessToken, refreshToken } = await generateTokenPair(user.id, metadata);
     return { user: sanitizeUser(user), accessToken, refreshToken };
   }
 
@@ -260,6 +283,15 @@ export async function findOrCreateOAuthUser(data: {
         where: { id: user.id },
         data: { verified: true },
       });
+
+      // Check and grant PRO plan on first-time verification
+      const verifiedCount = await prisma.user.count({
+        where: { verified: true },
+      });
+      if (verifiedCount <= env.PRO_PLAN_PROMOTION_LIMIT) {
+        await billingService.grantPromoAccess(user.id, UserPlan.PRO, 90);
+        user = await prisma.user.findUniqueOrThrow({ where: { id: user.id } });
+      }
     }
     await prisma.oAuthAccount.create({
       data: {
@@ -284,17 +316,29 @@ export async function findOrCreateOAuthUser(data: {
       },
     });
 
+    // Check and grant PRO plan on new user registration
+    const verifiedCount = await prisma.user.count({
+      where: { verified: true },
+    });
+    if (verifiedCount <= env.PRO_PLAN_PROMOTION_LIMIT) {
+      await billingService.grantPromoAccess(user.id, UserPlan.PRO, 90);
+      user = await prisma.user.findUniqueOrThrow({ where: { id: user.id } });
+    }
+
     // Seed default reminder rules for new OAuth user
     await seedDefaultReminderRules(user.id);
   }
 
-  const { accessToken, refreshToken } = await generateTokenPair(user.id);
+  const { accessToken, refreshToken } = await generateTokenPair(user.id, metadata);
   return { user: sanitizeUser(user), accessToken, refreshToken };
 }
 
 // ─── REFRESH TOKEN ──────────────────────────────────────────────────────────────
 
-export async function refreshTokenService(token: string) {
+export async function refreshTokenService(
+  token: string,
+  metadata?: { userAgent?: string | undefined; ipAddress?: string | undefined }
+) {
   const record = await prisma.refreshToken.findUnique({
     where: { token },
     include: { user: true },
@@ -317,7 +361,7 @@ export async function refreshTokenService(token: string) {
     data: { revoked: true },
   });
 
-  const { accessToken, refreshToken } = await generateTokenPair(record.userId);
+  const { accessToken, refreshToken } = await generateTokenPair(record.userId, metadata);
   return { accessToken, refreshToken, user: sanitizeUser(record.user) };
 }
 
@@ -371,7 +415,7 @@ function generateAccessToken(userId: string): string {
   } as jwt.SignOptions);
 }
 
-async function generateRefreshToken(userId: string): Promise<string> {
+async function generateRefreshToken(userId: string, metadata?: { userAgent?: string | undefined; ipAddress?: string | undefined }): Promise<string> {
   const token = crypto.randomBytes(64).toString("hex");
   const expiresAt = new Date(Date.now() + env.REFRESH_TOKEN_EXPIRES_IN_DAYS * 24 * 60 * 60 * 1000);
 
@@ -380,15 +424,18 @@ async function generateRefreshToken(userId: string): Promise<string> {
       userId,
       token,
       expiresAt,
+      userAgent: metadata?.userAgent || null,
+      ipAddress: metadata?.ipAddress || null,
+      lastActiveAt: new Date(),
     },
   });
 
   return token;
 }
 
-async function generateTokenPair(userId: string) {
+async function generateTokenPair(userId: string, metadata?: { userAgent?: string | undefined; ipAddress?: string | undefined }) {
   const accessToken = generateAccessToken(userId);
-  const refreshToken = await generateRefreshToken(userId);
+  const refreshToken = await generateRefreshToken(userId, metadata);
   return { accessToken, refreshToken };
 }
 

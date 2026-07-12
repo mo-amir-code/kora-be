@@ -262,7 +262,7 @@ export class BillingService {
       });
 
       // 2. Upsert Subscription locally
-      await tx.subscription.upsert({
+      const subscription = await tx.subscription.upsert({
         where: { userId: targetUserId },
         update: {
           plan: plan === UserPlan.PRO ? SubscriptionPlan.PRO : SubscriptionPlan.FREE,
@@ -286,6 +286,24 @@ export class BillingService {
           providerProductId: "PROMO",
         },
       });
+
+      // 3. Record Transaction history record if PRO plan is being issued
+      if (plan === UserPlan.PRO) {
+        await tx.transaction.create({
+          data: {
+            userId: targetUserId,
+            subscriptionId: subscription.id,
+            providerPaymentId: `PROMO_${Date.now()}`,
+            providerInvoiceId: `PROMO_INV_${Date.now()}`,
+            providerSubscriptionId: "PROMO",
+            amount: 0,
+            currency: "INR",
+            status: TransactionStatus.SUCCESS,
+            type: TransactionType.CHARGE,
+            paidAt: now,
+          },
+        });
+      }
     });
 
     return {

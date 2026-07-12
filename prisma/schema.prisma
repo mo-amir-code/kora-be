@@ -292,12 +292,15 @@ model Otp {
 }
 
 model RefreshToken {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId    String   @map("user_id") @db.Uuid
-  token     String   @unique
-  expiresAt DateTime @map("expires_at") @db.Timestamptz
-  revoked   Boolean  @default(false)
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId       String   @map("user_id") @db.Uuid
+  token        String   @unique
+  expiresAt    DateTime @map("expires_at") @db.Timestamptz
+  revoked      Boolean  @default(false)
+  userAgent    String?  @map("user_agent")
+  ipAddress    String?  @map("ip_address")
+  lastActiveAt DateTime @default(now()) @map("last_active_at") @db.Timestamptz
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz
 
   // Relations
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

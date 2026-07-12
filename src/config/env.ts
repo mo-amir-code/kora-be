@@ -44,6 +44,7 @@ export const env = {
   PROVIDER_PRO_QUARTERLY_PRODUCT_ID: process.env["PROVIDER_PRO_QUARTERLY_PRODUCT_ID"] ?? "prod_quarterly_id",
   PROVIDER_PRO_YEARLY_PRODUCT_ID: process.env["PROVIDER_PRO_YEARLY_PRODUCT_ID"] ?? "prod_yearly_id",
   ADMIN_SECRET_KEY: process.env["ADMIN_SECRET_KEY"] ?? "admin-secret-key-change-me",
+  PRO_PLAN_PROMOTION_LIMIT: parseInt(process.env["PRO_PLAN_PROMOTION_LIMIT"] ?? "10", 10),
 } as const;
 
 export type Env = typeof env;

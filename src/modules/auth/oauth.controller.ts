@@ -72,6 +72,9 @@ export async function googleCallback(req: Request, res: Response): Promise<void>
       avatarUrl: googleUser.picture,
       provider: "GOOGLE",
       providerId: googleUser.id,
+    }, {
+      userAgent: req.headers["user-agent"] || undefined,
+      ipAddress: req.ip || undefined,
     });
 
     // Set refresh token as httpOnly cookie

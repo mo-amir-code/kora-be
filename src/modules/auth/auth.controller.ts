@@ -20,6 +20,15 @@ import type {
   SignupVerifyOtpBody,
 } from "./auth.validation.js";
 
+// ─── REQUEST METADATA HELPER ──────────────────────────────────────────────────
+
+function getRequestMetadata(req: Request) {
+  return {
+    userAgent: req.headers["user-agent"] || undefined,
+    ipAddress: req.ip || undefined,
+  };
+}
+
 // ─── COOKIE CONFIG ──────────────────────────────────────────────────────────────
 
 const REFRESH_COOKIE_NAME = `${APP_NAME.toLowerCase()}_refresh_token`;
@@ -62,7 +71,7 @@ export const signupSendOtpController = apiController(async (req) => {
 });
 
 export const signupVerifyOtpController = apiController(async (req, res) => {
-  const result = await signupVerifyOtp(req.body as SignupVerifyOtpBody);
+  const result = await signupVerifyOtp(req.body as SignupVerifyOtpBody, getRequestMetadata(req));
   setRefreshCookie(res, result.refreshToken);
   return AppOk.ok({
     data: { user: result.user, accessToken: result.accessToken },
@@ -73,7 +82,7 @@ export const signupVerifyOtpController = apiController(async (req, res) => {
 // ─── SIGNIN ─────────────────────────────────────────────────────────────────────
 
 export const signin = apiController(async (req, res) => {
-  const result = await signinUser(req.body as SigninBody);
+  const result = await signinUser(req.body as SigninBody, getRequestMetadata(req));
   setRefreshCookie(res, result.refreshToken);
   return AppOk.ok({
     data: { user: result.user, accessToken: result.accessToken },
@@ -102,7 +111,7 @@ export const refresh = apiController(async (req, res) => {
     throw AppError.unauthorized("No refresh token provided");
   }
 
-  const result = await refreshTokenService(token);
+  const result = await refreshTokenService(token, getRequestMetadata(req));
   setRefreshCookie(res, result.refreshToken);
   return AppOk.ok({
     data: { user: result.user, accessToken: result.accessToken },
