@@ -15,7 +15,7 @@ export const userService = {
         avatarUrl: true,
         whatsappNumber: true,
         plan: true,
-        onboardingDone: true,
+        verified: true,
         createdAt: true,
         settings: true,
         invoiceSettings: true,

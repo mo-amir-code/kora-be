@@ -49,22 +49,32 @@ export async function signupSendOtp(data: {
     where: { email: data.email },
   });
 
-  if (existing) {
-    throw AppError.conflict("Email already registered");
-  }
-
   const hashedPassword = await bcrypt.hash(data.password, SALT_ROUNDS);
+  let user = existing;
 
-  const user = await prisma.user.create({
-    data: {
-      email: data.email,
-      password: hashedPassword,
-      fullName: data.fullName,
-    },
-  });
+  if (existing) {
+    if (existing.verified) {
+      throw AppError.conflict("Email already registered");
+    }
+    user = await prisma.user.update({
+      where: { id: existing.id },
+      data: {
+        password: hashedPassword,
+        fullName: data.fullName,
+      },
+    });
+  } else {
+    user = await prisma.user.create({
+      data: {
+        email: data.email,
+        password: hashedPassword,
+        fullName: data.fullName,
+      },
+    });
 
-  // Seed default reminder rules for new user
-  await seedDefaultReminderRules(user.id);
+    // Seed default reminder rules for new user
+    await seedDefaultReminderRules(user.id);
+  }
 
   const code = generateOtp();
   const expiresAt = new Date(Date.now() + OTP_EXPIRY_MINUTES * 60 * 1000);
@@ -105,13 +115,19 @@ export async function signupVerifyOtp(data: { email: string; otp: string }) {
     throw AppError.badRequest("Invalid or expired OTP");
   }
 
-  await prisma.otp.update({
-    where: { id: otpRecord.id },
-    data: { used: true },
-  });
+  const [, updatedUser] = await prisma.$transaction([
+    prisma.otp.update({
+      where: { id: otpRecord.id },
+      data: { used: true },
+    }),
+    prisma.user.update({
+      where: { id: user.id },
+      data: { verified: true },
+    }),
+  ]);
 
   const { accessToken, refreshToken } = await generateTokenPair(user.id);
-  return { user: sanitizeUser(user), accessToken, refreshToken };
+  return { user: sanitizeUser(updatedUser), accessToken, refreshToken };
 }
 
 // ─── SIGNIN ─────────────────────────────────────────────────────────────────────
@@ -121,7 +137,7 @@ export async function signinUser(data: { email: string; password: string }) {
     where: { email: data.email },
   });
 
-  if (!user || !user.password) {
+  if (!user || !user.password || !user.verified) {
     throw AppError.unauthorized("Invalid email or password");
   }
 
@@ -225,13 +241,26 @@ export async function findOrCreateOAuthUser(data: {
   });
 
   if (existingOAuth) {
-    const { accessToken, refreshToken } = await generateTokenPair(existingOAuth.user.id);
-    return { user: sanitizeUser(existingOAuth.user), accessToken, refreshToken };
+    let user = existingOAuth.user;
+    if (!user.verified) {
+      user = await prisma.user.update({
+        where: { id: user.id },
+        data: { verified: true },
+      });
+    }
+    const { accessToken, refreshToken } = await generateTokenPair(user.id);
+    return { user: sanitizeUser(user), accessToken, refreshToken };
   }
 
   let user = await prisma.user.findUnique({ where: { email: data.email } });
 
   if (user) {
+    if (!user.verified) {
+      user = await prisma.user.update({
+        where: { id: user.id },
+        data: { verified: true },
+      });
+    }
     await prisma.oAuthAccount.create({
       data: {
         userId: user.id,
@@ -245,6 +274,7 @@ export async function findOrCreateOAuthUser(data: {
         email: data.email,
         fullName: data.fullName,
         avatarUrl: data.avatarUrl ?? null,
+        verified: true,
         oauthAccounts: {
           create: {
             provider: data.provider,
@@ -366,11 +396,12 @@ function generateOtp(): string {
   return crypto.randomInt(100000, 999999).toString();
 }
 
-function sanitizeUser(user: { id: string; email: string; fullName: string; avatarUrl?: string | null }) {
+function sanitizeUser(user: { id: string; email: string; fullName: string; avatarUrl?: string | null; verified: boolean }) {
   return {
     id: user.id,
     email: user.email,
     fullName: user.fullName,
     avatarUrl: user.avatarUrl,
+    verified: user.verified,
   };
 }

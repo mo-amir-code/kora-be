@@ -101,7 +101,7 @@ export const UserScalarFieldEnum = {
   plan: 'plan',
   planExpiresAt: 'planExpiresAt',
   providerCustomerId: 'providerCustomerId',
-  onboardingDone: 'onboardingDone',
+  verified: 'verified',
   createdAt: 'createdAt',
   deletedAt: 'deletedAt'
 } as const

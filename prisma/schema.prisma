@@ -236,7 +236,7 @@ model User {
   plan            UserPlan  @default(FREE)
   planExpiresAt   DateTime? @map("plan_expires_at") @db.Timestamptz
   providerCustomerId String? @unique @map("provider_customer_id")
-  onboardingDone  Boolean   @default(false) @map("onboarding_done")
+  verified        Boolean   @default(false)
   createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz
   deletedAt       DateTime? @map("deleted_at") @db.Timestamptz
 

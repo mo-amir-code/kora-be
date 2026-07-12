@@ -35,7 +35,7 @@ export type UserMinAggregateOutputType = {
   plan: $Enums.UserPlan | null
   planExpiresAt: Date | null
   providerCustomerId: string | null
-  onboardingDone: boolean | null
+  verified: boolean | null
   createdAt: Date | null
   deletedAt: Date | null
 }
@@ -51,7 +51,7 @@ export type UserMaxAggregateOutputType = {
   plan: $Enums.UserPlan | null
   planExpiresAt: Date | null
   providerCustomerId: string | null
-  onboardingDone: boolean | null
+  verified: boolean | null
   createdAt: Date | null
   deletedAt: Date | null
 }
@@ -67,7 +67,7 @@ export type UserCountAggregateOutputType = {
   plan: number
   planExpiresAt: number
   providerCustomerId: number
-  onboardingDone: number
+  verified: number
   createdAt: number
   deletedAt: number
   _all: number
@@ -85,7 +85,7 @@ export type UserMinAggregateInputType = {
   plan?: true
   planExpiresAt?: true
   providerCustomerId?: true
-  onboardingDone?: true
+  verified?: true
   createdAt?: true
   deletedAt?: true
 }
@@ -101,7 +101,7 @@ export type UserMaxAggregateInputType = {
   plan?: true
   planExpiresAt?: true
   providerCustomerId?: true
-  onboardingDone?: true
+  verified?: true
   createdAt?: true
   deletedAt?: true
 }
@@ -117,7 +117,7 @@ export type UserCountAggregateInputType = {
   plan?: true
   planExpiresAt?: true
   providerCustomerId?: true
-  onboardingDone?: true
+  verified?: true
   createdAt?: true
   deletedAt?: true
   _all?: true
@@ -206,7 +206,7 @@ export type UserGroupByOutputType = {
   plan: $Enums.UserPlan
   planExpiresAt: Date | null
   providerCustomerId: string | null
-  onboardingDone: boolean
+  verified: boolean
   createdAt: Date
   deletedAt: Date | null
   _count: UserCountAggregateOutputType | null
@@ -243,7 +243,7 @@ export type UserWhereInput = {
   plan?: Prisma.EnumUserPlanFilter<"User"> | $Enums.UserPlan
   planExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   providerCustomerId?: Prisma.StringNullableFilter<"User"> | string | null
-  onboardingDone?: Prisma.BoolFilter<"User"> | boolean
+  verified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileListRelationFilter
@@ -275,7 +275,7 @@ export type UserOrderByWithRelationInput = {
   plan?: Prisma.SortOrder
   planExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   providerCustomerId?: Prisma.SortOrderInput | Prisma.SortOrder
-  onboardingDone?: Prisma.SortOrder
+  verified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   socialProfiles?: Prisma.UserSocialProfileOrderByRelationAggregateInput
@@ -310,7 +310,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   whatsappNumber?: Prisma.StringNullableFilter<"User"> | string | null
   plan?: Prisma.EnumUserPlanFilter<"User"> | $Enums.UserPlan
   planExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  onboardingDone?: Prisma.BoolFilter<"User"> | boolean
+  verified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileListRelationFilter
@@ -342,7 +342,7 @@ export type UserOrderByWithAggregationInput = {
   plan?: Prisma.SortOrder
   planExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   providerCustomerId?: Prisma.SortOrderInput | Prisma.SortOrder
-  onboardingDone?: Prisma.SortOrder
+  verified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -364,7 +364,7 @@ export type UserScalarWhereWithAggregatesInput = {
   plan?: Prisma.EnumUserPlanWithAggregatesFilter<"User"> | $Enums.UserPlan
   planExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   providerCustomerId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  onboardingDone?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  verified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
 }
@@ -380,7 +380,7 @@ export type UserCreateInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileCreateNestedManyWithoutUserInput
@@ -412,7 +412,7 @@ export type UserUncheckedCreateInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedCreateNestedManyWithoutUserInput
@@ -444,7 +444,7 @@ export type UserUpdateInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUpdateManyWithoutUserNestedInput
@@ -476,7 +476,7 @@ export type UserUncheckedUpdateInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedUpdateManyWithoutUserNestedInput
@@ -508,7 +508,7 @@ export type UserCreateManyInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
 }
@@ -524,7 +524,7 @@ export type UserUpdateManyMutationInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -540,7 +540,7 @@ export type UserUncheckedUpdateManyInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -556,7 +556,7 @@ export type UserCountOrderByAggregateInput = {
   plan?: Prisma.SortOrder
   planExpiresAt?: Prisma.SortOrder
   providerCustomerId?: Prisma.SortOrder
-  onboardingDone?: Prisma.SortOrder
+  verified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
 }
@@ -572,7 +572,7 @@ export type UserMaxOrderByAggregateInput = {
   plan?: Prisma.SortOrder
   planExpiresAt?: Prisma.SortOrder
   providerCustomerId?: Prisma.SortOrder
-  onboardingDone?: Prisma.SortOrder
+  verified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
 }
@@ -588,7 +588,7 @@ export type UserMinOrderByAggregateInput = {
   plan?: Prisma.SortOrder
   planExpiresAt?: Prisma.SortOrder
   providerCustomerId?: Prisma.SortOrder
-  onboardingDone?: Prisma.SortOrder
+  verified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
 }
@@ -857,7 +857,7 @@ export type UserCreateWithoutOauthAccountsInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileCreateNestedManyWithoutUserInput
@@ -888,7 +888,7 @@ export type UserUncheckedCreateWithoutOauthAccountsInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedCreateNestedManyWithoutUserInput
@@ -935,7 +935,7 @@ export type UserUpdateWithoutOauthAccountsInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUpdateManyWithoutUserNestedInput
@@ -966,7 +966,7 @@ export type UserUncheckedUpdateWithoutOauthAccountsInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedUpdateManyWithoutUserNestedInput
@@ -997,7 +997,7 @@ export type UserCreateWithoutOtpsInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileCreateNestedManyWithoutUserInput
@@ -1028,7 +1028,7 @@ export type UserUncheckedCreateWithoutOtpsInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedCreateNestedManyWithoutUserInput
@@ -1075,7 +1075,7 @@ export type UserUpdateWithoutOtpsInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUpdateManyWithoutUserNestedInput
@@ -1106,7 +1106,7 @@ export type UserUncheckedUpdateWithoutOtpsInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedUpdateManyWithoutUserNestedInput
@@ -1137,7 +1137,7 @@ export type UserCreateWithoutRefreshTokensInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileCreateNestedManyWithoutUserInput
@@ -1168,7 +1168,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedCreateNestedManyWithoutUserInput
@@ -1215,7 +1215,7 @@ export type UserUpdateWithoutRefreshTokensInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUpdateManyWithoutUserNestedInput
@@ -1246,7 +1246,7 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedUpdateManyWithoutUserNestedInput
@@ -1277,7 +1277,7 @@ export type UserCreateWithoutSocialProfilesInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   brands?: Prisma.BrandCreateNestedManyWithoutUserInput
@@ -1308,7 +1308,7 @@ export type UserUncheckedCreateWithoutSocialProfilesInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   brands?: Prisma.BrandUncheckedCreateNestedManyWithoutUserInput
@@ -1355,7 +1355,7 @@ export type UserUpdateWithoutSocialProfilesInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brands?: Prisma.BrandUpdateManyWithoutUserNestedInput
@@ -1386,7 +1386,7 @@ export type UserUncheckedUpdateWithoutSocialProfilesInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   brands?: Prisma.BrandUncheckedUpdateManyWithoutUserNestedInput
@@ -1417,7 +1417,7 @@ export type UserCreateWithoutBrandsInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileCreateNestedManyWithoutUserInput
@@ -1448,7 +1448,7 @@ export type UserUncheckedCreateWithoutBrandsInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedCreateNestedManyWithoutUserInput
@@ -1495,7 +1495,7 @@ export type UserUpdateWithoutBrandsInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUpdateManyWithoutUserNestedInput
@@ -1526,7 +1526,7 @@ export type UserUncheckedUpdateWithoutBrandsInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedUpdateManyWithoutUserNestedInput
@@ -1557,7 +1557,7 @@ export type UserCreateWithoutDealsInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileCreateNestedManyWithoutUserInput
@@ -1588,7 +1588,7 @@ export type UserUncheckedCreateWithoutDealsInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedCreateNestedManyWithoutUserInput
@@ -1635,7 +1635,7 @@ export type UserUpdateWithoutDealsInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUpdateManyWithoutUserNestedInput
@@ -1666,7 +1666,7 @@ export type UserUncheckedUpdateWithoutDealsInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedUpdateManyWithoutUserNestedInput
@@ -1697,7 +1697,7 @@ export type UserCreateWithoutDealActivitiesInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileCreateNestedManyWithoutUserInput
@@ -1728,7 +1728,7 @@ export type UserUncheckedCreateWithoutDealActivitiesInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedCreateNestedManyWithoutUserInput
@@ -1775,7 +1775,7 @@ export type UserUpdateWithoutDealActivitiesInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUpdateManyWithoutUserNestedInput
@@ -1806,7 +1806,7 @@ export type UserUncheckedUpdateWithoutDealActivitiesInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedUpdateManyWithoutUserNestedInput
@@ -1837,7 +1837,7 @@ export type UserCreateWithoutInvoicesInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileCreateNestedManyWithoutUserInput
@@ -1868,7 +1868,7 @@ export type UserUncheckedCreateWithoutInvoicesInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedCreateNestedManyWithoutUserInput
@@ -1915,7 +1915,7 @@ export type UserUpdateWithoutInvoicesInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUpdateManyWithoutUserNestedInput
@@ -1946,7 +1946,7 @@ export type UserUncheckedUpdateWithoutInvoicesInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedUpdateManyWithoutUserNestedInput
@@ -1977,7 +1977,7 @@ export type UserCreateWithoutReminderRulesInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileCreateNestedManyWithoutUserInput
@@ -2008,7 +2008,7 @@ export type UserUncheckedCreateWithoutReminderRulesInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedCreateNestedManyWithoutUserInput
@@ -2055,7 +2055,7 @@ export type UserUpdateWithoutReminderRulesInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUpdateManyWithoutUserNestedInput
@@ -2086,7 +2086,7 @@ export type UserUncheckedUpdateWithoutReminderRulesInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedUpdateManyWithoutUserNestedInput
@@ -2117,7 +2117,7 @@ export type UserCreateWithoutNotificationsInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileCreateNestedManyWithoutUserInput
@@ -2148,7 +2148,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedCreateNestedManyWithoutUserInput
@@ -2195,7 +2195,7 @@ export type UserUpdateWithoutNotificationsInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUpdateManyWithoutUserNestedInput
@@ -2226,7 +2226,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedUpdateManyWithoutUserNestedInput
@@ -2257,7 +2257,7 @@ export type UserCreateWithoutMessageTemplatesInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileCreateNestedManyWithoutUserInput
@@ -2288,7 +2288,7 @@ export type UserUncheckedCreateWithoutMessageTemplatesInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedCreateNestedManyWithoutUserInput
@@ -2335,7 +2335,7 @@ export type UserUpdateWithoutMessageTemplatesInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUpdateManyWithoutUserNestedInput
@@ -2366,7 +2366,7 @@ export type UserUncheckedUpdateWithoutMessageTemplatesInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedUpdateManyWithoutUserNestedInput
@@ -2397,7 +2397,7 @@ export type UserCreateWithoutSubscriptionInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileCreateNestedManyWithoutUserInput
@@ -2428,7 +2428,7 @@ export type UserUncheckedCreateWithoutSubscriptionInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedCreateNestedManyWithoutUserInput
@@ -2475,7 +2475,7 @@ export type UserUpdateWithoutSubscriptionInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUpdateManyWithoutUserNestedInput
@@ -2506,7 +2506,7 @@ export type UserUncheckedUpdateWithoutSubscriptionInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedUpdateManyWithoutUserNestedInput
@@ -2537,7 +2537,7 @@ export type UserCreateWithoutTransactionsInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileCreateNestedManyWithoutUserInput
@@ -2568,7 +2568,7 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedCreateNestedManyWithoutUserInput
@@ -2615,7 +2615,7 @@ export type UserUpdateWithoutTransactionsInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUpdateManyWithoutUserNestedInput
@@ -2646,7 +2646,7 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedUpdateManyWithoutUserNestedInput
@@ -2677,7 +2677,7 @@ export type UserCreateWithoutInvoiceSettingsInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileCreateNestedManyWithoutUserInput
@@ -2708,7 +2708,7 @@ export type UserUncheckedCreateWithoutInvoiceSettingsInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedCreateNestedManyWithoutUserInput
@@ -2755,7 +2755,7 @@ export type UserUpdateWithoutInvoiceSettingsInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUpdateManyWithoutUserNestedInput
@@ -2786,7 +2786,7 @@ export type UserUncheckedUpdateWithoutInvoiceSettingsInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedUpdateManyWithoutUserNestedInput
@@ -2817,7 +2817,7 @@ export type UserCreateWithoutSettingsInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileCreateNestedManyWithoutUserInput
@@ -2848,7 +2848,7 @@ export type UserUncheckedCreateWithoutSettingsInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedCreateNestedManyWithoutUserInput
@@ -2895,7 +2895,7 @@ export type UserUpdateWithoutSettingsInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUpdateManyWithoutUserNestedInput
@@ -2926,7 +2926,7 @@ export type UserUncheckedUpdateWithoutSettingsInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedUpdateManyWithoutUserNestedInput
@@ -2957,7 +2957,7 @@ export type UserCreateWithoutAttachmentsInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileCreateNestedManyWithoutUserInput
@@ -2988,7 +2988,7 @@ export type UserUncheckedCreateWithoutAttachmentsInput = {
   plan?: $Enums.UserPlan
   planExpiresAt?: Date | string | null
   providerCustomerId?: string | null
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: Date | string
   deletedAt?: Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedCreateNestedManyWithoutUserInput
@@ -3035,7 +3035,7 @@ export type UserUpdateWithoutAttachmentsInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUpdateManyWithoutUserNestedInput
@@ -3066,7 +3066,7 @@ export type UserUncheckedUpdateWithoutAttachmentsInput = {
   plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
   planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  onboardingDone?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socialProfiles?: Prisma.UserSocialProfileUncheckedUpdateManyWithoutUserNestedInput
@@ -3236,7 +3236,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   plan?: boolean
   planExpiresAt?: boolean
   providerCustomerId?: boolean
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: boolean
   deletedAt?: boolean
   socialProfiles?: boolean | Prisma.User$socialProfilesArgs<ExtArgs>
@@ -3269,7 +3269,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   plan?: boolean
   planExpiresAt?: boolean
   providerCustomerId?: boolean
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: boolean
   deletedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -3285,7 +3285,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   plan?: boolean
   planExpiresAt?: boolean
   providerCustomerId?: boolean
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: boolean
   deletedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -3301,12 +3301,12 @@ export type UserSelectScalar = {
   plan?: boolean
   planExpiresAt?: boolean
   providerCustomerId?: boolean
-  onboardingDone?: boolean
+  verified?: boolean
   createdAt?: boolean
   deletedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "fullName" | "password" | "handle" | "avatarUrl" | "whatsappNumber" | "plan" | "planExpiresAt" | "providerCustomerId" | "onboardingDone" | "createdAt" | "deletedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "fullName" | "password" | "handle" | "avatarUrl" | "whatsappNumber" | "plan" | "planExpiresAt" | "providerCustomerId" | "verified" | "createdAt" | "deletedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   socialProfiles?: boolean | Prisma.User$socialProfilesArgs<ExtArgs>
   brands?: boolean | Prisma.User$brandsArgs<ExtArgs>
@@ -3360,7 +3360,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     plan: $Enums.UserPlan
     planExpiresAt: Date | null
     providerCustomerId: string | null
-    onboardingDone: boolean
+    verified: boolean
     createdAt: Date
     deletedAt: Date | null
   }, ExtArgs["result"]["user"]>
@@ -3812,7 +3812,7 @@ export interface UserFieldRefs {
   readonly plan: Prisma.FieldRef<"User", 'UserPlan'>
   readonly planExpiresAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly providerCustomerId: Prisma.FieldRef<"User", 'String'>
-  readonly onboardingDone: Prisma.FieldRef<"User", 'Boolean'>
+  readonly verified: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
