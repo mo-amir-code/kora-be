@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { MessageTemplateCategory } from "@prisma/client";
+import { MessageTemplateCategory } from "../../generated/client/enums.js";
 
 const categoryEnum = z.nativeEnum(MessageTemplateCategory);
 

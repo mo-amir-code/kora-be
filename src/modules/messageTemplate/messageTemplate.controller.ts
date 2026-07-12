@@ -1,6 +1,6 @@
 import { apiController, AppOk, AppError } from "../../shared/index.js";
 import { messageTemplateService } from "./messageTemplate.service.js";
-import { MessageTemplateCategory } from "@prisma/client";
+import { MessageTemplateCategory } from "../../generated/client/enums.js";
 
 export const listTemplates = apiController(async (req) => {
   const category = req.query["category"] as MessageTemplateCategory | undefined;

@@ -1,5 +1,5 @@
 import { prisma } from "../../shared/index.js";
-import { MessageTemplateCategory } from "@prisma/client";
+import { MessageTemplateCategory } from "../../generated/client/enums.js";
 
 export const messageTemplateService = {
   /**

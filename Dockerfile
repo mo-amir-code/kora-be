@@ -15,11 +15,15 @@ RUN corepack enable
 # Install dependencies first (better build caching)
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
-# Ensure native modules (bcrypt) and Prisma engines are actually built
-RUN pnpm rebuild
 
 # Copy the rest of the source and build (prisma generate + tsc)
 COPY . .
+
+# Build-only Prisma vars (override via --build-arg if needed)
+ARG DIRECT_URL
+ENV DIRECT_URL=$DIRECT_URL
+
+# Compile: prisma generate + tsc -> dist/
 RUN pnpm build
 
 # Prisma may emit non-.ts runtime assets (e.g. .wasm) that tsc doesn't copy —
@@ -32,7 +36,6 @@ RUN pnpm prune --prod
 ##########  RUNTIME STAGE  ##########
 FROM node:22-slim AS runtime
 WORKDIR /app
-ENV NODE_ENV=production
 
 # openssl is required by Prisma at runtime
 RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates \
