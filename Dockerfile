@@ -1,0 +1,46 @@
+# syntax=docker/dockerfile:1
+
+##########  BUILD STAGE  ##########
+FROM node:22-slim AS build
+WORKDIR /app
+
+# OS packages needed to compile native modules (bcrypt) and for Prisma (openssl)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      python3 make g++ openssl ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# pnpm comes bundled with Node via corepack
+RUN corepack enable
+
+# Install dependencies first (better build caching)
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN pnpm install --frozen-lockfile
+# Ensure native modules (bcrypt) and Prisma engines are actually built
+RUN pnpm rebuild
+
+# Copy the rest of the source and build (prisma generate + tsc)
+COPY . .
+RUN pnpm build
+
+# Prisma may emit non-.ts runtime assets (e.g. .wasm) that tsc doesn't copy —
+# make sure they land next to the compiled client in dist/
+RUN cp -R src/generated/client/. dist/generated/client/ 2>/dev/null || true
+
+# Drop dev dependencies to slim the runtime node_modules
+RUN pnpm prune --prod
+
+##########  RUNTIME STAGE  ##########
+FROM node:22-slim AS runtime
+WORKDIR /app
+ENV NODE_ENV=production
+
+# openssl is required by Prisma at runtime
+RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/package.json ./package.json
+
+EXPOSE 8080
+CMD ["node", "dist/server.js"]
