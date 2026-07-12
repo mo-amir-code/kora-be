@@ -496,6 +496,7 @@ model PaymentEvent {
 model ReminderRule {
   id              String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId          String              @map("user_id") @db.Uuid
+  templateId      String?             @map("template_id") @db.Uuid
   name            String?
   triggerType     ReminderTriggerType @map("trigger_type")
   offsetValue     Int                 @map("offset_value")
@@ -510,7 +511,8 @@ model ReminderRule {
   createdAt       DateTime            @default(now()) @map("created_at") @db.Timestamptz
 
   // Relations
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user     User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  template MessageTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
 
   @@map("reminder_rules")
 }
@@ -540,13 +542,14 @@ model Notification {
 // ─── GROUP 6: SETTINGS & BILLING ────────────────────────────────────────────────
 
 model MessageTemplate {
-  id         String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId     String                  @map("user_id") @db.Uuid
-  category   MessageTemplateCategory
-  name       String
-  body       String
-  channels   String[]
-  isSystem   Boolean                 @default(false) @map("is_system")
+  id            String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId        String                  @map("user_id") @db.Uuid
+  category      MessageTemplateCategory
+  name          String
+  body          String
+  channels      String[]
+  isSystem      Boolean                 @default(false) @map("is_system")
+  reminderRules ReminderRule[]
 
   // Relations
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

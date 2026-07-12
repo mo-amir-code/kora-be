@@ -295,6 +295,7 @@ export type PaymentEventScalarFieldEnum = (typeof PaymentEventScalarFieldEnum)[k
 export const ReminderRuleScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  templateId: 'templateId',
   name: 'name',
   triggerType: 'triggerType',
   offsetValue: 'offsetValue',

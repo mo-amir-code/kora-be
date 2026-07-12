@@ -194,6 +194,7 @@ export type MessageTemplateWhereInput = {
   body?: Prisma.StringFilter<"MessageTemplate"> | string
   channels?: Prisma.StringNullableListFilter<"MessageTemplate">
   isSystem?: Prisma.BoolFilter<"MessageTemplate"> | boolean
+  reminderRules?: Prisma.ReminderRuleListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
@@ -205,6 +206,7 @@ export type MessageTemplateOrderByWithRelationInput = {
   body?: Prisma.SortOrder
   channels?: Prisma.SortOrder
   isSystem?: Prisma.SortOrder
+  reminderRules?: Prisma.ReminderRuleOrderByRelationAggregateInput
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -219,6 +221,7 @@ export type MessageTemplateWhereUniqueInput = Prisma.AtLeast<{
   body?: Prisma.StringFilter<"MessageTemplate"> | string
   channels?: Prisma.StringNullableListFilter<"MessageTemplate">
   isSystem?: Prisma.BoolFilter<"MessageTemplate"> | boolean
+  reminderRules?: Prisma.ReminderRuleListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
@@ -255,6 +258,7 @@ export type MessageTemplateCreateInput = {
   body: string
   channels?: Prisma.MessageTemplateCreatechannelsInput | string[]
   isSystem?: boolean
+  reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutTemplateInput
   user: Prisma.UserCreateNestedOneWithoutMessageTemplatesInput
 }
 
@@ -266,6 +270,7 @@ export type MessageTemplateUncheckedCreateInput = {
   body: string
   channels?: Prisma.MessageTemplateCreatechannelsInput | string[]
   isSystem?: boolean
+  reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutTemplateInput
 }
 
 export type MessageTemplateUpdateInput = {
@@ -275,6 +280,7 @@ export type MessageTemplateUpdateInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   channels?: Prisma.MessageTemplateUpdatechannelsInput | string[]
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reminderRules?: Prisma.ReminderRuleUpdateManyWithoutTemplateNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutMessageTemplatesNestedInput
 }
 
@@ -286,6 +292,7 @@ export type MessageTemplateUncheckedUpdateInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   channels?: Prisma.MessageTemplateUpdatechannelsInput | string[]
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutTemplateNestedInput
 }
 
 export type MessageTemplateCreateManyInput = {
@@ -325,6 +332,11 @@ export type MessageTemplateListRelationFilter = {
 
 export type MessageTemplateOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type MessageTemplateNullableScalarRelationFilter = {
+  is?: Prisma.MessageTemplateWhereInput | null
+  isNot?: Prisma.MessageTemplateWhereInput | null
 }
 
 export type MessageTemplateCountOrderByAggregateInput = {
@@ -397,6 +409,22 @@ export type MessageTemplateUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.MessageTemplateScalarWhereInput | Prisma.MessageTemplateScalarWhereInput[]
 }
 
+export type MessageTemplateCreateNestedOneWithoutReminderRulesInput = {
+  create?: Prisma.XOR<Prisma.MessageTemplateCreateWithoutReminderRulesInput, Prisma.MessageTemplateUncheckedCreateWithoutReminderRulesInput>
+  connectOrCreate?: Prisma.MessageTemplateCreateOrConnectWithoutReminderRulesInput
+  connect?: Prisma.MessageTemplateWhereUniqueInput
+}
+
+export type MessageTemplateUpdateOneWithoutReminderRulesNestedInput = {
+  create?: Prisma.XOR<Prisma.MessageTemplateCreateWithoutReminderRulesInput, Prisma.MessageTemplateUncheckedCreateWithoutReminderRulesInput>
+  connectOrCreate?: Prisma.MessageTemplateCreateOrConnectWithoutReminderRulesInput
+  upsert?: Prisma.MessageTemplateUpsertWithoutReminderRulesInput
+  disconnect?: Prisma.MessageTemplateWhereInput | boolean
+  delete?: Prisma.MessageTemplateWhereInput | boolean
+  connect?: Prisma.MessageTemplateWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MessageTemplateUpdateToOneWithWhereWithoutReminderRulesInput, Prisma.MessageTemplateUpdateWithoutReminderRulesInput>, Prisma.MessageTemplateUncheckedUpdateWithoutReminderRulesInput>
+}
+
 export type MessageTemplateCreatechannelsInput = {
   set: string[]
 }
@@ -417,6 +445,7 @@ export type MessageTemplateCreateWithoutUserInput = {
   body: string
   channels?: Prisma.MessageTemplateCreatechannelsInput | string[]
   isSystem?: boolean
+  reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutTemplateInput
 }
 
 export type MessageTemplateUncheckedCreateWithoutUserInput = {
@@ -426,6 +455,7 @@ export type MessageTemplateUncheckedCreateWithoutUserInput = {
   body: string
   channels?: Prisma.MessageTemplateCreatechannelsInput | string[]
   isSystem?: boolean
+  reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutTemplateInput
 }
 
 export type MessageTemplateCreateOrConnectWithoutUserInput = {
@@ -467,6 +497,62 @@ export type MessageTemplateScalarWhereInput = {
   isSystem?: Prisma.BoolFilter<"MessageTemplate"> | boolean
 }
 
+export type MessageTemplateCreateWithoutReminderRulesInput = {
+  id?: string
+  category: $Enums.MessageTemplateCategory
+  name: string
+  body: string
+  channels?: Prisma.MessageTemplateCreatechannelsInput | string[]
+  isSystem?: boolean
+  user: Prisma.UserCreateNestedOneWithoutMessageTemplatesInput
+}
+
+export type MessageTemplateUncheckedCreateWithoutReminderRulesInput = {
+  id?: string
+  userId: string
+  category: $Enums.MessageTemplateCategory
+  name: string
+  body: string
+  channels?: Prisma.MessageTemplateCreatechannelsInput | string[]
+  isSystem?: boolean
+}
+
+export type MessageTemplateCreateOrConnectWithoutReminderRulesInput = {
+  where: Prisma.MessageTemplateWhereUniqueInput
+  create: Prisma.XOR<Prisma.MessageTemplateCreateWithoutReminderRulesInput, Prisma.MessageTemplateUncheckedCreateWithoutReminderRulesInput>
+}
+
+export type MessageTemplateUpsertWithoutReminderRulesInput = {
+  update: Prisma.XOR<Prisma.MessageTemplateUpdateWithoutReminderRulesInput, Prisma.MessageTemplateUncheckedUpdateWithoutReminderRulesInput>
+  create: Prisma.XOR<Prisma.MessageTemplateCreateWithoutReminderRulesInput, Prisma.MessageTemplateUncheckedCreateWithoutReminderRulesInput>
+  where?: Prisma.MessageTemplateWhereInput
+}
+
+export type MessageTemplateUpdateToOneWithWhereWithoutReminderRulesInput = {
+  where?: Prisma.MessageTemplateWhereInput
+  data: Prisma.XOR<Prisma.MessageTemplateUpdateWithoutReminderRulesInput, Prisma.MessageTemplateUncheckedUpdateWithoutReminderRulesInput>
+}
+
+export type MessageTemplateUpdateWithoutReminderRulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.EnumMessageTemplateCategoryFieldUpdateOperationsInput | $Enums.MessageTemplateCategory
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  body?: Prisma.StringFieldUpdateOperationsInput | string
+  channels?: Prisma.MessageTemplateUpdatechannelsInput | string[]
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  user?: Prisma.UserUpdateOneRequiredWithoutMessageTemplatesNestedInput
+}
+
+export type MessageTemplateUncheckedUpdateWithoutReminderRulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.EnumMessageTemplateCategoryFieldUpdateOperationsInput | $Enums.MessageTemplateCategory
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  body?: Prisma.StringFieldUpdateOperationsInput | string
+  channels?: Prisma.MessageTemplateUpdatechannelsInput | string[]
+  isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+}
+
 export type MessageTemplateCreateManyUserInput = {
   id?: string
   category: $Enums.MessageTemplateCategory
@@ -483,6 +569,7 @@ export type MessageTemplateUpdateWithoutUserInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   channels?: Prisma.MessageTemplateUpdatechannelsInput | string[]
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reminderRules?: Prisma.ReminderRuleUpdateManyWithoutTemplateNestedInput
 }
 
 export type MessageTemplateUncheckedUpdateWithoutUserInput = {
@@ -492,6 +579,7 @@ export type MessageTemplateUncheckedUpdateWithoutUserInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   channels?: Prisma.MessageTemplateUpdatechannelsInput | string[]
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutTemplateNestedInput
 }
 
 export type MessageTemplateUncheckedUpdateManyWithoutUserInput = {
@@ -504,6 +592,35 @@ export type MessageTemplateUncheckedUpdateManyWithoutUserInput = {
 }
 
 
+/**
+ * Count Type MessageTemplateCountOutputType
+ */
+
+export type MessageTemplateCountOutputType = {
+  reminderRules: number
+}
+
+export type MessageTemplateCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  reminderRules?: boolean | MessageTemplateCountOutputTypeCountReminderRulesArgs
+}
+
+/**
+ * MessageTemplateCountOutputType without action
+ */
+export type MessageTemplateCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MessageTemplateCountOutputType
+   */
+  select?: Prisma.MessageTemplateCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * MessageTemplateCountOutputType without action
+ */
+export type MessageTemplateCountOutputTypeCountReminderRulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReminderRuleWhereInput
+}
+
 
 export type MessageTemplateSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -513,7 +630,9 @@ export type MessageTemplateSelect<ExtArgs extends runtime.Types.Extensions.Inter
   body?: boolean
   channels?: boolean
   isSystem?: boolean
+  reminderRules?: boolean | Prisma.MessageTemplate$reminderRulesArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  _count?: boolean | Prisma.MessageTemplateCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["messageTemplate"]>
 
 export type MessageTemplateSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -550,7 +669,9 @@ export type MessageTemplateSelectScalar = {
 
 export type MessageTemplateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "category" | "name" | "body" | "channels" | "isSystem", ExtArgs["result"]["messageTemplate"]>
 export type MessageTemplateInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  reminderRules?: boolean | Prisma.MessageTemplate$reminderRulesArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  _count?: boolean | Prisma.MessageTemplateCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type MessageTemplateIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -562,6 +683,7 @@ export type MessageTemplateIncludeUpdateManyAndReturn<ExtArgs extends runtime.Ty
 export type $MessageTemplatePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "MessageTemplate"
   objects: {
+    reminderRules: Prisma.$ReminderRulePayload<ExtArgs>[]
     user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -966,6 +1088,7 @@ readonly fields: MessageTemplateFieldRefs;
  */
 export interface Prisma__MessageTemplateClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  reminderRules<T extends Prisma.MessageTemplate$reminderRulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MessageTemplate$reminderRulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReminderRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1401,6 +1524,30 @@ export type MessageTemplateDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many MessageTemplates to delete.
    */
   limit?: number
+}
+
+/**
+ * MessageTemplate.reminderRules
+ */
+export type MessageTemplate$reminderRulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ReminderRule
+   */
+  select?: Prisma.ReminderRuleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ReminderRule
+   */
+  omit?: Prisma.ReminderRuleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReminderRuleInclude<ExtArgs> | null
+  where?: Prisma.ReminderRuleWhereInput
+  orderBy?: Prisma.ReminderRuleOrderByWithRelationInput | Prisma.ReminderRuleOrderByWithRelationInput[]
+  cursor?: Prisma.ReminderRuleWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReminderRuleScalarFieldEnum | Prisma.ReminderRuleScalarFieldEnum[]
 }
 
 /**
