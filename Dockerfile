@@ -23,6 +23,9 @@ COPY . .
 ARG DIRECT_URL
 ENV DIRECT_URL=$DIRECT_URL
 
+# Compile: prisma generate + tsc -> dist/  (REQUIRED — do not remove; without it dist/ is empty)
+RUN pnpm build
+
 # Prisma may emit non-.ts runtime assets (e.g. .wasm) that tsc doesn't copy —
 # make sure they land next to the compiled client in dist/
 RUN cp -R src/generated/client/. dist/generated/client/ 2>/dev/null || true
