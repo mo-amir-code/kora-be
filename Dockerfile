@@ -23,9 +23,6 @@ COPY . .
 ARG DIRECT_URL
 ENV DIRECT_URL=$DIRECT_URL
 
-# Compile: prisma generate + tsc -> dist/
-RUN pnpm build
-
 # Prisma may emit non-.ts runtime assets (e.g. .wasm) that tsc doesn't copy —
 # make sure they land next to the compiled client in dist/
 RUN cp -R src/generated/client/. dist/generated/client/ 2>/dev/null || true
@@ -36,6 +33,7 @@ RUN pnpm prune --prod
 ##########  RUNTIME STAGE  ##########
 FROM node:22-slim AS runtime
 WORKDIR /app
+ENV NODE_ENV=production
 
 # openssl is required by Prisma at runtime
 RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates \
