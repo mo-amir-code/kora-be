@@ -4,6 +4,7 @@ import {
   createCheckoutSession,
   changePlan,
   cancelSubscription,
+  resumeSubscription,
   grantPromoAccess,
   handleWebhook,
   getCurrentPlan
@@ -20,6 +21,7 @@ router.get("/current-plan", authenticate, getCurrentPlan);
 router.post("/checkout", authenticate, validate(createCheckoutSessionSchema), createCheckoutSession);
 router.post("/change-plan", authenticate, validate(changePlanSchema), changePlan);
 router.post("/cancel", authenticate, cancelSubscription);
+router.post("/resume", authenticate, resumeSubscription);
 router.post("/promo-access", validate(grantPromoAccessSchema), grantPromoAccess);
 router.post("/webhook", handleWebhook);
 

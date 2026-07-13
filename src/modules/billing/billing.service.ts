@@ -127,9 +127,6 @@ export class BillingService {
     return PRODUCT_ID_TO_BILLING_CYCLE[productId] || BillingCycle.MONTHLY;
   }
 
-  /**
-   * Creates a checkout session for upgrading to PRO.
-   */
   async createCheckoutSession(userId: string, billingCycle: BillingCycle) {
     const user = await prisma.user.findUnique({
       where: { id: userId },
@@ -142,6 +139,17 @@ export class BillingService {
     if (!productId) {
       throw AppError.badRequest(`Invalid billing cycle: ${billingCycle}`);
     }
+
+    const subscription = await prisma.subscription.findUnique({
+      where: { userId },
+    });
+
+    const isPromoActive =
+      subscription &&
+      subscription.providerSubscriptionId === "PROMO" &&
+      subscription.status === SubscriptionStatus.ACTIVE &&
+      subscription.currentPeriodEnd &&
+      subscription.currentPeriodEnd > new Date();
 
     const checkoutParams: any = {
       product_cart: [
@@ -156,6 +164,17 @@ export class BillingService {
       return_url: `${env.CLIENT_URL}/subscription?status=success`,
       cancel_url: `${env.CLIENT_URL}/subscription?status=cancel`,
     };
+
+    if (isPromoActive && subscription.currentPeriodEnd) {
+      const now = new Date();
+      const remainingMs = subscription.currentPeriodEnd.getTime() - now.getTime();
+      const remainingDays = Math.ceil(remainingMs / (1000 * 60 * 60 * 24));
+      if (remainingDays > 0) {
+        checkoutParams.subscription_data = {
+          trial_period_days: remainingDays,
+        };
+      }
+    }
 
     if (user.providerCustomerId) {
       checkoutParams.customer = {
@@ -190,6 +209,10 @@ export class BillingService {
 
     if (!subscription || !subscription.providerSubscriptionId || subscription.status !== SubscriptionStatus.ACTIVE) {
       throw AppError.badRequest("No active payment provider subscription found to update.");
+    }
+
+    if (subscription.providerSubscriptionId === "PROMO") {
+      throw AppError.badRequest("Cannot change plan on a promotional subscription. Please purchase a regular subscription instead.");
     }
 
     const newProductId = BILLING_CYCLE_TO_PRODUCT_ID[billingCycle];
@@ -234,6 +257,38 @@ export class BillingService {
       return { message: "Subscription scheduled for cancellation at the next billing date" };
     } catch (err: any) {
       throw AppError.internal(`Failed to cancel subscription: ${err.message}`);
+    }
+  }
+
+  /**
+   * Resumes a cancelled-but-active subscription before the period end.
+   */
+  async resumeSubscription(userId: string) {
+    const subscription = await prisma.subscription.findUnique({
+      where: { userId },
+    });
+
+    if (!subscription || !subscription.providerSubscriptionId) {
+      throw AppError.badRequest("No active subscription found to resume.");
+    }
+
+    if (subscription.status !== SubscriptionStatus.ACTIVE && subscription.status !== SubscriptionStatus.CANCELLED) {
+      throw AppError.badRequest("Subscription is not in a resumeable state.");
+    }
+
+    try {
+      await providerClient.subscriptions.update(subscription.providerSubscriptionId, {
+        cancel_at_next_billing_date: false,
+      });
+      await prisma.subscription.update({
+        where: { userId },
+        data: {
+          cancelAtPeriodEnd: false,
+        },
+      });
+      return { message: "Subscription successfully resumed" };
+    } catch (err: any) {
+      throw AppError.internal(`Failed to resume subscription: ${err.message}`);
     }
   }
 
@@ -576,6 +631,7 @@ export class BillingService {
         billingCycle: null,
         planExpiresAt: null,
         cancelAtPeriodEnd: false,
+        isPromo: false,
       };
     }
 
@@ -585,6 +641,7 @@ export class BillingService {
       planExpiresAt: subscription.currentPeriodEnd || user?.planExpiresAt || null,
       status: subscription.status,
       cancelAtPeriodEnd: subscription.cancelAtPeriodEnd,
+      isPromo: subscription.providerSubscriptionId === "PROMO",
     };
   }
 }

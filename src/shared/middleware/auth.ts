@@ -3,7 +3,7 @@ import jwt, { type Secret } from "jsonwebtoken";
 import { env } from "../../config/index.js";
 import { AppError } from "../utils/app-error.js";
 import { prisma } from "../database/prisma.js";
-import { UserPlan } from "../../generated/client/enums.js";
+import { UserPlan, SubscriptionPlan, SubscriptionStatus } from "../../generated/client/enums.js";
 
 // Extend Express Request to include userId
 declare global {
@@ -57,7 +57,7 @@ export async function requireProPlan(req: Request, _res: Response, next: NextFun
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.userId },
-      select: { plan: true },
+      select: { plan: true, planExpiresAt: true },
     });
 
     if (!user || user.plan !== UserPlan.PRO) {
@@ -65,8 +65,48 @@ export async function requireProPlan(req: Request, _res: Response, next: NextFun
       return;
     }
 
+    if (user.planExpiresAt) {
+      const gracePeriodEnd = new Date(user.planExpiresAt.getTime() + 24 * 60 * 60 * 1000);
+      if (new Date() > gracePeriodEnd) {
+        handleExpiredSubscription(req.userId).catch((err) => {
+          console.error("Failed to update expired subscription in background", err);
+        });
+
+        next(AppError.forbidden("Pro plan has expired. Please renew your subscription."));
+        return;
+      }
+    }
+
     next();
   } catch (error) {
     next(error);
+  }
+}
+
+/**
+ * Updates the user's plan and subscription records to FREE/EXPIRED when a plan has expired.
+ */
+async function handleExpiredSubscription(userId: string): Promise<void> {
+  try {
+    await prisma.$transaction(async (tx) => {
+      await tx.user.update({
+        where: { id: userId },
+        data: {
+          plan: UserPlan.FREE,
+          planExpiresAt: null,
+        },
+      });
+
+      await tx.subscription.updateMany({
+        where: { userId },
+        data: {
+          plan: SubscriptionPlan.FREE,
+          status: SubscriptionStatus.EXPIRED,
+        },
+      });
+    });
+    console.log(`[Auth] Successfully demoted expired subscription database records for user: ${userId}`);
+  } catch (err: any) {
+    console.error(`[Auth] Failed to demote expired subscription database records for user: ${userId}`, err);
   }
 }

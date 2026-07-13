@@ -29,6 +29,15 @@ export const cancelSubscription = apiController(async (req) => {
   return { data: result, message: "Subscription cancelled successfully" };
 });
 
+export const resumeSubscription = apiController(async (req) => {
+  if (!req.userId) {
+    throw AppError.unauthorized("Not authenticated");
+  }
+  const result = await billingService.resumeSubscription(req.userId);
+  return { data: result, message: "Subscription resumed successfully" };
+});
+
+
 export const grantPromoAccess = apiController(async (req) => {
   const adminKey = req.headers["x-admin-key"];
   if (typeof adminKey !== "string") {
