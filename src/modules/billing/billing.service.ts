@@ -146,7 +146,7 @@ export class BillingService {
 
     const isPromoActive =
       subscription &&
-      subscription.providerSubscriptionId === "PROMO" &&
+      Boolean(subscription.providerSubscriptionId?.startsWith("PROMO")) &&
       subscription.status === SubscriptionStatus.ACTIVE &&
       subscription.currentPeriodEnd &&
       subscription.currentPeriodEnd > new Date();
@@ -211,7 +211,7 @@ export class BillingService {
       throw AppError.badRequest("No active payment provider subscription found to update.");
     }
 
-    if (subscription.providerSubscriptionId === "PROMO") {
+    if (subscription.providerSubscriptionId?.startsWith("PROMO")) {
       throw AppError.badRequest("Cannot change plan on a promotional subscription. Please purchase a regular subscription instead.");
     }
 
@@ -325,7 +325,7 @@ export class BillingService {
           status: plan === UserPlan.PRO ? SubscriptionStatus.ACTIVE : SubscriptionStatus.EXPIRED,
           currentPeriodStart: plan === UserPlan.PRO ? now : null,
           currentPeriodEnd: expiresAt,
-          providerSubscriptionId: plan === UserPlan.PRO ? "PROMO" : null,
+          providerSubscriptionId: plan === UserPlan.PRO ? `PROMO_${targetUserId}` : null,
           providerProductId: "PROMO",
           cancelAtPeriodEnd: false,
           cancelledAt: null,
@@ -337,7 +337,7 @@ export class BillingService {
           status: plan === UserPlan.PRO ? SubscriptionStatus.ACTIVE : SubscriptionStatus.EXPIRED,
           currentPeriodStart: plan === UserPlan.PRO ? now : null,
           currentPeriodEnd: expiresAt,
-          providerSubscriptionId: plan === UserPlan.PRO ? "PROMO" : null,
+          providerSubscriptionId: plan === UserPlan.PRO ? `PROMO_${targetUserId}` : null,
           providerProductId: "PROMO",
         },
       });
@@ -350,7 +350,7 @@ export class BillingService {
             subscriptionId: subscription.id,
             providerPaymentId: `PROMO_${Date.now()}`,
             providerInvoiceId: `PROMO_INV_${Date.now()}`,
-            providerSubscriptionId: "PROMO",
+            providerSubscriptionId: `PROMO_${targetUserId}`,
             amount: 0,
             currency: "INR",
             status: TransactionStatus.SUCCESS,
@@ -641,7 +641,7 @@ export class BillingService {
       planExpiresAt: subscription.currentPeriodEnd || user?.planExpiresAt || null,
       status: subscription.status,
       cancelAtPeriodEnd: subscription.cancelAtPeriodEnd,
-      isPromo: subscription.providerSubscriptionId === "PROMO",
+      isPromo: Boolean(subscription.providerSubscriptionId?.startsWith("PROMO")),
     };
   }
 }
