@@ -65,7 +65,7 @@ export const ModelName = {
   InvoiceLineItem: 'InvoiceLineItem',
   PaymentEvent: 'PaymentEvent',
   ReminderRule: 'ReminderRule',
-  Notification: 'Notification',
+  ReminderRuleLog: 'ReminderRuleLog',
   MessageTemplate: 'MessageTemplate',
   Subscription: 'Subscription',
   Transaction: 'Transaction',
@@ -310,28 +310,27 @@ export const ReminderRuleScalarFieldEnum = {
   channelWhatsapp: 'channelWhatsapp',
   channelPush: 'channelPush',
   isActive: 'isActive',
+  lastTriggeredAt: 'lastTriggeredAt',
   createdAt: 'createdAt'
 } as const
 
 export type ReminderRuleScalarFieldEnum = (typeof ReminderRuleScalarFieldEnum)[keyof typeof ReminderRuleScalarFieldEnum]
 
 
-export const NotificationScalarFieldEnum = {
+export const ReminderRuleLogScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  dealId: 'dealId',
-  deliverableId: 'deliverableId',
-  type: 'type',
-  channel: 'channel',
-  title: 'title',
-  body: 'body',
+  reminderRuleId: 'reminderRuleId',
+  attempt: 'attempt',
   status: 'status',
-  scheduledFor: 'scheduledFor',
-  sentAt: 'sentAt',
-  readAt: 'readAt'
+  errorCode: 'errorCode',
+  errorMessage: 'errorMessage',
+  providerMessageId: 'providerMessageId',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt'
 } as const
 
-export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+export type ReminderRuleLogScalarFieldEnum = (typeof ReminderRuleLogScalarFieldEnum)[keyof typeof ReminderRuleLogScalarFieldEnum]
 
 
 export const MessageTemplateScalarFieldEnum = {

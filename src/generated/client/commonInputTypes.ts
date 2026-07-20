@@ -582,55 +582,21 @@ export type EnumReminderTriggerTypeWithAggregatesFilter<$PrismaModel = never> = 
   _max?: Prisma.NestedEnumReminderTriggerTypeFilter<$PrismaModel>
 }
 
-export type EnumNotificationTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.NotificationType | Prisma.EnumNotificationTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.NotificationType[] | Prisma.ListEnumNotificationTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.NotificationType[] | Prisma.ListEnumNotificationTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumNotificationTypeFilter<$PrismaModel> | $Enums.NotificationType
+export type EnumReminderExecutionStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReminderExecutionStatus | Prisma.EnumReminderExecutionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReminderExecutionStatus[] | Prisma.ListEnumReminderExecutionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReminderExecutionStatus[] | Prisma.ListEnumReminderExecutionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReminderExecutionStatusFilter<$PrismaModel> | $Enums.ReminderExecutionStatus
 }
 
-export type EnumNotificationChannelFilter<$PrismaModel = never> = {
-  equals?: $Enums.NotificationChannel | Prisma.EnumNotificationChannelFieldRefInput<$PrismaModel>
-  in?: $Enums.NotificationChannel[] | Prisma.ListEnumNotificationChannelFieldRefInput<$PrismaModel>
-  notIn?: $Enums.NotificationChannel[] | Prisma.ListEnumNotificationChannelFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumNotificationChannelFilter<$PrismaModel> | $Enums.NotificationChannel
-}
-
-export type EnumNotificationStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.NotificationStatus | Prisma.EnumNotificationStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.NotificationStatus[] | Prisma.ListEnumNotificationStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.NotificationStatus[] | Prisma.ListEnumNotificationStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumNotificationStatusFilter<$PrismaModel> | $Enums.NotificationStatus
-}
-
-export type EnumNotificationTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.NotificationType | Prisma.EnumNotificationTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.NotificationType[] | Prisma.ListEnumNotificationTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.NotificationType[] | Prisma.ListEnumNotificationTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumNotificationTypeWithAggregatesFilter<$PrismaModel> | $Enums.NotificationType
+export type EnumReminderExecutionStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReminderExecutionStatus | Prisma.EnumReminderExecutionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReminderExecutionStatus[] | Prisma.ListEnumReminderExecutionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReminderExecutionStatus[] | Prisma.ListEnumReminderExecutionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReminderExecutionStatusWithAggregatesFilter<$PrismaModel> | $Enums.ReminderExecutionStatus
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumNotificationTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumNotificationTypeFilter<$PrismaModel>
-}
-
-export type EnumNotificationChannelWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.NotificationChannel | Prisma.EnumNotificationChannelFieldRefInput<$PrismaModel>
-  in?: $Enums.NotificationChannel[] | Prisma.ListEnumNotificationChannelFieldRefInput<$PrismaModel>
-  notIn?: $Enums.NotificationChannel[] | Prisma.ListEnumNotificationChannelFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumNotificationChannelWithAggregatesFilter<$PrismaModel> | $Enums.NotificationChannel
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumNotificationChannelFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumNotificationChannelFilter<$PrismaModel>
-}
-
-export type EnumNotificationStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.NotificationStatus | Prisma.EnumNotificationStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.NotificationStatus[] | Prisma.ListEnumNotificationStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.NotificationStatus[] | Prisma.ListEnumNotificationStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumNotificationStatusWithAggregatesFilter<$PrismaModel> | $Enums.NotificationStatus
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumNotificationStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumNotificationStatusFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReminderExecutionStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReminderExecutionStatusFilter<$PrismaModel>
 }
 
 export type EnumMessageTemplateCategoryFilter<$PrismaModel = never> = {
@@ -1329,55 +1295,21 @@ export type NestedEnumReminderTriggerTypeWithAggregatesFilter<$PrismaModel = nev
   _max?: Prisma.NestedEnumReminderTriggerTypeFilter<$PrismaModel>
 }
 
-export type NestedEnumNotificationTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.NotificationType | Prisma.EnumNotificationTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.NotificationType[] | Prisma.ListEnumNotificationTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.NotificationType[] | Prisma.ListEnumNotificationTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumNotificationTypeFilter<$PrismaModel> | $Enums.NotificationType
+export type NestedEnumReminderExecutionStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReminderExecutionStatus | Prisma.EnumReminderExecutionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReminderExecutionStatus[] | Prisma.ListEnumReminderExecutionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReminderExecutionStatus[] | Prisma.ListEnumReminderExecutionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReminderExecutionStatusFilter<$PrismaModel> | $Enums.ReminderExecutionStatus
 }
 
-export type NestedEnumNotificationChannelFilter<$PrismaModel = never> = {
-  equals?: $Enums.NotificationChannel | Prisma.EnumNotificationChannelFieldRefInput<$PrismaModel>
-  in?: $Enums.NotificationChannel[] | Prisma.ListEnumNotificationChannelFieldRefInput<$PrismaModel>
-  notIn?: $Enums.NotificationChannel[] | Prisma.ListEnumNotificationChannelFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumNotificationChannelFilter<$PrismaModel> | $Enums.NotificationChannel
-}
-
-export type NestedEnumNotificationStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.NotificationStatus | Prisma.EnumNotificationStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.NotificationStatus[] | Prisma.ListEnumNotificationStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.NotificationStatus[] | Prisma.ListEnumNotificationStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumNotificationStatusFilter<$PrismaModel> | $Enums.NotificationStatus
-}
-
-export type NestedEnumNotificationTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.NotificationType | Prisma.EnumNotificationTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.NotificationType[] | Prisma.ListEnumNotificationTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.NotificationType[] | Prisma.ListEnumNotificationTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumNotificationTypeWithAggregatesFilter<$PrismaModel> | $Enums.NotificationType
+export type NestedEnumReminderExecutionStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReminderExecutionStatus | Prisma.EnumReminderExecutionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReminderExecutionStatus[] | Prisma.ListEnumReminderExecutionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReminderExecutionStatus[] | Prisma.ListEnumReminderExecutionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReminderExecutionStatusWithAggregatesFilter<$PrismaModel> | $Enums.ReminderExecutionStatus
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumNotificationTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumNotificationTypeFilter<$PrismaModel>
-}
-
-export type NestedEnumNotificationChannelWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.NotificationChannel | Prisma.EnumNotificationChannelFieldRefInput<$PrismaModel>
-  in?: $Enums.NotificationChannel[] | Prisma.ListEnumNotificationChannelFieldRefInput<$PrismaModel>
-  notIn?: $Enums.NotificationChannel[] | Prisma.ListEnumNotificationChannelFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumNotificationChannelWithAggregatesFilter<$PrismaModel> | $Enums.NotificationChannel
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumNotificationChannelFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumNotificationChannelFilter<$PrismaModel>
-}
-
-export type NestedEnumNotificationStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.NotificationStatus | Prisma.EnumNotificationStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.NotificationStatus[] | Prisma.ListEnumNotificationStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.NotificationStatus[] | Prisma.ListEnumNotificationStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumNotificationStatusWithAggregatesFilter<$PrismaModel> | $Enums.NotificationStatus
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumNotificationStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumNotificationStatusFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReminderExecutionStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReminderExecutionStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumMessageTemplateCategoryFilter<$PrismaModel = never> = {

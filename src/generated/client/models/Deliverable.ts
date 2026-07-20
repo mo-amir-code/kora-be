@@ -257,7 +257,6 @@ export type DeliverableWhereInput = {
   postUrl?: Prisma.StringNullableFilter<"Deliverable"> | string | null
   notes?: Prisma.StringNullableFilter<"Deliverable"> | string | null
   deal?: Prisma.XOR<Prisma.DealScalarRelationFilter, Prisma.DealWhereInput>
-  notifications?: Prisma.NotificationListRelationFilter
 }
 
 export type DeliverableOrderByWithRelationInput = {
@@ -272,7 +271,6 @@ export type DeliverableOrderByWithRelationInput = {
   postUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   deal?: Prisma.DealOrderByWithRelationInput
-  notifications?: Prisma.NotificationOrderByRelationAggregateInput
 }
 
 export type DeliverableWhereUniqueInput = Prisma.AtLeast<{
@@ -290,7 +288,6 @@ export type DeliverableWhereUniqueInput = Prisma.AtLeast<{
   postUrl?: Prisma.StringNullableFilter<"Deliverable"> | string | null
   notes?: Prisma.StringNullableFilter<"Deliverable"> | string | null
   deal?: Prisma.XOR<Prisma.DealScalarRelationFilter, Prisma.DealWhereInput>
-  notifications?: Prisma.NotificationListRelationFilter
 }, "id">
 
 export type DeliverableOrderByWithAggregationInput = {
@@ -338,7 +335,6 @@ export type DeliverableCreateInput = {
   postUrl?: string | null
   notes?: string | null
   deal: Prisma.DealCreateNestedOneWithoutDeliverablesInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutDeliverableInput
 }
 
 export type DeliverableUncheckedCreateInput = {
@@ -352,7 +348,6 @@ export type DeliverableUncheckedCreateInput = {
   completedAt?: Date | string | null
   postUrl?: string | null
   notes?: string | null
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutDeliverableInput
 }
 
 export type DeliverableUpdateInput = {
@@ -366,7 +361,6 @@ export type DeliverableUpdateInput = {
   postUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deal?: Prisma.DealUpdateOneRequiredWithoutDeliverablesNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutDeliverableNestedInput
 }
 
 export type DeliverableUncheckedUpdateInput = {
@@ -380,7 +374,6 @@ export type DeliverableUncheckedUpdateInput = {
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   postUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutDeliverableNestedInput
 }
 
 export type DeliverableCreateManyInput = {
@@ -478,11 +471,6 @@ export type DeliverableSumOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
 }
 
-export type DeliverableNullableScalarRelationFilter = {
-  is?: Prisma.DeliverableWhereInput | null
-  isNot?: Prisma.DeliverableWhereInput | null
-}
-
 export type DeliverableCreateNestedManyWithoutDealInput = {
   create?: Prisma.XOR<Prisma.DeliverableCreateWithoutDealInput, Prisma.DeliverableUncheckedCreateWithoutDealInput> | Prisma.DeliverableCreateWithoutDealInput[] | Prisma.DeliverableUncheckedCreateWithoutDealInput[]
   connectOrCreate?: Prisma.DeliverableCreateOrConnectWithoutDealInput | Prisma.DeliverableCreateOrConnectWithoutDealInput[]
@@ -529,22 +517,6 @@ export type EnumDeliverableTypeFieldUpdateOperationsInput = {
   set?: $Enums.DeliverableType
 }
 
-export type DeliverableCreateNestedOneWithoutNotificationsInput = {
-  create?: Prisma.XOR<Prisma.DeliverableCreateWithoutNotificationsInput, Prisma.DeliverableUncheckedCreateWithoutNotificationsInput>
-  connectOrCreate?: Prisma.DeliverableCreateOrConnectWithoutNotificationsInput
-  connect?: Prisma.DeliverableWhereUniqueInput
-}
-
-export type DeliverableUpdateOneWithoutNotificationsNestedInput = {
-  create?: Prisma.XOR<Prisma.DeliverableCreateWithoutNotificationsInput, Prisma.DeliverableUncheckedCreateWithoutNotificationsInput>
-  connectOrCreate?: Prisma.DeliverableCreateOrConnectWithoutNotificationsInput
-  upsert?: Prisma.DeliverableUpsertWithoutNotificationsInput
-  disconnect?: Prisma.DeliverableWhereInput | boolean
-  delete?: Prisma.DeliverableWhereInput | boolean
-  connect?: Prisma.DeliverableWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.DeliverableUpdateToOneWithWhereWithoutNotificationsInput, Prisma.DeliverableUpdateWithoutNotificationsInput>, Prisma.DeliverableUncheckedUpdateWithoutNotificationsInput>
-}
-
 export type DeliverableCreateWithoutDealInput = {
   id?: string
   type: $Enums.DeliverableType
@@ -555,7 +527,6 @@ export type DeliverableCreateWithoutDealInput = {
   completedAt?: Date | string | null
   postUrl?: string | null
   notes?: string | null
-  notifications?: Prisma.NotificationCreateNestedManyWithoutDeliverableInput
 }
 
 export type DeliverableUncheckedCreateWithoutDealInput = {
@@ -568,7 +539,6 @@ export type DeliverableUncheckedCreateWithoutDealInput = {
   completedAt?: Date | string | null
   postUrl?: string | null
   notes?: string | null
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutDeliverableInput
 }
 
 export type DeliverableCreateOrConnectWithoutDealInput = {
@@ -613,74 +583,6 @@ export type DeliverableScalarWhereInput = {
   notes?: Prisma.StringNullableFilter<"Deliverable"> | string | null
 }
 
-export type DeliverableCreateWithoutNotificationsInput = {
-  id?: string
-  type: $Enums.DeliverableType
-  quantity?: number
-  platform?: string | null
-  dueDate?: Date | string | null
-  isCompleted?: boolean
-  completedAt?: Date | string | null
-  postUrl?: string | null
-  notes?: string | null
-  deal: Prisma.DealCreateNestedOneWithoutDeliverablesInput
-}
-
-export type DeliverableUncheckedCreateWithoutNotificationsInput = {
-  id?: string
-  dealId: string
-  type: $Enums.DeliverableType
-  quantity?: number
-  platform?: string | null
-  dueDate?: Date | string | null
-  isCompleted?: boolean
-  completedAt?: Date | string | null
-  postUrl?: string | null
-  notes?: string | null
-}
-
-export type DeliverableCreateOrConnectWithoutNotificationsInput = {
-  where: Prisma.DeliverableWhereUniqueInput
-  create: Prisma.XOR<Prisma.DeliverableCreateWithoutNotificationsInput, Prisma.DeliverableUncheckedCreateWithoutNotificationsInput>
-}
-
-export type DeliverableUpsertWithoutNotificationsInput = {
-  update: Prisma.XOR<Prisma.DeliverableUpdateWithoutNotificationsInput, Prisma.DeliverableUncheckedUpdateWithoutNotificationsInput>
-  create: Prisma.XOR<Prisma.DeliverableCreateWithoutNotificationsInput, Prisma.DeliverableUncheckedCreateWithoutNotificationsInput>
-  where?: Prisma.DeliverableWhereInput
-}
-
-export type DeliverableUpdateToOneWithWhereWithoutNotificationsInput = {
-  where?: Prisma.DeliverableWhereInput
-  data: Prisma.XOR<Prisma.DeliverableUpdateWithoutNotificationsInput, Prisma.DeliverableUncheckedUpdateWithoutNotificationsInput>
-}
-
-export type DeliverableUpdateWithoutNotificationsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumDeliverableTypeFieldUpdateOperationsInput | $Enums.DeliverableType
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  postUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deal?: Prisma.DealUpdateOneRequiredWithoutDeliverablesNestedInput
-}
-
-export type DeliverableUncheckedUpdateWithoutNotificationsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  dealId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumDeliverableTypeFieldUpdateOperationsInput | $Enums.DeliverableType
-  quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  postUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-}
-
 export type DeliverableCreateManyDealInput = {
   id?: string
   type: $Enums.DeliverableType
@@ -703,7 +605,6 @@ export type DeliverableUpdateWithoutDealInput = {
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   postUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notifications?: Prisma.NotificationUpdateManyWithoutDeliverableNestedInput
 }
 
 export type DeliverableUncheckedUpdateWithoutDealInput = {
@@ -716,7 +617,6 @@ export type DeliverableUncheckedUpdateWithoutDealInput = {
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   postUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutDeliverableNestedInput
 }
 
 export type DeliverableUncheckedUpdateManyWithoutDealInput = {
@@ -732,35 +632,6 @@ export type DeliverableUncheckedUpdateManyWithoutDealInput = {
 }
 
 
-/**
- * Count Type DeliverableCountOutputType
- */
-
-export type DeliverableCountOutputType = {
-  notifications: number
-}
-
-export type DeliverableCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  notifications?: boolean | DeliverableCountOutputTypeCountNotificationsArgs
-}
-
-/**
- * DeliverableCountOutputType without action
- */
-export type DeliverableCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the DeliverableCountOutputType
-   */
-  select?: Prisma.DeliverableCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * DeliverableCountOutputType without action
- */
-export type DeliverableCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.NotificationWhereInput
-}
-
 
 export type DeliverableSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -774,8 +645,6 @@ export type DeliverableSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   postUrl?: boolean
   notes?: boolean
   deal?: boolean | Prisma.DealDefaultArgs<ExtArgs>
-  notifications?: boolean | Prisma.Deliverable$notificationsArgs<ExtArgs>
-  _count?: boolean | Prisma.DeliverableCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["deliverable"]>
 
 export type DeliverableSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -822,8 +691,6 @@ export type DeliverableSelectScalar = {
 export type DeliverableOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dealId" | "type" | "quantity" | "platform" | "dueDate" | "isCompleted" | "completedAt" | "postUrl" | "notes", ExtArgs["result"]["deliverable"]>
 export type DeliverableInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   deal?: boolean | Prisma.DealDefaultArgs<ExtArgs>
-  notifications?: boolean | Prisma.Deliverable$notificationsArgs<ExtArgs>
-  _count?: boolean | Prisma.DeliverableCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DeliverableIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   deal?: boolean | Prisma.DealDefaultArgs<ExtArgs>
@@ -836,7 +703,6 @@ export type $DeliverablePayload<ExtArgs extends runtime.Types.Extensions.Interna
   name: "Deliverable"
   objects: {
     deal: Prisma.$DealPayload<ExtArgs>
-    notifications: Prisma.$NotificationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1244,7 +1110,6 @@ readonly fields: DeliverableFieldRefs;
 export interface Prisma__DeliverableClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   deal<T extends Prisma.DealDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DealDefaultArgs<ExtArgs>>): Prisma.Prisma__DealClient<runtime.Types.Result.GetResult<Prisma.$DealPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  notifications<T extends Prisma.Deliverable$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Deliverable$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1682,30 +1547,6 @@ export type DeliverableDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many Deliverables to delete.
    */
   limit?: number
-}
-
-/**
- * Deliverable.notifications
- */
-export type Deliverable$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Notification
-   */
-  select?: Prisma.NotificationSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Notification
-   */
-  omit?: Prisma.NotificationOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.NotificationInclude<ExtArgs> | null
-  where?: Prisma.NotificationWhereInput
-  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
-  cursor?: Prisma.NotificationWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
 }
 
 /**

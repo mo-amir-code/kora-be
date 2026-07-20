@@ -47,6 +47,7 @@ export type ReminderRuleMinAggregateOutputType = {
   channelWhatsapp: boolean | null
   channelPush: boolean | null
   isActive: boolean | null
+  lastTriggeredAt: Date | null
   createdAt: Date | null
 }
 
@@ -63,6 +64,7 @@ export type ReminderRuleMaxAggregateOutputType = {
   channelWhatsapp: boolean | null
   channelPush: boolean | null
   isActive: boolean | null
+  lastTriggeredAt: Date | null
   createdAt: Date | null
 }
 
@@ -81,6 +83,7 @@ export type ReminderRuleCountAggregateOutputType = {
   channelWhatsapp: number
   channelPush: number
   isActive: number
+  lastTriggeredAt: number
   createdAt: number
   _all: number
 }
@@ -107,6 +110,7 @@ export type ReminderRuleMinAggregateInputType = {
   channelWhatsapp?: true
   channelPush?: true
   isActive?: true
+  lastTriggeredAt?: true
   createdAt?: true
 }
 
@@ -123,6 +127,7 @@ export type ReminderRuleMaxAggregateInputType = {
   channelWhatsapp?: true
   channelPush?: true
   isActive?: true
+  lastTriggeredAt?: true
   createdAt?: true
 }
 
@@ -141,6 +146,7 @@ export type ReminderRuleCountAggregateInputType = {
   channelWhatsapp?: true
   channelPush?: true
   isActive?: true
+  lastTriggeredAt?: true
   createdAt?: true
   _all?: true
 }
@@ -246,6 +252,7 @@ export type ReminderRuleGroupByOutputType = {
   channelWhatsapp: boolean
   channelPush: boolean
   isActive: boolean
+  lastTriggeredAt: Date | null
   createdAt: Date
   _count: ReminderRuleCountAggregateOutputType | null
   _avg: ReminderRuleAvgAggregateOutputType | null
@@ -287,9 +294,11 @@ export type ReminderRuleWhereInput = {
   channelWhatsapp?: Prisma.BoolFilter<"ReminderRule"> | boolean
   channelPush?: Prisma.BoolFilter<"ReminderRule"> | boolean
   isActive?: Prisma.BoolFilter<"ReminderRule"> | boolean
+  lastTriggeredAt?: Prisma.DateTimeNullableFilter<"ReminderRule"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ReminderRule"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   template?: Prisma.XOR<Prisma.MessageTemplateNullableScalarRelationFilter, Prisma.MessageTemplateWhereInput> | null
+  logs?: Prisma.ReminderRuleLogListRelationFilter
 }
 
 export type ReminderRuleOrderByWithRelationInput = {
@@ -307,9 +316,11 @@ export type ReminderRuleOrderByWithRelationInput = {
   channelWhatsapp?: Prisma.SortOrder
   channelPush?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  lastTriggeredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   template?: Prisma.MessageTemplateOrderByWithRelationInput
+  logs?: Prisma.ReminderRuleLogOrderByRelationAggregateInput
 }
 
 export type ReminderRuleWhereUniqueInput = Prisma.AtLeast<{
@@ -330,9 +341,11 @@ export type ReminderRuleWhereUniqueInput = Prisma.AtLeast<{
   channelWhatsapp?: Prisma.BoolFilter<"ReminderRule"> | boolean
   channelPush?: Prisma.BoolFilter<"ReminderRule"> | boolean
   isActive?: Prisma.BoolFilter<"ReminderRule"> | boolean
+  lastTriggeredAt?: Prisma.DateTimeNullableFilter<"ReminderRule"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ReminderRule"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   template?: Prisma.XOR<Prisma.MessageTemplateNullableScalarRelationFilter, Prisma.MessageTemplateWhereInput> | null
+  logs?: Prisma.ReminderRuleLogListRelationFilter
 }, "id">
 
 export type ReminderRuleOrderByWithAggregationInput = {
@@ -350,6 +363,7 @@ export type ReminderRuleOrderByWithAggregationInput = {
   channelWhatsapp?: Prisma.SortOrder
   channelPush?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  lastTriggeredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.ReminderRuleCountOrderByAggregateInput
   _avg?: Prisma.ReminderRuleAvgOrderByAggregateInput
@@ -376,6 +390,7 @@ export type ReminderRuleScalarWhereWithAggregatesInput = {
   channelWhatsapp?: Prisma.BoolWithAggregatesFilter<"ReminderRule"> | boolean
   channelPush?: Prisma.BoolWithAggregatesFilter<"ReminderRule"> | boolean
   isActive?: Prisma.BoolWithAggregatesFilter<"ReminderRule"> | boolean
+  lastTriggeredAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ReminderRule"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ReminderRule"> | Date | string
 }
 
@@ -392,9 +407,11 @@ export type ReminderRuleCreateInput = {
   channelWhatsapp?: boolean
   channelPush?: boolean
   isActive?: boolean
+  lastTriggeredAt?: Date | string | null
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutReminderRulesInput
   template?: Prisma.MessageTemplateCreateNestedOneWithoutReminderRulesInput
+  logs?: Prisma.ReminderRuleLogCreateNestedManyWithoutReminderRuleInput
 }
 
 export type ReminderRuleUncheckedCreateInput = {
@@ -412,7 +429,9 @@ export type ReminderRuleUncheckedCreateInput = {
   channelWhatsapp?: boolean
   channelPush?: boolean
   isActive?: boolean
+  lastTriggeredAt?: Date | string | null
   createdAt?: Date | string
+  logs?: Prisma.ReminderRuleLogUncheckedCreateNestedManyWithoutReminderRuleInput
 }
 
 export type ReminderRuleUpdateInput = {
@@ -428,9 +447,11 @@ export type ReminderRuleUpdateInput = {
   channelWhatsapp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   channelPush?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastTriggeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutReminderRulesNestedInput
   template?: Prisma.MessageTemplateUpdateOneWithoutReminderRulesNestedInput
+  logs?: Prisma.ReminderRuleLogUpdateManyWithoutReminderRuleNestedInput
 }
 
 export type ReminderRuleUncheckedUpdateInput = {
@@ -448,7 +469,9 @@ export type ReminderRuleUncheckedUpdateInput = {
   channelWhatsapp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   channelPush?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastTriggeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logs?: Prisma.ReminderRuleLogUncheckedUpdateManyWithoutReminderRuleNestedInput
 }
 
 export type ReminderRuleCreateManyInput = {
@@ -466,6 +489,7 @@ export type ReminderRuleCreateManyInput = {
   channelWhatsapp?: boolean
   channelPush?: boolean
   isActive?: boolean
+  lastTriggeredAt?: Date | string | null
   createdAt?: Date | string
 }
 
@@ -482,6 +506,7 @@ export type ReminderRuleUpdateManyMutationInput = {
   channelWhatsapp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   channelPush?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastTriggeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -500,6 +525,7 @@ export type ReminderRuleUncheckedUpdateManyInput = {
   channelWhatsapp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   channelPush?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastTriggeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -528,6 +554,7 @@ export type ReminderRuleCountOrderByAggregateInput = {
   channelWhatsapp?: Prisma.SortOrder
   channelPush?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  lastTriggeredAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -548,6 +575,7 @@ export type ReminderRuleMaxOrderByAggregateInput = {
   channelWhatsapp?: Prisma.SortOrder
   channelPush?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  lastTriggeredAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -564,11 +592,17 @@ export type ReminderRuleMinOrderByAggregateInput = {
   channelWhatsapp?: Prisma.SortOrder
   channelPush?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  lastTriggeredAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type ReminderRuleSumOrderByAggregateInput = {
   offsetValue?: Prisma.SortOrder
+}
+
+export type ReminderRuleScalarRelationFilter = {
+  is?: Prisma.ReminderRuleWhereInput
+  isNot?: Prisma.ReminderRuleWhereInput
 }
 
 export type ReminderRuleCreateNestedManyWithoutUserInput = {
@@ -635,6 +669,20 @@ export type ReminderRuleUpdaterecipientsInput = {
   push?: string | string[]
 }
 
+export type ReminderRuleCreateNestedOneWithoutLogsInput = {
+  create?: Prisma.XOR<Prisma.ReminderRuleCreateWithoutLogsInput, Prisma.ReminderRuleUncheckedCreateWithoutLogsInput>
+  connectOrCreate?: Prisma.ReminderRuleCreateOrConnectWithoutLogsInput
+  connect?: Prisma.ReminderRuleWhereUniqueInput
+}
+
+export type ReminderRuleUpdateOneRequiredWithoutLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.ReminderRuleCreateWithoutLogsInput, Prisma.ReminderRuleUncheckedCreateWithoutLogsInput>
+  connectOrCreate?: Prisma.ReminderRuleCreateOrConnectWithoutLogsInput
+  upsert?: Prisma.ReminderRuleUpsertWithoutLogsInput
+  connect?: Prisma.ReminderRuleWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ReminderRuleUpdateToOneWithWhereWithoutLogsInput, Prisma.ReminderRuleUpdateWithoutLogsInput>, Prisma.ReminderRuleUncheckedUpdateWithoutLogsInput>
+}
+
 export type ReminderRuleCreateNestedManyWithoutTemplateInput = {
   create?: Prisma.XOR<Prisma.ReminderRuleCreateWithoutTemplateInput, Prisma.ReminderRuleUncheckedCreateWithoutTemplateInput> | Prisma.ReminderRuleCreateWithoutTemplateInput[] | Prisma.ReminderRuleUncheckedCreateWithoutTemplateInput[]
   connectOrCreate?: Prisma.ReminderRuleCreateOrConnectWithoutTemplateInput | Prisma.ReminderRuleCreateOrConnectWithoutTemplateInput[]
@@ -690,8 +738,10 @@ export type ReminderRuleCreateWithoutUserInput = {
   channelWhatsapp?: boolean
   channelPush?: boolean
   isActive?: boolean
+  lastTriggeredAt?: Date | string | null
   createdAt?: Date | string
   template?: Prisma.MessageTemplateCreateNestedOneWithoutReminderRulesInput
+  logs?: Prisma.ReminderRuleLogCreateNestedManyWithoutReminderRuleInput
 }
 
 export type ReminderRuleUncheckedCreateWithoutUserInput = {
@@ -708,7 +758,9 @@ export type ReminderRuleUncheckedCreateWithoutUserInput = {
   channelWhatsapp?: boolean
   channelPush?: boolean
   isActive?: boolean
+  lastTriggeredAt?: Date | string | null
   createdAt?: Date | string
+  logs?: Prisma.ReminderRuleLogUncheckedCreateNestedManyWithoutReminderRuleInput
 }
 
 export type ReminderRuleCreateOrConnectWithoutUserInput = {
@@ -755,7 +807,100 @@ export type ReminderRuleScalarWhereInput = {
   channelWhatsapp?: Prisma.BoolFilter<"ReminderRule"> | boolean
   channelPush?: Prisma.BoolFilter<"ReminderRule"> | boolean
   isActive?: Prisma.BoolFilter<"ReminderRule"> | boolean
+  lastTriggeredAt?: Prisma.DateTimeNullableFilter<"ReminderRule"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ReminderRule"> | Date | string
+}
+
+export type ReminderRuleCreateWithoutLogsInput = {
+  id?: string
+  name?: string | null
+  triggerType: $Enums.ReminderTriggerType
+  offsetValue: number
+  offsetUnit?: string
+  nextFollowUps?: Prisma.ReminderRuleCreatenextFollowUpsInput | string[]
+  recipients?: Prisma.ReminderRuleCreaterecipientsInput | string[]
+  messageTemplate?: string | null
+  channelEmail?: boolean
+  channelWhatsapp?: boolean
+  channelPush?: boolean
+  isActive?: boolean
+  lastTriggeredAt?: Date | string | null
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutReminderRulesInput
+  template?: Prisma.MessageTemplateCreateNestedOneWithoutReminderRulesInput
+}
+
+export type ReminderRuleUncheckedCreateWithoutLogsInput = {
+  id?: string
+  userId: string
+  templateId?: string | null
+  name?: string | null
+  triggerType: $Enums.ReminderTriggerType
+  offsetValue: number
+  offsetUnit?: string
+  nextFollowUps?: Prisma.ReminderRuleCreatenextFollowUpsInput | string[]
+  recipients?: Prisma.ReminderRuleCreaterecipientsInput | string[]
+  messageTemplate?: string | null
+  channelEmail?: boolean
+  channelWhatsapp?: boolean
+  channelPush?: boolean
+  isActive?: boolean
+  lastTriggeredAt?: Date | string | null
+  createdAt?: Date | string
+}
+
+export type ReminderRuleCreateOrConnectWithoutLogsInput = {
+  where: Prisma.ReminderRuleWhereUniqueInput
+  create: Prisma.XOR<Prisma.ReminderRuleCreateWithoutLogsInput, Prisma.ReminderRuleUncheckedCreateWithoutLogsInput>
+}
+
+export type ReminderRuleUpsertWithoutLogsInput = {
+  update: Prisma.XOR<Prisma.ReminderRuleUpdateWithoutLogsInput, Prisma.ReminderRuleUncheckedUpdateWithoutLogsInput>
+  create: Prisma.XOR<Prisma.ReminderRuleCreateWithoutLogsInput, Prisma.ReminderRuleUncheckedCreateWithoutLogsInput>
+  where?: Prisma.ReminderRuleWhereInput
+}
+
+export type ReminderRuleUpdateToOneWithWhereWithoutLogsInput = {
+  where?: Prisma.ReminderRuleWhereInput
+  data: Prisma.XOR<Prisma.ReminderRuleUpdateWithoutLogsInput, Prisma.ReminderRuleUncheckedUpdateWithoutLogsInput>
+}
+
+export type ReminderRuleUpdateWithoutLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  triggerType?: Prisma.EnumReminderTriggerTypeFieldUpdateOperationsInput | $Enums.ReminderTriggerType
+  offsetValue?: Prisma.IntFieldUpdateOperationsInput | number
+  offsetUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  nextFollowUps?: Prisma.ReminderRuleUpdatenextFollowUpsInput | string[]
+  recipients?: Prisma.ReminderRuleUpdaterecipientsInput | string[]
+  messageTemplate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  channelEmail?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  channelWhatsapp?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  channelPush?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastTriggeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutReminderRulesNestedInput
+  template?: Prisma.MessageTemplateUpdateOneWithoutReminderRulesNestedInput
+}
+
+export type ReminderRuleUncheckedUpdateWithoutLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  triggerType?: Prisma.EnumReminderTriggerTypeFieldUpdateOperationsInput | $Enums.ReminderTriggerType
+  offsetValue?: Prisma.IntFieldUpdateOperationsInput | number
+  offsetUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  nextFollowUps?: Prisma.ReminderRuleUpdatenextFollowUpsInput | string[]
+  recipients?: Prisma.ReminderRuleUpdaterecipientsInput | string[]
+  messageTemplate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  channelEmail?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  channelWhatsapp?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  channelPush?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastTriggeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ReminderRuleCreateWithoutTemplateInput = {
@@ -771,8 +916,10 @@ export type ReminderRuleCreateWithoutTemplateInput = {
   channelWhatsapp?: boolean
   channelPush?: boolean
   isActive?: boolean
+  lastTriggeredAt?: Date | string | null
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutReminderRulesInput
+  logs?: Prisma.ReminderRuleLogCreateNestedManyWithoutReminderRuleInput
 }
 
 export type ReminderRuleUncheckedCreateWithoutTemplateInput = {
@@ -789,7 +936,9 @@ export type ReminderRuleUncheckedCreateWithoutTemplateInput = {
   channelWhatsapp?: boolean
   channelPush?: boolean
   isActive?: boolean
+  lastTriggeredAt?: Date | string | null
   createdAt?: Date | string
+  logs?: Prisma.ReminderRuleLogUncheckedCreateNestedManyWithoutReminderRuleInput
 }
 
 export type ReminderRuleCreateOrConnectWithoutTemplateInput = {
@@ -832,6 +981,7 @@ export type ReminderRuleCreateManyUserInput = {
   channelWhatsapp?: boolean
   channelPush?: boolean
   isActive?: boolean
+  lastTriggeredAt?: Date | string | null
   createdAt?: Date | string
 }
 
@@ -848,8 +998,10 @@ export type ReminderRuleUpdateWithoutUserInput = {
   channelWhatsapp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   channelPush?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastTriggeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   template?: Prisma.MessageTemplateUpdateOneWithoutReminderRulesNestedInput
+  logs?: Prisma.ReminderRuleLogUpdateManyWithoutReminderRuleNestedInput
 }
 
 export type ReminderRuleUncheckedUpdateWithoutUserInput = {
@@ -866,7 +1018,9 @@ export type ReminderRuleUncheckedUpdateWithoutUserInput = {
   channelWhatsapp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   channelPush?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastTriggeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logs?: Prisma.ReminderRuleLogUncheckedUpdateManyWithoutReminderRuleNestedInput
 }
 
 export type ReminderRuleUncheckedUpdateManyWithoutUserInput = {
@@ -883,6 +1037,7 @@ export type ReminderRuleUncheckedUpdateManyWithoutUserInput = {
   channelWhatsapp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   channelPush?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastTriggeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -900,6 +1055,7 @@ export type ReminderRuleCreateManyTemplateInput = {
   channelWhatsapp?: boolean
   channelPush?: boolean
   isActive?: boolean
+  lastTriggeredAt?: Date | string | null
   createdAt?: Date | string
 }
 
@@ -916,8 +1072,10 @@ export type ReminderRuleUpdateWithoutTemplateInput = {
   channelWhatsapp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   channelPush?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastTriggeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutReminderRulesNestedInput
+  logs?: Prisma.ReminderRuleLogUpdateManyWithoutReminderRuleNestedInput
 }
 
 export type ReminderRuleUncheckedUpdateWithoutTemplateInput = {
@@ -934,7 +1092,9 @@ export type ReminderRuleUncheckedUpdateWithoutTemplateInput = {
   channelWhatsapp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   channelPush?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastTriggeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logs?: Prisma.ReminderRuleLogUncheckedUpdateManyWithoutReminderRuleNestedInput
 }
 
 export type ReminderRuleUncheckedUpdateManyWithoutTemplateInput = {
@@ -951,9 +1111,39 @@ export type ReminderRuleUncheckedUpdateManyWithoutTemplateInput = {
   channelWhatsapp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   channelPush?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastTriggeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type ReminderRuleCountOutputType
+ */
+
+export type ReminderRuleCountOutputType = {
+  logs: number
+}
+
+export type ReminderRuleCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  logs?: boolean | ReminderRuleCountOutputTypeCountLogsArgs
+}
+
+/**
+ * ReminderRuleCountOutputType without action
+ */
+export type ReminderRuleCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ReminderRuleCountOutputType
+   */
+  select?: Prisma.ReminderRuleCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ReminderRuleCountOutputType without action
+ */
+export type ReminderRuleCountOutputTypeCountLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReminderRuleLogWhereInput
+}
 
 
 export type ReminderRuleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -971,9 +1161,12 @@ export type ReminderRuleSelect<ExtArgs extends runtime.Types.Extensions.Internal
   channelWhatsapp?: boolean
   channelPush?: boolean
   isActive?: boolean
+  lastTriggeredAt?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   template?: boolean | Prisma.ReminderRule$templateArgs<ExtArgs>
+  logs?: boolean | Prisma.ReminderRule$logsArgs<ExtArgs>
+  _count?: boolean | Prisma.ReminderRuleCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reminderRule"]>
 
 export type ReminderRuleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -991,6 +1184,7 @@ export type ReminderRuleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   channelWhatsapp?: boolean
   channelPush?: boolean
   isActive?: boolean
+  lastTriggeredAt?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   template?: boolean | Prisma.ReminderRule$templateArgs<ExtArgs>
@@ -1011,6 +1205,7 @@ export type ReminderRuleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   channelWhatsapp?: boolean
   channelPush?: boolean
   isActive?: boolean
+  lastTriggeredAt?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   template?: boolean | Prisma.ReminderRule$templateArgs<ExtArgs>
@@ -1031,13 +1226,16 @@ export type ReminderRuleSelectScalar = {
   channelWhatsapp?: boolean
   channelPush?: boolean
   isActive?: boolean
+  lastTriggeredAt?: boolean
   createdAt?: boolean
 }
 
-export type ReminderRuleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "templateId" | "name" | "triggerType" | "offsetValue" | "offsetUnit" | "nextFollowUps" | "recipients" | "messageTemplate" | "channelEmail" | "channelWhatsapp" | "channelPush" | "isActive" | "createdAt", ExtArgs["result"]["reminderRule"]>
+export type ReminderRuleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "templateId" | "name" | "triggerType" | "offsetValue" | "offsetUnit" | "nextFollowUps" | "recipients" | "messageTemplate" | "channelEmail" | "channelWhatsapp" | "channelPush" | "isActive" | "lastTriggeredAt" | "createdAt", ExtArgs["result"]["reminderRule"]>
 export type ReminderRuleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   template?: boolean | Prisma.ReminderRule$templateArgs<ExtArgs>
+  logs?: boolean | Prisma.ReminderRule$logsArgs<ExtArgs>
+  _count?: boolean | Prisma.ReminderRuleCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ReminderRuleIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1053,6 +1251,7 @@ export type $ReminderRulePayload<ExtArgs extends runtime.Types.Extensions.Intern
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
     template: Prisma.$MessageTemplatePayload<ExtArgs> | null
+    logs: Prisma.$ReminderRuleLogPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1069,6 +1268,7 @@ export type $ReminderRulePayload<ExtArgs extends runtime.Types.Extensions.Intern
     channelWhatsapp: boolean
     channelPush: boolean
     isActive: boolean
+    lastTriggeredAt: Date | null
     createdAt: Date
   }, ExtArgs["result"]["reminderRule"]>
   composites: {}
@@ -1466,6 +1666,7 @@ export interface Prisma__ReminderRuleClient<T, Null = never, ExtArgs extends run
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   template<T extends Prisma.ReminderRule$templateArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ReminderRule$templateArgs<ExtArgs>>): Prisma.Prisma__MessageTemplateClient<runtime.Types.Result.GetResult<Prisma.$MessageTemplatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  logs<T extends Prisma.ReminderRule$logsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ReminderRule$logsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReminderRuleLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1509,6 +1710,7 @@ export interface ReminderRuleFieldRefs {
   readonly channelWhatsapp: Prisma.FieldRef<"ReminderRule", 'Boolean'>
   readonly channelPush: Prisma.FieldRef<"ReminderRule", 'Boolean'>
   readonly isActive: Prisma.FieldRef<"ReminderRule", 'Boolean'>
+  readonly lastTriggeredAt: Prisma.FieldRef<"ReminderRule", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"ReminderRule", 'DateTime'>
 }
     
@@ -1927,6 +2129,30 @@ export type ReminderRule$templateArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   include?: Prisma.MessageTemplateInclude<ExtArgs> | null
   where?: Prisma.MessageTemplateWhereInput
+}
+
+/**
+ * ReminderRule.logs
+ */
+export type ReminderRule$logsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ReminderRuleLog
+   */
+  select?: Prisma.ReminderRuleLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ReminderRuleLog
+   */
+  omit?: Prisma.ReminderRuleLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReminderRuleLogInclude<ExtArgs> | null
+  where?: Prisma.ReminderRuleLogWhereInput
+  orderBy?: Prisma.ReminderRuleLogOrderByWithRelationInput | Prisma.ReminderRuleLogOrderByWithRelationInput[]
+  cursor?: Prisma.ReminderRuleLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReminderRuleLogScalarFieldEnum | Prisma.ReminderRuleLogScalarFieldEnum[]
 }
 
 /**

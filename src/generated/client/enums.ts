@@ -187,39 +187,14 @@ export const ReminderTriggerType = {
 export type ReminderTriggerType = (typeof ReminderTriggerType)[keyof typeof ReminderTriggerType]
 
 
-export const NotificationType = {
-  DELIVERABLE_REMINDER: 'DELIVERABLE_REMINDER',
-  INVOICE_REMINDER: 'INVOICE_REMINDER',
-  PAYMENT_REMINDER: 'PAYMENT_REMINDER',
-  PAYMENT_RECEIVED: 'PAYMENT_RECEIVED',
-  DEAL_UPDATED: 'DEAL_UPDATED',
-  DEAL_COMPLETED: 'DEAL_COMPLETED',
-  EXCLUSIVITY_ENDING: 'EXCLUSIVITY_ENDING',
-  SYSTEM_NOTIFICATION: 'SYSTEM_NOTIFICATION'
-} as const
-
-export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
-
-
-export const NotificationChannel = {
-  EMAIL: 'EMAIL',
-  WHATSAPP: 'WHATSAPP',
-  PUSH: 'PUSH',
-  IN_APP: 'IN_APP'
-} as const
-
-export type NotificationChannel = (typeof NotificationChannel)[keyof typeof NotificationChannel]
-
-
-export const NotificationStatus = {
-  PENDING: 'PENDING',
-  SCHEDULED: 'SCHEDULED',
-  SENT: 'SENT',
+export const ReminderExecutionStatus = {
+  SUCCESS: 'SUCCESS',
   FAILED: 'FAILED',
-  READ: 'READ'
+  SKIPPED: 'SKIPPED',
+  PENDING: 'PENDING'
 } as const
 
-export type NotificationStatus = (typeof NotificationStatus)[keyof typeof NotificationStatus]
+export type ReminderExecutionStatus = (typeof ReminderExecutionStatus)[keyof typeof ReminderExecutionStatus]
 
 
 export const MessageTemplateCategory = {

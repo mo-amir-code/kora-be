@@ -112,10 +112,10 @@ export type PaymentEvent = Prisma.PaymentEventModel
  */
 export type ReminderRule = Prisma.ReminderRuleModel
 /**
- * Model Notification
+ * Model ReminderRuleLog
  * 
  */
-export type Notification = Prisma.NotificationModel
+export type ReminderRuleLog = Prisma.ReminderRuleLogModel
 /**
  * Model MessageTemplate
  * 

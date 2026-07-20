@@ -398,7 +398,7 @@ export const ModelName = {
   InvoiceLineItem: 'InvoiceLineItem',
   PaymentEvent: 'PaymentEvent',
   ReminderRule: 'ReminderRule',
-  Notification: 'Notification',
+  ReminderRuleLog: 'ReminderRuleLog',
   MessageTemplate: 'MessageTemplate',
   Subscription: 'Subscription',
   Transaction: 'Transaction',
@@ -420,7 +420,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "oAuthAccount" | "otp" | "refreshToken" | "userSocialProfile" | "brand" | "brandContact" | "deal" | "deliverable" | "dealActivity" | "invoice" | "invoiceLineItem" | "paymentEvent" | "reminderRule" | "notification" | "messageTemplate" | "subscription" | "transaction" | "userInvoiceSettings" | "userSettings" | "attachment"
+    modelProps: "user" | "oAuthAccount" | "otp" | "refreshToken" | "userSocialProfile" | "brand" | "brandContact" | "deal" | "deliverable" | "dealActivity" | "invoice" | "invoiceLineItem" | "paymentEvent" | "reminderRule" | "reminderRuleLog" | "messageTemplate" | "subscription" | "transaction" | "userInvoiceSettings" | "userSettings" | "attachment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1460,77 +1460,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Notification: {
-      payload: Prisma.$NotificationPayload<ExtArgs>
-      fields: Prisma.NotificationFieldRefs
+    ReminderRuleLog: {
+      payload: Prisma.$ReminderRuleLogPayload<ExtArgs>
+      fields: Prisma.ReminderRuleLogFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.NotificationFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+          args: Prisma.ReminderRuleLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderRuleLogPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.NotificationFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+          args: Prisma.ReminderRuleLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderRuleLogPayload>
         }
         findFirst: {
-          args: Prisma.NotificationFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+          args: Prisma.ReminderRuleLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderRuleLogPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.NotificationFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+          args: Prisma.ReminderRuleLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderRuleLogPayload>
         }
         findMany: {
-          args: Prisma.NotificationFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+          args: Prisma.ReminderRuleLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderRuleLogPayload>[]
         }
         create: {
-          args: Prisma.NotificationCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+          args: Prisma.ReminderRuleLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderRuleLogPayload>
         }
         createMany: {
-          args: Prisma.NotificationCreateManyArgs<ExtArgs>
+          args: Prisma.ReminderRuleLogCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.NotificationCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+          args: Prisma.ReminderRuleLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderRuleLogPayload>[]
         }
         delete: {
-          args: Prisma.NotificationDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+          args: Prisma.ReminderRuleLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderRuleLogPayload>
         }
         update: {
-          args: Prisma.NotificationUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+          args: Prisma.ReminderRuleLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderRuleLogPayload>
         }
         deleteMany: {
-          args: Prisma.NotificationDeleteManyArgs<ExtArgs>
+          args: Prisma.ReminderRuleLogDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.NotificationUpdateManyArgs<ExtArgs>
+          args: Prisma.ReminderRuleLogUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.NotificationUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+          args: Prisma.ReminderRuleLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderRuleLogPayload>[]
         }
         upsert: {
-          args: Prisma.NotificationUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+          args: Prisma.ReminderRuleLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderRuleLogPayload>
         }
         aggregate: {
-          args: Prisma.NotificationAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateNotification>
+          args: Prisma.ReminderRuleLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReminderRuleLog>
         }
         groupBy: {
-          args: Prisma.NotificationGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.NotificationGroupByOutputType>[]
+          args: Prisma.ReminderRuleLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReminderRuleLogGroupByOutputType>[]
         }
         count: {
-          args: Prisma.NotificationCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.NotificationCountAggregateOutputType> | number
+          args: Prisma.ReminderRuleLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReminderRuleLogCountAggregateOutputType> | number
         }
       }
     }
@@ -2237,28 +2237,27 @@ export const ReminderRuleScalarFieldEnum = {
   channelWhatsapp: 'channelWhatsapp',
   channelPush: 'channelPush',
   isActive: 'isActive',
+  lastTriggeredAt: 'lastTriggeredAt',
   createdAt: 'createdAt'
 } as const
 
 export type ReminderRuleScalarFieldEnum = (typeof ReminderRuleScalarFieldEnum)[keyof typeof ReminderRuleScalarFieldEnum]
 
 
-export const NotificationScalarFieldEnum = {
+export const ReminderRuleLogScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  dealId: 'dealId',
-  deliverableId: 'deliverableId',
-  type: 'type',
-  channel: 'channel',
-  title: 'title',
-  body: 'body',
+  reminderRuleId: 'reminderRuleId',
+  attempt: 'attempt',
   status: 'status',
-  scheduledFor: 'scheduledFor',
-  sentAt: 'sentAt',
-  readAt: 'readAt'
+  errorCode: 'errorCode',
+  errorMessage: 'errorMessage',
+  providerMessageId: 'providerMessageId',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt'
 } as const
 
-export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+export type ReminderRuleLogScalarFieldEnum = (typeof ReminderRuleLogScalarFieldEnum)[keyof typeof ReminderRuleLogScalarFieldEnum]
 
 
 export const MessageTemplateScalarFieldEnum = {
@@ -2660,44 +2659,16 @@ export type ListEnumReminderTriggerTypeFieldRefInput<$PrismaModel> = FieldRefInp
 
 
 /**
- * Reference to a field of type 'NotificationType'
+ * Reference to a field of type 'ReminderExecutionStatus'
  */
-export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType'>
+export type EnumReminderExecutionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReminderExecutionStatus'>
     
 
 
 /**
- * Reference to a field of type 'NotificationType[]'
+ * Reference to a field of type 'ReminderExecutionStatus[]'
  */
-export type ListEnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType[]'>
-    
-
-
-/**
- * Reference to a field of type 'NotificationChannel'
- */
-export type EnumNotificationChannelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationChannel'>
-    
-
-
-/**
- * Reference to a field of type 'NotificationChannel[]'
- */
-export type ListEnumNotificationChannelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationChannel[]'>
-    
-
-
-/**
- * Reference to a field of type 'NotificationStatus'
- */
-export type EnumNotificationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationStatus'>
-    
-
-
-/**
- * Reference to a field of type 'NotificationStatus[]'
- */
-export type ListEnumNotificationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationStatus[]'>
+export type ListEnumReminderExecutionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReminderExecutionStatus[]'>
     
 
 
@@ -2950,7 +2921,7 @@ export type GlobalOmitConfig = {
   invoiceLineItem?: Prisma.InvoiceLineItemOmit
   paymentEvent?: Prisma.PaymentEventOmit
   reminderRule?: Prisma.ReminderRuleOmit
-  notification?: Prisma.NotificationOmit
+  reminderRuleLog?: Prisma.ReminderRuleLogOmit
   messageTemplate?: Prisma.MessageTemplateOmit
   subscription?: Prisma.SubscriptionOmit
   transaction?: Prisma.TransactionOmit

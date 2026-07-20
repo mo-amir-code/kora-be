@@ -8,7 +8,7 @@ export const calendarService = {
    * @param endDate - End of the range (inclusive).
    */
   async getEvents(userId: string, startDate: Date, endDate: Date) {
-    const [deliverables, deals, invoices, notifications] = await Promise.all([
+    const [deliverables, deals, invoices] = await Promise.all([
       // 1. Deliverables — filter by dueDate within range
       prisma.deliverable.findMany({
         where: {
@@ -37,18 +37,6 @@ export const calendarService = {
         where: {
           userId,
           dueDate: { gte: startDate, lte: endDate },
-        },
-        include: {
-          deal: { include: { brand: true } },
-        },
-      }),
-
-      // 4. Follow-up Notifications — filter by scheduledFor within range
-      prisma.notification.findMany({
-        where: {
-          userId,
-          status: "SCHEDULED",
-          scheduledFor: { gte: startDate, lte: endDate },
         },
         include: {
           deal: { include: { brand: true } },
@@ -120,22 +108,6 @@ export const calendarService = {
           amount: inv.total,
           brandName: inv.deal.brand.name,
           invoiceId: inv.id,
-        },
-      });
-    });
-
-    // Map Notifications (Follow-ups)
-    notifications.forEach((n) => {
-      events.push({
-        id: `notification-${n.id}`,
-        type: "FOLLOW_UP",
-        date: n.scheduledFor,
-        title: `Follow-up: ${n.deal?.brand.name || "Brand"}`,
-        subtitle: n.deal?.title || "Lead Follow-up",
-        status: "success",
-        meta: {
-          notificationId: n.id,
-          dealId: n.dealId,
         },
       });
     });

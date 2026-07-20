@@ -251,7 +251,6 @@ export type UserWhereInput = {
   deals?: Prisma.DealListRelationFilter
   dealActivities?: Prisma.DealActivityListRelationFilter
   invoices?: Prisma.InvoiceListRelationFilter
-  notifications?: Prisma.NotificationListRelationFilter
   reminderRules?: Prisma.ReminderRuleListRelationFilter
   messageTemplates?: Prisma.MessageTemplateListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
@@ -283,7 +282,6 @@ export type UserOrderByWithRelationInput = {
   deals?: Prisma.DealOrderByRelationAggregateInput
   dealActivities?: Prisma.DealActivityOrderByRelationAggregateInput
   invoices?: Prisma.InvoiceOrderByRelationAggregateInput
-  notifications?: Prisma.NotificationOrderByRelationAggregateInput
   reminderRules?: Prisma.ReminderRuleOrderByRelationAggregateInput
   messageTemplates?: Prisma.MessageTemplateOrderByRelationAggregateInput
   subscription?: Prisma.SubscriptionOrderByWithRelationInput
@@ -318,7 +316,6 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   deals?: Prisma.DealListRelationFilter
   dealActivities?: Prisma.DealActivityListRelationFilter
   invoices?: Prisma.InvoiceListRelationFilter
-  notifications?: Prisma.NotificationListRelationFilter
   reminderRules?: Prisma.ReminderRuleListRelationFilter
   messageTemplates?: Prisma.MessageTemplateListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
@@ -388,7 +385,6 @@ export type UserCreateInput = {
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
@@ -420,7 +416,6 @@ export type UserUncheckedCreateInput = {
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
@@ -452,7 +447,6 @@ export type UserUpdateInput = {
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
@@ -484,7 +478,6 @@ export type UserUncheckedUpdateInput = {
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
@@ -748,20 +741,6 @@ export type UserUpdateOneRequiredWithoutReminderRulesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReminderRulesInput, Prisma.UserUpdateWithoutReminderRulesInput>, Prisma.UserUncheckedUpdateWithoutReminderRulesInput>
 }
 
-export type UserCreateNestedOneWithoutNotificationsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
-  upsert?: Prisma.UserUpsertWithoutNotificationsInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
-}
-
 export type UserCreateNestedOneWithoutMessageTemplatesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutMessageTemplatesInput, Prisma.UserUncheckedCreateWithoutMessageTemplatesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutMessageTemplatesInput
@@ -865,7 +844,6 @@ export type UserCreateWithoutOauthAccountsInput = {
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
@@ -896,7 +874,6 @@ export type UserUncheckedCreateWithoutOauthAccountsInput = {
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
@@ -943,7 +920,6 @@ export type UserUpdateWithoutOauthAccountsInput = {
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
@@ -974,7 +950,6 @@ export type UserUncheckedUpdateWithoutOauthAccountsInput = {
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
@@ -1005,7 +980,6 @@ export type UserCreateWithoutOtpsInput = {
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
@@ -1036,7 +1010,6 @@ export type UserUncheckedCreateWithoutOtpsInput = {
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
@@ -1083,7 +1056,6 @@ export type UserUpdateWithoutOtpsInput = {
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
@@ -1114,7 +1086,6 @@ export type UserUncheckedUpdateWithoutOtpsInput = {
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
@@ -1145,7 +1116,6 @@ export type UserCreateWithoutRefreshTokensInput = {
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
@@ -1176,7 +1146,6 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
@@ -1223,7 +1192,6 @@ export type UserUpdateWithoutRefreshTokensInput = {
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
@@ -1254,7 +1222,6 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
@@ -1284,7 +1251,6 @@ export type UserCreateWithoutSocialProfilesInput = {
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
@@ -1315,7 +1281,6 @@ export type UserUncheckedCreateWithoutSocialProfilesInput = {
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
@@ -1362,7 +1327,6 @@ export type UserUpdateWithoutSocialProfilesInput = {
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
@@ -1393,7 +1357,6 @@ export type UserUncheckedUpdateWithoutSocialProfilesInput = {
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
@@ -1424,7 +1387,6 @@ export type UserCreateWithoutBrandsInput = {
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
@@ -1455,7 +1417,6 @@ export type UserUncheckedCreateWithoutBrandsInput = {
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
@@ -1502,7 +1463,6 @@ export type UserUpdateWithoutBrandsInput = {
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
@@ -1533,7 +1493,6 @@ export type UserUncheckedUpdateWithoutBrandsInput = {
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
@@ -1564,7 +1523,6 @@ export type UserCreateWithoutDealsInput = {
   brands?: Prisma.BrandCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
@@ -1595,7 +1553,6 @@ export type UserUncheckedCreateWithoutDealsInput = {
   brands?: Prisma.BrandUncheckedCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
@@ -1642,7 +1599,6 @@ export type UserUpdateWithoutDealsInput = {
   brands?: Prisma.BrandUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
@@ -1673,7 +1629,6 @@ export type UserUncheckedUpdateWithoutDealsInput = {
   brands?: Prisma.BrandUncheckedUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
@@ -1704,7 +1659,6 @@ export type UserCreateWithoutDealActivitiesInput = {
   brands?: Prisma.BrandCreateNestedManyWithoutUserInput
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
@@ -1735,7 +1689,6 @@ export type UserUncheckedCreateWithoutDealActivitiesInput = {
   brands?: Prisma.BrandUncheckedCreateNestedManyWithoutUserInput
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
@@ -1782,7 +1735,6 @@ export type UserUpdateWithoutDealActivitiesInput = {
   brands?: Prisma.BrandUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
@@ -1813,7 +1765,6 @@ export type UserUncheckedUpdateWithoutDealActivitiesInput = {
   brands?: Prisma.BrandUncheckedUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
@@ -1844,7 +1795,6 @@ export type UserCreateWithoutInvoicesInput = {
   brands?: Prisma.BrandCreateNestedManyWithoutUserInput
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
@@ -1875,7 +1825,6 @@ export type UserUncheckedCreateWithoutInvoicesInput = {
   brands?: Prisma.BrandUncheckedCreateNestedManyWithoutUserInput
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
@@ -1922,7 +1871,6 @@ export type UserUpdateWithoutInvoicesInput = {
   brands?: Prisma.BrandUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
@@ -1953,7 +1901,6 @@ export type UserUncheckedUpdateWithoutInvoicesInput = {
   brands?: Prisma.BrandUncheckedUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
@@ -1985,7 +1932,6 @@ export type UserCreateWithoutReminderRulesInput = {
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
   settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
@@ -2016,7 +1962,6 @@ export type UserUncheckedCreateWithoutReminderRulesInput = {
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
   settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
@@ -2063,7 +2008,6 @@ export type UserUpdateWithoutReminderRulesInput = {
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
   settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
@@ -2094,147 +2038,6 @@ export type UserUncheckedUpdateWithoutReminderRulesInput = {
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
-  settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
-  invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedUpdateOneWithoutUserNestedInput
-  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutCreatorNestedInput
-  oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
-  otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
-  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
-  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutNotificationsInput = {
-  id?: string
-  email: string
-  fullName: string
-  password?: string | null
-  handle?: string | null
-  avatarUrl?: string | null
-  whatsappNumber?: string | null
-  plan?: $Enums.UserPlan
-  planExpiresAt?: Date | string | null
-  providerCustomerId?: string | null
-  verified?: boolean
-  createdAt?: Date | string
-  deletedAt?: Date | string | null
-  socialProfiles?: Prisma.UserSocialProfileCreateNestedManyWithoutUserInput
-  brands?: Prisma.BrandCreateNestedManyWithoutUserInput
-  deals?: Prisma.DealCreateNestedManyWithoutUserInput
-  dealActivities?: Prisma.DealActivityCreateNestedManyWithoutUserInput
-  invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
-  reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
-  messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
-  settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
-  invoiceSettings?: Prisma.UserInvoiceSettingsCreateNestedOneWithoutUserInput
-  attachments?: Prisma.AttachmentCreateNestedManyWithoutCreatorInput
-  oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
-  otps?: Prisma.OtpCreateNestedManyWithoutUserInput
-  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
-  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutNotificationsInput = {
-  id?: string
-  email: string
-  fullName: string
-  password?: string | null
-  handle?: string | null
-  avatarUrl?: string | null
-  whatsappNumber?: string | null
-  plan?: $Enums.UserPlan
-  planExpiresAt?: Date | string | null
-  providerCustomerId?: string | null
-  verified?: boolean
-  createdAt?: Date | string
-  deletedAt?: Date | string | null
-  socialProfiles?: Prisma.UserSocialProfileUncheckedCreateNestedManyWithoutUserInput
-  brands?: Prisma.BrandUncheckedCreateNestedManyWithoutUserInput
-  deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
-  dealActivities?: Prisma.DealActivityUncheckedCreateNestedManyWithoutUserInput
-  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
-  reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
-  messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
-  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
-  settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
-  invoiceSettings?: Prisma.UserInvoiceSettingsUncheckedCreateNestedOneWithoutUserInput
-  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutCreatorInput
-  oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
-  otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
-  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
-  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutNotificationsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
-}
-
-export type UserUpsertWithoutNotificationsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
-}
-
-export type UserUpdateWithoutNotificationsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  fullName?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  socialProfiles?: Prisma.UserSocialProfileUpdateManyWithoutUserNestedInput
-  brands?: Prisma.BrandUpdateManyWithoutUserNestedInput
-  deals?: Prisma.DealUpdateManyWithoutUserNestedInput
-  dealActivities?: Prisma.DealActivityUpdateManyWithoutUserNestedInput
-  invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
-  reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
-  messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
-  settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
-  invoiceSettings?: Prisma.UserInvoiceSettingsUpdateOneWithoutUserNestedInput
-  attachments?: Prisma.AttachmentUpdateManyWithoutCreatorNestedInput
-  oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
-  otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
-  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
-  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutNotificationsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  fullName?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  whatsappNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  planExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  providerCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  socialProfiles?: Prisma.UserSocialProfileUncheckedUpdateManyWithoutUserNestedInput
-  brands?: Prisma.BrandUncheckedUpdateManyWithoutUserNestedInput
-  deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
-  dealActivities?: Prisma.DealActivityUncheckedUpdateManyWithoutUserNestedInput
-  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
-  reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
   settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
@@ -2265,7 +2068,6 @@ export type UserCreateWithoutMessageTemplatesInput = {
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
   settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
@@ -2296,7 +2098,6 @@ export type UserUncheckedCreateWithoutMessageTemplatesInput = {
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
   settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
@@ -2343,7 +2144,6 @@ export type UserUpdateWithoutMessageTemplatesInput = {
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
   settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
@@ -2374,7 +2174,6 @@ export type UserUncheckedUpdateWithoutMessageTemplatesInput = {
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
   settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
@@ -2405,7 +2204,6 @@ export type UserCreateWithoutSubscriptionInput = {
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   settings?: Prisma.UserSettingsCreateNestedOneWithoutUserInput
@@ -2436,7 +2234,6 @@ export type UserUncheckedCreateWithoutSubscriptionInput = {
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   settings?: Prisma.UserSettingsUncheckedCreateNestedOneWithoutUserInput
@@ -2483,7 +2280,6 @@ export type UserUpdateWithoutSubscriptionInput = {
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   settings?: Prisma.UserSettingsUpdateOneWithoutUserNestedInput
@@ -2514,7 +2310,6 @@ export type UserUncheckedUpdateWithoutSubscriptionInput = {
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   settings?: Prisma.UserSettingsUncheckedUpdateOneWithoutUserNestedInput
@@ -2545,7 +2340,6 @@ export type UserCreateWithoutTransactionsInput = {
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
@@ -2576,7 +2370,6 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
@@ -2623,7 +2416,6 @@ export type UserUpdateWithoutTransactionsInput = {
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
@@ -2654,7 +2446,6 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
@@ -2685,7 +2476,6 @@ export type UserCreateWithoutInvoiceSettingsInput = {
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
@@ -2716,7 +2506,6 @@ export type UserUncheckedCreateWithoutInvoiceSettingsInput = {
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
@@ -2763,7 +2552,6 @@ export type UserUpdateWithoutInvoiceSettingsInput = {
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
@@ -2794,7 +2582,6 @@ export type UserUncheckedUpdateWithoutInvoiceSettingsInput = {
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
@@ -2825,7 +2612,6 @@ export type UserCreateWithoutSettingsInput = {
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
@@ -2856,7 +2642,6 @@ export type UserUncheckedCreateWithoutSettingsInput = {
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
@@ -2903,7 +2688,6 @@ export type UserUpdateWithoutSettingsInput = {
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
@@ -2934,7 +2718,6 @@ export type UserUncheckedUpdateWithoutSettingsInput = {
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
@@ -2965,7 +2748,6 @@ export type UserCreateWithoutAttachmentsInput = {
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
@@ -2996,7 +2778,6 @@ export type UserUncheckedCreateWithoutAttachmentsInput = {
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
   dealActivities?: Prisma.DealActivityUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   reminderRules?: Prisma.ReminderRuleUncheckedCreateNestedManyWithoutUserInput
   messageTemplates?: Prisma.MessageTemplateUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
@@ -3043,7 +2824,6 @@ export type UserUpdateWithoutAttachmentsInput = {
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
@@ -3074,7 +2854,6 @@ export type UserUncheckedUpdateWithoutAttachmentsInput = {
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
   dealActivities?: Prisma.DealActivityUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   reminderRules?: Prisma.ReminderRuleUncheckedUpdateManyWithoutUserNestedInput
   messageTemplates?: Prisma.MessageTemplateUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
@@ -3097,7 +2876,6 @@ export type UserCountOutputType = {
   deals: number
   dealActivities: number
   invoices: number
-  notifications: number
   reminderRules: number
   messageTemplates: number
   attachments: number
@@ -3113,7 +2891,6 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   deals?: boolean | UserCountOutputTypeCountDealsArgs
   dealActivities?: boolean | UserCountOutputTypeCountDealActivitiesArgs
   invoices?: boolean | UserCountOutputTypeCountInvoicesArgs
-  notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   reminderRules?: boolean | UserCountOutputTypeCountReminderRulesArgs
   messageTemplates?: boolean | UserCountOutputTypeCountMessageTemplatesArgs
   attachments?: boolean | UserCountOutputTypeCountAttachmentsArgs
@@ -3166,13 +2943,6 @@ export type UserCountOutputTypeCountDealActivitiesArgs<ExtArgs extends runtime.T
  */
 export type UserCountOutputTypeCountInvoicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.InvoiceWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.NotificationWhereInput
 }
 
 /**
@@ -3244,7 +3014,6 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   deals?: boolean | Prisma.User$dealsArgs<ExtArgs>
   dealActivities?: boolean | Prisma.User$dealActivitiesArgs<ExtArgs>
   invoices?: boolean | Prisma.User$invoicesArgs<ExtArgs>
-  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   reminderRules?: boolean | Prisma.User$reminderRulesArgs<ExtArgs>
   messageTemplates?: boolean | Prisma.User$messageTemplatesArgs<ExtArgs>
   subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
@@ -3313,7 +3082,6 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   deals?: boolean | Prisma.User$dealsArgs<ExtArgs>
   dealActivities?: boolean | Prisma.User$dealActivitiesArgs<ExtArgs>
   invoices?: boolean | Prisma.User$invoicesArgs<ExtArgs>
-  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   reminderRules?: boolean | Prisma.User$reminderRulesArgs<ExtArgs>
   messageTemplates?: boolean | Prisma.User$messageTemplatesArgs<ExtArgs>
   subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
@@ -3337,7 +3105,6 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     deals: Prisma.$DealPayload<ExtArgs>[]
     dealActivities: Prisma.$DealActivityPayload<ExtArgs>[]
     invoices: Prisma.$InvoicePayload<ExtArgs>[]
-    notifications: Prisma.$NotificationPayload<ExtArgs>[]
     reminderRules: Prisma.$ReminderRulePayload<ExtArgs>[]
     messageTemplates: Prisma.$MessageTemplatePayload<ExtArgs>[]
     subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
@@ -3762,7 +3529,6 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   deals<T extends Prisma.User$dealsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$dealsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DealPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   dealActivities<T extends Prisma.User$dealActivitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$dealActivitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DealActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   invoices<T extends Prisma.User$invoicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reminderRules<T extends Prisma.User$reminderRulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reminderRulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReminderRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   messageTemplates<T extends Prisma.User$messageTemplatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$messageTemplatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessageTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscription<T extends Prisma.User$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$subscriptionArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -4325,30 +4091,6 @@ export type User$invoicesArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.InvoiceScalarFieldEnum | Prisma.InvoiceScalarFieldEnum[]
-}
-
-/**
- * User.notifications
- */
-export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Notification
-   */
-  select?: Prisma.NotificationSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Notification
-   */
-  omit?: Prisma.NotificationOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.NotificationInclude<ExtArgs> | null
-  where?: Prisma.NotificationWhereInput
-  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
-  cursor?: Prisma.NotificationWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
 }
 
 /**

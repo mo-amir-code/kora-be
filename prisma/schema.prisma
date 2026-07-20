@@ -148,30 +148,11 @@ enum ReminderTriggerType {
   MISSING_INVOICE
 }
 
-enum NotificationType {
-  DELIVERABLE_REMINDER
-  INVOICE_REMINDER
-  PAYMENT_REMINDER
-  PAYMENT_RECEIVED
-  DEAL_UPDATED
-  DEAL_COMPLETED
-  EXCLUSIVITY_ENDING
-  SYSTEM_NOTIFICATION
-}
-
-enum NotificationChannel {
-  EMAIL
-  WHATSAPP
-  PUSH
-  IN_APP
-}
-
-enum NotificationStatus {
-  PENDING
-  SCHEDULED
-  SENT
+enum ReminderExecutionStatus {
+  SUCCESS
   FAILED
-  READ
+  SKIPPED
+  PENDING
 }
 
 enum MessageTemplateCategory {
@@ -246,7 +227,6 @@ model User {
   deals            Deal[]
   dealActivities   DealActivity[]
   invoices         Invoice[]
-  notifications    Notification[]
   reminderRules    ReminderRule[]
   messageTemplates MessageTemplate[]
   subscription     Subscription?
@@ -394,7 +374,6 @@ model Deal {
   activities    DealActivity[]
   invoices      Invoice[]
   paymentEvents PaymentEvent[]
-  notifications Notification[]
 
   @@map("deals")
 }
@@ -413,7 +392,6 @@ model Deliverable {
 
   // Relations
   deal          Deal           @relation(fields: [dealId], references: [id], onDelete: Cascade)
-  notifications Notification[]
 
   @@map("deliverables")
 }
@@ -511,35 +489,33 @@ model ReminderRule {
   channelWhatsapp Boolean             @default(false) @map("channel_whatsapp")
   channelPush     Boolean             @default(true) @map("channel_push")
   isActive        Boolean             @default(true) @map("is_active")
+  lastTriggeredAt DateTime?           @map("last_triggered_at") @db.Timestamptz
   createdAt       DateTime            @default(now()) @map("created_at") @db.Timestamptz
 
   // Relations
-  user     User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  template MessageTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  user     User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  template MessageTemplate?  @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  logs     ReminderRuleLog[]
 
   @@map("reminder_rules")
 }
 
-model Notification {
-  id            String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId        String              @map("user_id") @db.Uuid
-  dealId        String?             @map("deal_id") @db.Uuid
-  deliverableId String?             @map("deliverable_id") @db.Uuid
-  type          NotificationType
-  channel       NotificationChannel
-  title         String
-  body          String?
-  status        NotificationStatus  @default(PENDING)
-  scheduledFor  DateTime?           @map("scheduled_for") @db.Timestamptz
-  sentAt        DateTime?           @map("sent_at") @db.Timestamptz
-  readAt        DateTime?           @map("read_at") @db.Timestamptz
+model ReminderRuleLog {
+  id                String                  @id @default(cuid())
+  reminderRuleId    String                  @map("reminder_rule_id") @db.Uuid
+  attempt           Int                     @default(1)
+  status            ReminderExecutionStatus
+  errorCode         String?                 @map("error_code")
+  errorMessage      String?                 @map("error_message")
+  providerMessageId String?                 @map("provider_message_id")
+  startedAt         DateTime                @map("started_at") @db.Timestamptz
+  completedAt       DateTime?               @map("completed_at") @db.Timestamptz
+  createdAt         DateTime                @default(now()) @map("created_at") @db.Timestamptz
 
   // Relations
-  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  deal        Deal?        @relation(fields: [dealId], references: [id], onDelete: SetNull)
-  deliverable Deliverable? @relation(fields: [deliverableId], references: [id], onDelete: SetNull)
+  reminderRule      ReminderRule            @relation(fields: [reminderRuleId], references: [id], onDelete: Cascade)
 
-  @@map("notifications")
+  @@map("reminder_rule_logs")
 }
 
 // ─── GROUP 6: SETTINGS & BILLING ────────────────────────────────────────────────
