@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import jwt, { type Secret } from "jsonwebtoken";
 import crypto from "node:crypto";
 import { prisma } from "../../shared/index.js";
-import { env } from "../../config/index.js";
+import { env, REFRESH_TOKEN_EXPIRES_IN_DAYS } from "../../config/index.js";
 import { AppError } from "../../shared/index.js";
 import { sendOtpEmail } from "./email.service.js";
 import { billingService } from "../billing/billing.service.js";
@@ -417,7 +417,7 @@ function generateAccessToken(userId: string): string {
 
 async function generateRefreshToken(userId: string, metadata?: { userAgent?: string | undefined; ipAddress?: string | undefined }): Promise<string> {
   const token = crypto.randomBytes(64).toString("hex");
-  const expiresAt = new Date(Date.now() + env.REFRESH_TOKEN_EXPIRES_IN_DAYS * 24 * 60 * 60 * 1000);
+  const expiresAt = new Date(Date.now() + REFRESH_TOKEN_EXPIRES_IN_DAYS * 24 * 60 * 60 * 1000);
 
   await prisma.refreshToken.create({
     data: {

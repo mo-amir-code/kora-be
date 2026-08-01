@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { apiController, AppOk, AppError, prisma } from "../../shared/index.js";
-import { env, APP_NAME } from "../../config/index.js";
+import { env, APP_NAME, REFRESH_TOKEN_EXPIRES_IN_DAYS } from "../../config/index.js";
 import {
   signupUser,
   signupSendOtp,
@@ -38,7 +38,7 @@ function setRefreshCookie(res: Response, refreshToken: string) {
     httpOnly: true,
     secure: env.NODE_ENV === "production",
     sameSite: env.NODE_ENV === "production" ? "strict" : "lax",
-    maxAge: env.REFRESH_TOKEN_EXPIRES_IN_DAYS * 24 * 60 * 60 * 1000,
+    maxAge: REFRESH_TOKEN_EXPIRES_IN_DAYS * 24 * 60 * 60 * 1000,
     path: "/api/auth",
   });
 }

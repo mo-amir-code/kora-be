@@ -12,8 +12,6 @@ export const env = {
   // JWT
   JWT_SECRET: process.env["JWT_SECRET"] ?? "change-me-in-production",
   JWT_EXPIRES_IN: process.env["JWT_EXPIRES_IN"] ?? "15m",
-  REFRESH_TOKEN_SECRET: process.env["REFRESH_TOKEN_SECRET"] ?? "refresh-change-me-in-production",
-  REFRESH_TOKEN_EXPIRES_IN_DAYS: parseInt(process.env["REFRESH_TOKEN_EXPIRES_IN_DAYS"] ?? "30", 10),
 
   // Resend
   RESEND_API_KEY: process.env["RESEND_API_KEY"] ?? "",
