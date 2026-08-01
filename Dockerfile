@@ -9,12 +9,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       python3 make g++ openssl ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# pnpm comes bundled with Node via corepack
-RUN corepack enable
-
 # Install dependencies first (better build caching)
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-RUN pnpm install --frozen-lockfile
+COPY package*.json ./
+RUN npm install
 
 # Copy the rest of the source and build (prisma generate + tsc)
 COPY . .
@@ -24,14 +21,14 @@ ARG DIRECT_URL
 ENV DIRECT_URL=$DIRECT_URL
 
 # Compile: prisma generate + tsc -> dist/  (REQUIRED — do not remove; without it dist/ is empty)
-RUN pnpm build
+RUN npm run build
 
 # Prisma may emit non-.ts runtime assets (e.g. .wasm) that tsc doesn't copy —
 # make sure they land next to the compiled client in dist/
 RUN cp -R src/generated/client/. dist/generated/client/ 2>/dev/null || true
 
 # Drop dev dependencies to slim the runtime node_modules
-RUN pnpm prune --prod
+RUN npm prune --omit=dev
 
 ##########  RUNTIME STAGE  ##########
 FROM node:22-slim AS runtime
