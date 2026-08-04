@@ -113,6 +113,47 @@ export async function updateDeal(userId: string, dealId: string, data: UpdateDea
     throw AppError.notFound("Deal not found");
   }
 
+  if (data.deliverables !== undefined) {
+    const keepIds = data.deliverables.filter((d) => d.id).map((d) => d.id!);
+
+    // Delete deliverables removed during editing
+    await prisma.deliverable.deleteMany({
+      where: {
+        dealId,
+        id: { notIn: keepIds },
+      },
+    });
+
+    // Create or update deliverables
+    for (const d of data.deliverables) {
+      if (d.id) {
+        await prisma.deliverable.update({
+          where: { id: d.id },
+          data: {
+            type: d.type as any,
+            quantity: d.quantity,
+            platform: d.platform ?? null,
+            dueDate: d.dueDate ? new Date(d.dueDate) : null,
+            notes: d.notes ?? null,
+          },
+        });
+      } else {
+        await prisma.deliverable.create({
+          data: {
+            dealId,
+            type: d.type as any,
+            quantity: d.quantity,
+            platform: d.platform ?? null,
+            dueDate: d.dueDate ? new Date(d.dueDate) : null,
+            notes: d.notes ?? null,
+          },
+        });
+      }
+    }
+
+    await logActivity(dealId, userId, "DEAL_UPDATED", `Updated deliverables for deal`);
+  }
+
   const deal = await prisma.deal.update({
     where: { id: dealId },
     data: {

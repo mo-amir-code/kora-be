@@ -320,6 +320,10 @@ export type ReminderRuleScalarFieldEnum = (typeof ReminderRuleScalarFieldEnum)[k
 export const ReminderRuleLogScalarFieldEnum = {
   id: 'id',
   reminderRuleId: 'reminderRuleId',
+  userId: 'userId',
+  dealId: 'dealId',
+  triggerType: 'triggerType',
+  resource: 'resource',
   attempt: 'attempt',
   status: 'status',
   errorCode: 'errorCode',

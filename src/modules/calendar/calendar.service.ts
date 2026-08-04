@@ -68,7 +68,7 @@ export const calendarService = {
       if (deal.paymentDueDate) {
         events.push({
           id: `deal-payment-${deal.id}`,
-          type: "PAYMENT_DUE",
+          type: "PAYMENT_DUE_SOON",
           date: deal.paymentDueDate,
           title: `Payment: ${deal.brand.name}`,
           subtitle: deal.title,

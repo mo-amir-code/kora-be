@@ -54,6 +54,14 @@ export const updateDealSchema = z.object({
     contractUrl: z.string().url().nullable().optional(),
     exclusivityEnds: z.string().nullable().optional(),
     notes: z.string().nullable().optional(),
+    deliverables: z.array(z.object({
+      id: z.string().uuid().optional(),
+      type: deliverableTypeEnum,
+      quantity: z.number().int().min(1).optional().default(1),
+      platform: z.string().nullable().optional(),
+      dueDate: z.string().nullable().optional(),
+      notes: z.string().nullable().optional(),
+    })).optional(),
   }),
 });
 

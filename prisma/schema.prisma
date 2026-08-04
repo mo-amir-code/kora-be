@@ -144,6 +144,7 @@ enum ReminderTriggerType {
   DELIVERABLE_DUE_SOON
   DELIVERABLE_OVERDUE
   PAYMENT_DUE
+  PAYMENT_DUE_SOON
   PAYMENT_OVERDUE
   MISSING_INVOICE
 }
@@ -228,6 +229,7 @@ model User {
   dealActivities   DealActivity[]
   invoices         Invoice[]
   reminderRules    ReminderRule[]
+  reminderRuleLogs ReminderRuleLog[]
   messageTemplates MessageTemplate[]
   subscription     Subscription?
   settings         UserSettings?
@@ -374,6 +376,7 @@ model Deal {
   activities    DealActivity[]
   invoices      Invoice[]
   paymentEvents PaymentEvent[]
+  reminderRuleLogs ReminderRuleLog[]
 
   @@map("deals")
 }
@@ -503,6 +506,10 @@ model ReminderRule {
 model ReminderRuleLog {
   id                String                  @id @default(cuid())
   reminderRuleId    String                  @map("reminder_rule_id") @db.Uuid
+  userId            String                  @map("user_id") @db.Uuid
+  dealId            String?                 @map("deal_id") @db.Uuid
+  triggerType       ReminderTriggerType     @map("trigger_type")
+  resource          String?                 @map("resource")
   attempt           Int                     @default(1)
   status            ReminderExecutionStatus
   errorCode         String?                 @map("error_code")
@@ -514,7 +521,10 @@ model ReminderRuleLog {
 
   // Relations
   reminderRule      ReminderRule            @relation(fields: [reminderRuleId], references: [id], onDelete: Cascade)
+  user              User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deal              Deal?                   @relation(fields: [dealId], references: [id], onDelete: SetNull)
 
+  @@index([userId, dealId, triggerType, resource])
   @@map("reminder_rule_logs")
 }
 

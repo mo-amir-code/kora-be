@@ -37,6 +37,10 @@ export type ReminderRuleLogSumAggregateOutputType = {
 export type ReminderRuleLogMinAggregateOutputType = {
   id: string | null
   reminderRuleId: string | null
+  userId: string | null
+  dealId: string | null
+  triggerType: $Enums.ReminderTriggerType | null
+  resource: string | null
   attempt: number | null
   status: $Enums.ReminderExecutionStatus | null
   errorCode: string | null
@@ -50,6 +54,10 @@ export type ReminderRuleLogMinAggregateOutputType = {
 export type ReminderRuleLogMaxAggregateOutputType = {
   id: string | null
   reminderRuleId: string | null
+  userId: string | null
+  dealId: string | null
+  triggerType: $Enums.ReminderTriggerType | null
+  resource: string | null
   attempt: number | null
   status: $Enums.ReminderExecutionStatus | null
   errorCode: string | null
@@ -63,6 +71,10 @@ export type ReminderRuleLogMaxAggregateOutputType = {
 export type ReminderRuleLogCountAggregateOutputType = {
   id: number
   reminderRuleId: number
+  userId: number
+  dealId: number
+  triggerType: number
+  resource: number
   attempt: number
   status: number
   errorCode: number
@@ -86,6 +98,10 @@ export type ReminderRuleLogSumAggregateInputType = {
 export type ReminderRuleLogMinAggregateInputType = {
   id?: true
   reminderRuleId?: true
+  userId?: true
+  dealId?: true
+  triggerType?: true
+  resource?: true
   attempt?: true
   status?: true
   errorCode?: true
@@ -99,6 +115,10 @@ export type ReminderRuleLogMinAggregateInputType = {
 export type ReminderRuleLogMaxAggregateInputType = {
   id?: true
   reminderRuleId?: true
+  userId?: true
+  dealId?: true
+  triggerType?: true
+  resource?: true
   attempt?: true
   status?: true
   errorCode?: true
@@ -112,6 +132,10 @@ export type ReminderRuleLogMaxAggregateInputType = {
 export type ReminderRuleLogCountAggregateInputType = {
   id?: true
   reminderRuleId?: true
+  userId?: true
+  dealId?: true
+  triggerType?: true
+  resource?: true
   attempt?: true
   status?: true
   errorCode?: true
@@ -212,6 +236,10 @@ export type ReminderRuleLogGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 export type ReminderRuleLogGroupByOutputType = {
   id: string
   reminderRuleId: string
+  userId: string
+  dealId: string | null
+  triggerType: $Enums.ReminderTriggerType
+  resource: string | null
   attempt: number
   status: $Enums.ReminderExecutionStatus
   errorCode: string | null
@@ -248,6 +276,10 @@ export type ReminderRuleLogWhereInput = {
   NOT?: Prisma.ReminderRuleLogWhereInput | Prisma.ReminderRuleLogWhereInput[]
   id?: Prisma.StringFilter<"ReminderRuleLog"> | string
   reminderRuleId?: Prisma.UuidFilter<"ReminderRuleLog"> | string
+  userId?: Prisma.UuidFilter<"ReminderRuleLog"> | string
+  dealId?: Prisma.UuidNullableFilter<"ReminderRuleLog"> | string | null
+  triggerType?: Prisma.EnumReminderTriggerTypeFilter<"ReminderRuleLog"> | $Enums.ReminderTriggerType
+  resource?: Prisma.StringNullableFilter<"ReminderRuleLog"> | string | null
   attempt?: Prisma.IntFilter<"ReminderRuleLog"> | number
   status?: Prisma.EnumReminderExecutionStatusFilter<"ReminderRuleLog"> | $Enums.ReminderExecutionStatus
   errorCode?: Prisma.StringNullableFilter<"ReminderRuleLog"> | string | null
@@ -257,11 +289,17 @@ export type ReminderRuleLogWhereInput = {
   completedAt?: Prisma.DateTimeNullableFilter<"ReminderRuleLog"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ReminderRuleLog"> | Date | string
   reminderRule?: Prisma.XOR<Prisma.ReminderRuleScalarRelationFilter, Prisma.ReminderRuleWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  deal?: Prisma.XOR<Prisma.DealNullableScalarRelationFilter, Prisma.DealWhereInput> | null
 }
 
 export type ReminderRuleLogOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   reminderRuleId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  dealId?: Prisma.SortOrderInput | Prisma.SortOrder
+  triggerType?: Prisma.SortOrder
+  resource?: Prisma.SortOrderInput | Prisma.SortOrder
   attempt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   errorCode?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -271,6 +309,8 @@ export type ReminderRuleLogOrderByWithRelationInput = {
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   reminderRule?: Prisma.ReminderRuleOrderByWithRelationInput
+  user?: Prisma.UserOrderByWithRelationInput
+  deal?: Prisma.DealOrderByWithRelationInput
 }
 
 export type ReminderRuleLogWhereUniqueInput = Prisma.AtLeast<{
@@ -279,6 +319,10 @@ export type ReminderRuleLogWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ReminderRuleLogWhereInput[]
   NOT?: Prisma.ReminderRuleLogWhereInput | Prisma.ReminderRuleLogWhereInput[]
   reminderRuleId?: Prisma.UuidFilter<"ReminderRuleLog"> | string
+  userId?: Prisma.UuidFilter<"ReminderRuleLog"> | string
+  dealId?: Prisma.UuidNullableFilter<"ReminderRuleLog"> | string | null
+  triggerType?: Prisma.EnumReminderTriggerTypeFilter<"ReminderRuleLog"> | $Enums.ReminderTriggerType
+  resource?: Prisma.StringNullableFilter<"ReminderRuleLog"> | string | null
   attempt?: Prisma.IntFilter<"ReminderRuleLog"> | number
   status?: Prisma.EnumReminderExecutionStatusFilter<"ReminderRuleLog"> | $Enums.ReminderExecutionStatus
   errorCode?: Prisma.StringNullableFilter<"ReminderRuleLog"> | string | null
@@ -288,11 +332,17 @@ export type ReminderRuleLogWhereUniqueInput = Prisma.AtLeast<{
   completedAt?: Prisma.DateTimeNullableFilter<"ReminderRuleLog"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ReminderRuleLog"> | Date | string
   reminderRule?: Prisma.XOR<Prisma.ReminderRuleScalarRelationFilter, Prisma.ReminderRuleWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  deal?: Prisma.XOR<Prisma.DealNullableScalarRelationFilter, Prisma.DealWhereInput> | null
 }, "id">
 
 export type ReminderRuleLogOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   reminderRuleId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  dealId?: Prisma.SortOrderInput | Prisma.SortOrder
+  triggerType?: Prisma.SortOrder
+  resource?: Prisma.SortOrderInput | Prisma.SortOrder
   attempt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   errorCode?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -314,6 +364,10 @@ export type ReminderRuleLogScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ReminderRuleLogScalarWhereWithAggregatesInput | Prisma.ReminderRuleLogScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"ReminderRuleLog"> | string
   reminderRuleId?: Prisma.UuidWithAggregatesFilter<"ReminderRuleLog"> | string
+  userId?: Prisma.UuidWithAggregatesFilter<"ReminderRuleLog"> | string
+  dealId?: Prisma.UuidNullableWithAggregatesFilter<"ReminderRuleLog"> | string | null
+  triggerType?: Prisma.EnumReminderTriggerTypeWithAggregatesFilter<"ReminderRuleLog"> | $Enums.ReminderTriggerType
+  resource?: Prisma.StringNullableWithAggregatesFilter<"ReminderRuleLog"> | string | null
   attempt?: Prisma.IntWithAggregatesFilter<"ReminderRuleLog"> | number
   status?: Prisma.EnumReminderExecutionStatusWithAggregatesFilter<"ReminderRuleLog"> | $Enums.ReminderExecutionStatus
   errorCode?: Prisma.StringNullableWithAggregatesFilter<"ReminderRuleLog"> | string | null
@@ -326,6 +380,8 @@ export type ReminderRuleLogScalarWhereWithAggregatesInput = {
 
 export type ReminderRuleLogCreateInput = {
   id?: string
+  triggerType: $Enums.ReminderTriggerType
+  resource?: string | null
   attempt?: number
   status: $Enums.ReminderExecutionStatus
   errorCode?: string | null
@@ -335,11 +391,17 @@ export type ReminderRuleLogCreateInput = {
   completedAt?: Date | string | null
   createdAt?: Date | string
   reminderRule: Prisma.ReminderRuleCreateNestedOneWithoutLogsInput
+  user: Prisma.UserCreateNestedOneWithoutReminderRuleLogsInput
+  deal?: Prisma.DealCreateNestedOneWithoutReminderRuleLogsInput
 }
 
 export type ReminderRuleLogUncheckedCreateInput = {
   id?: string
   reminderRuleId: string
+  userId: string
+  dealId?: string | null
+  triggerType: $Enums.ReminderTriggerType
+  resource?: string | null
   attempt?: number
   status: $Enums.ReminderExecutionStatus
   errorCode?: string | null
@@ -352,6 +414,8 @@ export type ReminderRuleLogUncheckedCreateInput = {
 
 export type ReminderRuleLogUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  triggerType?: Prisma.EnumReminderTriggerTypeFieldUpdateOperationsInput | $Enums.ReminderTriggerType
+  resource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attempt?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumReminderExecutionStatusFieldUpdateOperationsInput | $Enums.ReminderExecutionStatus
   errorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -361,11 +425,17 @@ export type ReminderRuleLogUpdateInput = {
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reminderRule?: Prisma.ReminderRuleUpdateOneRequiredWithoutLogsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutReminderRuleLogsNestedInput
+  deal?: Prisma.DealUpdateOneWithoutReminderRuleLogsNestedInput
 }
 
 export type ReminderRuleLogUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   reminderRuleId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  dealId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  triggerType?: Prisma.EnumReminderTriggerTypeFieldUpdateOperationsInput | $Enums.ReminderTriggerType
+  resource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attempt?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumReminderExecutionStatusFieldUpdateOperationsInput | $Enums.ReminderExecutionStatus
   errorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -379,6 +449,10 @@ export type ReminderRuleLogUncheckedUpdateInput = {
 export type ReminderRuleLogCreateManyInput = {
   id?: string
   reminderRuleId: string
+  userId: string
+  dealId?: string | null
+  triggerType: $Enums.ReminderTriggerType
+  resource?: string | null
   attempt?: number
   status: $Enums.ReminderExecutionStatus
   errorCode?: string | null
@@ -391,6 +465,8 @@ export type ReminderRuleLogCreateManyInput = {
 
 export type ReminderRuleLogUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  triggerType?: Prisma.EnumReminderTriggerTypeFieldUpdateOperationsInput | $Enums.ReminderTriggerType
+  resource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attempt?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumReminderExecutionStatusFieldUpdateOperationsInput | $Enums.ReminderExecutionStatus
   errorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -404,6 +480,10 @@ export type ReminderRuleLogUpdateManyMutationInput = {
 export type ReminderRuleLogUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   reminderRuleId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  dealId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  triggerType?: Prisma.EnumReminderTriggerTypeFieldUpdateOperationsInput | $Enums.ReminderTriggerType
+  resource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attempt?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumReminderExecutionStatusFieldUpdateOperationsInput | $Enums.ReminderExecutionStatus
   errorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -427,6 +507,10 @@ export type ReminderRuleLogOrderByRelationAggregateInput = {
 export type ReminderRuleLogCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   reminderRuleId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  dealId?: Prisma.SortOrder
+  triggerType?: Prisma.SortOrder
+  resource?: Prisma.SortOrder
   attempt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   errorCode?: Prisma.SortOrder
@@ -444,6 +528,10 @@ export type ReminderRuleLogAvgOrderByAggregateInput = {
 export type ReminderRuleLogMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   reminderRuleId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  dealId?: Prisma.SortOrder
+  triggerType?: Prisma.SortOrder
+  resource?: Prisma.SortOrder
   attempt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   errorCode?: Prisma.SortOrder
@@ -457,6 +545,10 @@ export type ReminderRuleLogMaxOrderByAggregateInput = {
 export type ReminderRuleLogMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   reminderRuleId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  dealId?: Prisma.SortOrder
+  triggerType?: Prisma.SortOrder
+  resource?: Prisma.SortOrder
   attempt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   errorCode?: Prisma.SortOrder
@@ -469,6 +561,90 @@ export type ReminderRuleLogMinOrderByAggregateInput = {
 
 export type ReminderRuleLogSumOrderByAggregateInput = {
   attempt?: Prisma.SortOrder
+}
+
+export type ReminderRuleLogCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.ReminderRuleLogCreateWithoutUserInput, Prisma.ReminderRuleLogUncheckedCreateWithoutUserInput> | Prisma.ReminderRuleLogCreateWithoutUserInput[] | Prisma.ReminderRuleLogUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ReminderRuleLogCreateOrConnectWithoutUserInput | Prisma.ReminderRuleLogCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.ReminderRuleLogCreateManyUserInputEnvelope
+  connect?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+}
+
+export type ReminderRuleLogUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.ReminderRuleLogCreateWithoutUserInput, Prisma.ReminderRuleLogUncheckedCreateWithoutUserInput> | Prisma.ReminderRuleLogCreateWithoutUserInput[] | Prisma.ReminderRuleLogUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ReminderRuleLogCreateOrConnectWithoutUserInput | Prisma.ReminderRuleLogCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.ReminderRuleLogCreateManyUserInputEnvelope
+  connect?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+}
+
+export type ReminderRuleLogUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.ReminderRuleLogCreateWithoutUserInput, Prisma.ReminderRuleLogUncheckedCreateWithoutUserInput> | Prisma.ReminderRuleLogCreateWithoutUserInput[] | Prisma.ReminderRuleLogUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ReminderRuleLogCreateOrConnectWithoutUserInput | Prisma.ReminderRuleLogCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.ReminderRuleLogUpsertWithWhereUniqueWithoutUserInput | Prisma.ReminderRuleLogUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.ReminderRuleLogCreateManyUserInputEnvelope
+  set?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+  disconnect?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+  delete?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+  connect?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+  update?: Prisma.ReminderRuleLogUpdateWithWhereUniqueWithoutUserInput | Prisma.ReminderRuleLogUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.ReminderRuleLogUpdateManyWithWhereWithoutUserInput | Prisma.ReminderRuleLogUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.ReminderRuleLogScalarWhereInput | Prisma.ReminderRuleLogScalarWhereInput[]
+}
+
+export type ReminderRuleLogUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.ReminderRuleLogCreateWithoutUserInput, Prisma.ReminderRuleLogUncheckedCreateWithoutUserInput> | Prisma.ReminderRuleLogCreateWithoutUserInput[] | Prisma.ReminderRuleLogUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ReminderRuleLogCreateOrConnectWithoutUserInput | Prisma.ReminderRuleLogCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.ReminderRuleLogUpsertWithWhereUniqueWithoutUserInput | Prisma.ReminderRuleLogUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.ReminderRuleLogCreateManyUserInputEnvelope
+  set?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+  disconnect?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+  delete?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+  connect?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+  update?: Prisma.ReminderRuleLogUpdateWithWhereUniqueWithoutUserInput | Prisma.ReminderRuleLogUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.ReminderRuleLogUpdateManyWithWhereWithoutUserInput | Prisma.ReminderRuleLogUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.ReminderRuleLogScalarWhereInput | Prisma.ReminderRuleLogScalarWhereInput[]
+}
+
+export type ReminderRuleLogCreateNestedManyWithoutDealInput = {
+  create?: Prisma.XOR<Prisma.ReminderRuleLogCreateWithoutDealInput, Prisma.ReminderRuleLogUncheckedCreateWithoutDealInput> | Prisma.ReminderRuleLogCreateWithoutDealInput[] | Prisma.ReminderRuleLogUncheckedCreateWithoutDealInput[]
+  connectOrCreate?: Prisma.ReminderRuleLogCreateOrConnectWithoutDealInput | Prisma.ReminderRuleLogCreateOrConnectWithoutDealInput[]
+  createMany?: Prisma.ReminderRuleLogCreateManyDealInputEnvelope
+  connect?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+}
+
+export type ReminderRuleLogUncheckedCreateNestedManyWithoutDealInput = {
+  create?: Prisma.XOR<Prisma.ReminderRuleLogCreateWithoutDealInput, Prisma.ReminderRuleLogUncheckedCreateWithoutDealInput> | Prisma.ReminderRuleLogCreateWithoutDealInput[] | Prisma.ReminderRuleLogUncheckedCreateWithoutDealInput[]
+  connectOrCreate?: Prisma.ReminderRuleLogCreateOrConnectWithoutDealInput | Prisma.ReminderRuleLogCreateOrConnectWithoutDealInput[]
+  createMany?: Prisma.ReminderRuleLogCreateManyDealInputEnvelope
+  connect?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+}
+
+export type ReminderRuleLogUpdateManyWithoutDealNestedInput = {
+  create?: Prisma.XOR<Prisma.ReminderRuleLogCreateWithoutDealInput, Prisma.ReminderRuleLogUncheckedCreateWithoutDealInput> | Prisma.ReminderRuleLogCreateWithoutDealInput[] | Prisma.ReminderRuleLogUncheckedCreateWithoutDealInput[]
+  connectOrCreate?: Prisma.ReminderRuleLogCreateOrConnectWithoutDealInput | Prisma.ReminderRuleLogCreateOrConnectWithoutDealInput[]
+  upsert?: Prisma.ReminderRuleLogUpsertWithWhereUniqueWithoutDealInput | Prisma.ReminderRuleLogUpsertWithWhereUniqueWithoutDealInput[]
+  createMany?: Prisma.ReminderRuleLogCreateManyDealInputEnvelope
+  set?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+  disconnect?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+  delete?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+  connect?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+  update?: Prisma.ReminderRuleLogUpdateWithWhereUniqueWithoutDealInput | Prisma.ReminderRuleLogUpdateWithWhereUniqueWithoutDealInput[]
+  updateMany?: Prisma.ReminderRuleLogUpdateManyWithWhereWithoutDealInput | Prisma.ReminderRuleLogUpdateManyWithWhereWithoutDealInput[]
+  deleteMany?: Prisma.ReminderRuleLogScalarWhereInput | Prisma.ReminderRuleLogScalarWhereInput[]
+}
+
+export type ReminderRuleLogUncheckedUpdateManyWithoutDealNestedInput = {
+  create?: Prisma.XOR<Prisma.ReminderRuleLogCreateWithoutDealInput, Prisma.ReminderRuleLogUncheckedCreateWithoutDealInput> | Prisma.ReminderRuleLogCreateWithoutDealInput[] | Prisma.ReminderRuleLogUncheckedCreateWithoutDealInput[]
+  connectOrCreate?: Prisma.ReminderRuleLogCreateOrConnectWithoutDealInput | Prisma.ReminderRuleLogCreateOrConnectWithoutDealInput[]
+  upsert?: Prisma.ReminderRuleLogUpsertWithWhereUniqueWithoutDealInput | Prisma.ReminderRuleLogUpsertWithWhereUniqueWithoutDealInput[]
+  createMany?: Prisma.ReminderRuleLogCreateManyDealInputEnvelope
+  set?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+  disconnect?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+  delete?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+  connect?: Prisma.ReminderRuleLogWhereUniqueInput | Prisma.ReminderRuleLogWhereUniqueInput[]
+  update?: Prisma.ReminderRuleLogUpdateWithWhereUniqueWithoutDealInput | Prisma.ReminderRuleLogUpdateWithWhereUniqueWithoutDealInput[]
+  updateMany?: Prisma.ReminderRuleLogUpdateManyWithWhereWithoutDealInput | Prisma.ReminderRuleLogUpdateManyWithWhereWithoutDealInput[]
+  deleteMany?: Prisma.ReminderRuleLogScalarWhereInput | Prisma.ReminderRuleLogScalarWhereInput[]
 }
 
 export type ReminderRuleLogCreateNestedManyWithoutReminderRuleInput = {
@@ -517,8 +693,28 @@ export type EnumReminderExecutionStatusFieldUpdateOperationsInput = {
   set?: $Enums.ReminderExecutionStatus
 }
 
-export type ReminderRuleLogCreateWithoutReminderRuleInput = {
+export type ReminderRuleLogCreateWithoutUserInput = {
   id?: string
+  triggerType: $Enums.ReminderTriggerType
+  resource?: string | null
+  attempt?: number
+  status: $Enums.ReminderExecutionStatus
+  errorCode?: string | null
+  errorMessage?: string | null
+  providerMessageId?: string | null
+  startedAt: Date | string
+  completedAt?: Date | string | null
+  createdAt?: Date | string
+  reminderRule: Prisma.ReminderRuleCreateNestedOneWithoutLogsInput
+  deal?: Prisma.DealCreateNestedOneWithoutReminderRuleLogsInput
+}
+
+export type ReminderRuleLogUncheckedCreateWithoutUserInput = {
+  id?: string
+  reminderRuleId: string
+  dealId?: string | null
+  triggerType: $Enums.ReminderTriggerType
+  resource?: string | null
   attempt?: number
   status: $Enums.ReminderExecutionStatus
   errorCode?: string | null
@@ -529,8 +725,132 @@ export type ReminderRuleLogCreateWithoutReminderRuleInput = {
   createdAt?: Date | string
 }
 
+export type ReminderRuleLogCreateOrConnectWithoutUserInput = {
+  where: Prisma.ReminderRuleLogWhereUniqueInput
+  create: Prisma.XOR<Prisma.ReminderRuleLogCreateWithoutUserInput, Prisma.ReminderRuleLogUncheckedCreateWithoutUserInput>
+}
+
+export type ReminderRuleLogCreateManyUserInputEnvelope = {
+  data: Prisma.ReminderRuleLogCreateManyUserInput | Prisma.ReminderRuleLogCreateManyUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type ReminderRuleLogUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.ReminderRuleLogWhereUniqueInput
+  update: Prisma.XOR<Prisma.ReminderRuleLogUpdateWithoutUserInput, Prisma.ReminderRuleLogUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.ReminderRuleLogCreateWithoutUserInput, Prisma.ReminderRuleLogUncheckedCreateWithoutUserInput>
+}
+
+export type ReminderRuleLogUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.ReminderRuleLogWhereUniqueInput
+  data: Prisma.XOR<Prisma.ReminderRuleLogUpdateWithoutUserInput, Prisma.ReminderRuleLogUncheckedUpdateWithoutUserInput>
+}
+
+export type ReminderRuleLogUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.ReminderRuleLogScalarWhereInput
+  data: Prisma.XOR<Prisma.ReminderRuleLogUpdateManyMutationInput, Prisma.ReminderRuleLogUncheckedUpdateManyWithoutUserInput>
+}
+
+export type ReminderRuleLogScalarWhereInput = {
+  AND?: Prisma.ReminderRuleLogScalarWhereInput | Prisma.ReminderRuleLogScalarWhereInput[]
+  OR?: Prisma.ReminderRuleLogScalarWhereInput[]
+  NOT?: Prisma.ReminderRuleLogScalarWhereInput | Prisma.ReminderRuleLogScalarWhereInput[]
+  id?: Prisma.StringFilter<"ReminderRuleLog"> | string
+  reminderRuleId?: Prisma.UuidFilter<"ReminderRuleLog"> | string
+  userId?: Prisma.UuidFilter<"ReminderRuleLog"> | string
+  dealId?: Prisma.UuidNullableFilter<"ReminderRuleLog"> | string | null
+  triggerType?: Prisma.EnumReminderTriggerTypeFilter<"ReminderRuleLog"> | $Enums.ReminderTriggerType
+  resource?: Prisma.StringNullableFilter<"ReminderRuleLog"> | string | null
+  attempt?: Prisma.IntFilter<"ReminderRuleLog"> | number
+  status?: Prisma.EnumReminderExecutionStatusFilter<"ReminderRuleLog"> | $Enums.ReminderExecutionStatus
+  errorCode?: Prisma.StringNullableFilter<"ReminderRuleLog"> | string | null
+  errorMessage?: Prisma.StringNullableFilter<"ReminderRuleLog"> | string | null
+  providerMessageId?: Prisma.StringNullableFilter<"ReminderRuleLog"> | string | null
+  startedAt?: Prisma.DateTimeFilter<"ReminderRuleLog"> | Date | string
+  completedAt?: Prisma.DateTimeNullableFilter<"ReminderRuleLog"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"ReminderRuleLog"> | Date | string
+}
+
+export type ReminderRuleLogCreateWithoutDealInput = {
+  id?: string
+  triggerType: $Enums.ReminderTriggerType
+  resource?: string | null
+  attempt?: number
+  status: $Enums.ReminderExecutionStatus
+  errorCode?: string | null
+  errorMessage?: string | null
+  providerMessageId?: string | null
+  startedAt: Date | string
+  completedAt?: Date | string | null
+  createdAt?: Date | string
+  reminderRule: Prisma.ReminderRuleCreateNestedOneWithoutLogsInput
+  user: Prisma.UserCreateNestedOneWithoutReminderRuleLogsInput
+}
+
+export type ReminderRuleLogUncheckedCreateWithoutDealInput = {
+  id?: string
+  reminderRuleId: string
+  userId: string
+  triggerType: $Enums.ReminderTriggerType
+  resource?: string | null
+  attempt?: number
+  status: $Enums.ReminderExecutionStatus
+  errorCode?: string | null
+  errorMessage?: string | null
+  providerMessageId?: string | null
+  startedAt: Date | string
+  completedAt?: Date | string | null
+  createdAt?: Date | string
+}
+
+export type ReminderRuleLogCreateOrConnectWithoutDealInput = {
+  where: Prisma.ReminderRuleLogWhereUniqueInput
+  create: Prisma.XOR<Prisma.ReminderRuleLogCreateWithoutDealInput, Prisma.ReminderRuleLogUncheckedCreateWithoutDealInput>
+}
+
+export type ReminderRuleLogCreateManyDealInputEnvelope = {
+  data: Prisma.ReminderRuleLogCreateManyDealInput | Prisma.ReminderRuleLogCreateManyDealInput[]
+  skipDuplicates?: boolean
+}
+
+export type ReminderRuleLogUpsertWithWhereUniqueWithoutDealInput = {
+  where: Prisma.ReminderRuleLogWhereUniqueInput
+  update: Prisma.XOR<Prisma.ReminderRuleLogUpdateWithoutDealInput, Prisma.ReminderRuleLogUncheckedUpdateWithoutDealInput>
+  create: Prisma.XOR<Prisma.ReminderRuleLogCreateWithoutDealInput, Prisma.ReminderRuleLogUncheckedCreateWithoutDealInput>
+}
+
+export type ReminderRuleLogUpdateWithWhereUniqueWithoutDealInput = {
+  where: Prisma.ReminderRuleLogWhereUniqueInput
+  data: Prisma.XOR<Prisma.ReminderRuleLogUpdateWithoutDealInput, Prisma.ReminderRuleLogUncheckedUpdateWithoutDealInput>
+}
+
+export type ReminderRuleLogUpdateManyWithWhereWithoutDealInput = {
+  where: Prisma.ReminderRuleLogScalarWhereInput
+  data: Prisma.XOR<Prisma.ReminderRuleLogUpdateManyMutationInput, Prisma.ReminderRuleLogUncheckedUpdateManyWithoutDealInput>
+}
+
+export type ReminderRuleLogCreateWithoutReminderRuleInput = {
+  id?: string
+  triggerType: $Enums.ReminderTriggerType
+  resource?: string | null
+  attempt?: number
+  status: $Enums.ReminderExecutionStatus
+  errorCode?: string | null
+  errorMessage?: string | null
+  providerMessageId?: string | null
+  startedAt: Date | string
+  completedAt?: Date | string | null
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutReminderRuleLogsInput
+  deal?: Prisma.DealCreateNestedOneWithoutReminderRuleLogsInput
+}
+
 export type ReminderRuleLogUncheckedCreateWithoutReminderRuleInput = {
   id?: string
+  userId: string
+  dealId?: string | null
+  triggerType: $Enums.ReminderTriggerType
+  resource?: string | null
   attempt?: number
   status: $Enums.ReminderExecutionStatus
   errorCode?: string | null
@@ -567,24 +887,140 @@ export type ReminderRuleLogUpdateManyWithWhereWithoutReminderRuleInput = {
   data: Prisma.XOR<Prisma.ReminderRuleLogUpdateManyMutationInput, Prisma.ReminderRuleLogUncheckedUpdateManyWithoutReminderRuleInput>
 }
 
-export type ReminderRuleLogScalarWhereInput = {
-  AND?: Prisma.ReminderRuleLogScalarWhereInput | Prisma.ReminderRuleLogScalarWhereInput[]
-  OR?: Prisma.ReminderRuleLogScalarWhereInput[]
-  NOT?: Prisma.ReminderRuleLogScalarWhereInput | Prisma.ReminderRuleLogScalarWhereInput[]
-  id?: Prisma.StringFilter<"ReminderRuleLog"> | string
-  reminderRuleId?: Prisma.UuidFilter<"ReminderRuleLog"> | string
-  attempt?: Prisma.IntFilter<"ReminderRuleLog"> | number
-  status?: Prisma.EnumReminderExecutionStatusFilter<"ReminderRuleLog"> | $Enums.ReminderExecutionStatus
-  errorCode?: Prisma.StringNullableFilter<"ReminderRuleLog"> | string | null
-  errorMessage?: Prisma.StringNullableFilter<"ReminderRuleLog"> | string | null
-  providerMessageId?: Prisma.StringNullableFilter<"ReminderRuleLog"> | string | null
-  startedAt?: Prisma.DateTimeFilter<"ReminderRuleLog"> | Date | string
-  completedAt?: Prisma.DateTimeNullableFilter<"ReminderRuleLog"> | Date | string | null
-  createdAt?: Prisma.DateTimeFilter<"ReminderRuleLog"> | Date | string
+export type ReminderRuleLogCreateManyUserInput = {
+  id?: string
+  reminderRuleId: string
+  dealId?: string | null
+  triggerType: $Enums.ReminderTriggerType
+  resource?: string | null
+  attempt?: number
+  status: $Enums.ReminderExecutionStatus
+  errorCode?: string | null
+  errorMessage?: string | null
+  providerMessageId?: string | null
+  startedAt: Date | string
+  completedAt?: Date | string | null
+  createdAt?: Date | string
+}
+
+export type ReminderRuleLogUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  triggerType?: Prisma.EnumReminderTriggerTypeFieldUpdateOperationsInput | $Enums.ReminderTriggerType
+  resource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumReminderExecutionStatusFieldUpdateOperationsInput | $Enums.ReminderExecutionStatus
+  errorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reminderRule?: Prisma.ReminderRuleUpdateOneRequiredWithoutLogsNestedInput
+  deal?: Prisma.DealUpdateOneWithoutReminderRuleLogsNestedInput
+}
+
+export type ReminderRuleLogUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  reminderRuleId?: Prisma.StringFieldUpdateOperationsInput | string
+  dealId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  triggerType?: Prisma.EnumReminderTriggerTypeFieldUpdateOperationsInput | $Enums.ReminderTriggerType
+  resource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumReminderExecutionStatusFieldUpdateOperationsInput | $Enums.ReminderExecutionStatus
+  errorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ReminderRuleLogUncheckedUpdateManyWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  reminderRuleId?: Prisma.StringFieldUpdateOperationsInput | string
+  dealId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  triggerType?: Prisma.EnumReminderTriggerTypeFieldUpdateOperationsInput | $Enums.ReminderTriggerType
+  resource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumReminderExecutionStatusFieldUpdateOperationsInput | $Enums.ReminderExecutionStatus
+  errorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ReminderRuleLogCreateManyDealInput = {
+  id?: string
+  reminderRuleId: string
+  userId: string
+  triggerType: $Enums.ReminderTriggerType
+  resource?: string | null
+  attempt?: number
+  status: $Enums.ReminderExecutionStatus
+  errorCode?: string | null
+  errorMessage?: string | null
+  providerMessageId?: string | null
+  startedAt: Date | string
+  completedAt?: Date | string | null
+  createdAt?: Date | string
+}
+
+export type ReminderRuleLogUpdateWithoutDealInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  triggerType?: Prisma.EnumReminderTriggerTypeFieldUpdateOperationsInput | $Enums.ReminderTriggerType
+  resource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumReminderExecutionStatusFieldUpdateOperationsInput | $Enums.ReminderExecutionStatus
+  errorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reminderRule?: Prisma.ReminderRuleUpdateOneRequiredWithoutLogsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutReminderRuleLogsNestedInput
+}
+
+export type ReminderRuleLogUncheckedUpdateWithoutDealInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  reminderRuleId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  triggerType?: Prisma.EnumReminderTriggerTypeFieldUpdateOperationsInput | $Enums.ReminderTriggerType
+  resource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumReminderExecutionStatusFieldUpdateOperationsInput | $Enums.ReminderExecutionStatus
+  errorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ReminderRuleLogUncheckedUpdateManyWithoutDealInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  reminderRuleId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  triggerType?: Prisma.EnumReminderTriggerTypeFieldUpdateOperationsInput | $Enums.ReminderTriggerType
+  resource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attempt?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumReminderExecutionStatusFieldUpdateOperationsInput | $Enums.ReminderExecutionStatus
+  errorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ReminderRuleLogCreateManyReminderRuleInput = {
   id?: string
+  userId: string
+  dealId?: string | null
+  triggerType: $Enums.ReminderTriggerType
+  resource?: string | null
   attempt?: number
   status: $Enums.ReminderExecutionStatus
   errorCode?: string | null
@@ -597,6 +1033,8 @@ export type ReminderRuleLogCreateManyReminderRuleInput = {
 
 export type ReminderRuleLogUpdateWithoutReminderRuleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  triggerType?: Prisma.EnumReminderTriggerTypeFieldUpdateOperationsInput | $Enums.ReminderTriggerType
+  resource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attempt?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumReminderExecutionStatusFieldUpdateOperationsInput | $Enums.ReminderExecutionStatus
   errorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -605,10 +1043,16 @@ export type ReminderRuleLogUpdateWithoutReminderRuleInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutReminderRuleLogsNestedInput
+  deal?: Prisma.DealUpdateOneWithoutReminderRuleLogsNestedInput
 }
 
 export type ReminderRuleLogUncheckedUpdateWithoutReminderRuleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  dealId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  triggerType?: Prisma.EnumReminderTriggerTypeFieldUpdateOperationsInput | $Enums.ReminderTriggerType
+  resource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attempt?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumReminderExecutionStatusFieldUpdateOperationsInput | $Enums.ReminderExecutionStatus
   errorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -621,6 +1065,10 @@ export type ReminderRuleLogUncheckedUpdateWithoutReminderRuleInput = {
 
 export type ReminderRuleLogUncheckedUpdateManyWithoutReminderRuleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  dealId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  triggerType?: Prisma.EnumReminderTriggerTypeFieldUpdateOperationsInput | $Enums.ReminderTriggerType
+  resource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attempt?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumReminderExecutionStatusFieldUpdateOperationsInput | $Enums.ReminderExecutionStatus
   errorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -636,6 +1084,10 @@ export type ReminderRuleLogUncheckedUpdateManyWithoutReminderRuleInput = {
 export type ReminderRuleLogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   reminderRuleId?: boolean
+  userId?: boolean
+  dealId?: boolean
+  triggerType?: boolean
+  resource?: boolean
   attempt?: boolean
   status?: boolean
   errorCode?: boolean
@@ -645,11 +1097,17 @@ export type ReminderRuleLogSelect<ExtArgs extends runtime.Types.Extensions.Inter
   completedAt?: boolean
   createdAt?: boolean
   reminderRule?: boolean | Prisma.ReminderRuleDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  deal?: boolean | Prisma.ReminderRuleLog$dealArgs<ExtArgs>
 }, ExtArgs["result"]["reminderRuleLog"]>
 
 export type ReminderRuleLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   reminderRuleId?: boolean
+  userId?: boolean
+  dealId?: boolean
+  triggerType?: boolean
+  resource?: boolean
   attempt?: boolean
   status?: boolean
   errorCode?: boolean
@@ -659,11 +1117,17 @@ export type ReminderRuleLogSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   completedAt?: boolean
   createdAt?: boolean
   reminderRule?: boolean | Prisma.ReminderRuleDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  deal?: boolean | Prisma.ReminderRuleLog$dealArgs<ExtArgs>
 }, ExtArgs["result"]["reminderRuleLog"]>
 
 export type ReminderRuleLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   reminderRuleId?: boolean
+  userId?: boolean
+  dealId?: boolean
+  triggerType?: boolean
+  resource?: boolean
   attempt?: boolean
   status?: boolean
   errorCode?: boolean
@@ -673,11 +1137,17 @@ export type ReminderRuleLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   completedAt?: boolean
   createdAt?: boolean
   reminderRule?: boolean | Prisma.ReminderRuleDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  deal?: boolean | Prisma.ReminderRuleLog$dealArgs<ExtArgs>
 }, ExtArgs["result"]["reminderRuleLog"]>
 
 export type ReminderRuleLogSelectScalar = {
   id?: boolean
   reminderRuleId?: boolean
+  userId?: boolean
+  dealId?: boolean
+  triggerType?: boolean
+  resource?: boolean
   attempt?: boolean
   status?: boolean
   errorCode?: boolean
@@ -688,25 +1158,37 @@ export type ReminderRuleLogSelectScalar = {
   createdAt?: boolean
 }
 
-export type ReminderRuleLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "reminderRuleId" | "attempt" | "status" | "errorCode" | "errorMessage" | "providerMessageId" | "startedAt" | "completedAt" | "createdAt", ExtArgs["result"]["reminderRuleLog"]>
+export type ReminderRuleLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "reminderRuleId" | "userId" | "dealId" | "triggerType" | "resource" | "attempt" | "status" | "errorCode" | "errorMessage" | "providerMessageId" | "startedAt" | "completedAt" | "createdAt", ExtArgs["result"]["reminderRuleLog"]>
 export type ReminderRuleLogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   reminderRule?: boolean | Prisma.ReminderRuleDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  deal?: boolean | Prisma.ReminderRuleLog$dealArgs<ExtArgs>
 }
 export type ReminderRuleLogIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   reminderRule?: boolean | Prisma.ReminderRuleDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  deal?: boolean | Prisma.ReminderRuleLog$dealArgs<ExtArgs>
 }
 export type ReminderRuleLogIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   reminderRule?: boolean | Prisma.ReminderRuleDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  deal?: boolean | Prisma.ReminderRuleLog$dealArgs<ExtArgs>
 }
 
 export type $ReminderRuleLogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ReminderRuleLog"
   objects: {
     reminderRule: Prisma.$ReminderRulePayload<ExtArgs>
+    user: Prisma.$UserPayload<ExtArgs>
+    deal: Prisma.$DealPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     reminderRuleId: string
+    userId: string
+    dealId: string | null
+    triggerType: $Enums.ReminderTriggerType
+    resource: string | null
     attempt: number
     status: $Enums.ReminderExecutionStatus
     errorCode: string | null
@@ -1110,6 +1592,8 @@ readonly fields: ReminderRuleLogFieldRefs;
 export interface Prisma__ReminderRuleLogClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   reminderRule<T extends Prisma.ReminderRuleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ReminderRuleDefaultArgs<ExtArgs>>): Prisma.Prisma__ReminderRuleClient<runtime.Types.Result.GetResult<Prisma.$ReminderRulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  deal<T extends Prisma.ReminderRuleLog$dealArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ReminderRuleLog$dealArgs<ExtArgs>>): Prisma.Prisma__DealClient<runtime.Types.Result.GetResult<Prisma.$DealPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1141,6 +1625,10 @@ export interface Prisma__ReminderRuleLogClient<T, Null = never, ExtArgs extends 
 export interface ReminderRuleLogFieldRefs {
   readonly id: Prisma.FieldRef<"ReminderRuleLog", 'String'>
   readonly reminderRuleId: Prisma.FieldRef<"ReminderRuleLog", 'String'>
+  readonly userId: Prisma.FieldRef<"ReminderRuleLog", 'String'>
+  readonly dealId: Prisma.FieldRef<"ReminderRuleLog", 'String'>
+  readonly triggerType: Prisma.FieldRef<"ReminderRuleLog", 'ReminderTriggerType'>
+  readonly resource: Prisma.FieldRef<"ReminderRuleLog", 'String'>
   readonly attempt: Prisma.FieldRef<"ReminderRuleLog", 'Int'>
   readonly status: Prisma.FieldRef<"ReminderRuleLog", 'ReminderExecutionStatus'>
   readonly errorCode: Prisma.FieldRef<"ReminderRuleLog", 'String'>
@@ -1547,6 +2035,25 @@ export type ReminderRuleLogDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many ReminderRuleLogs to delete.
    */
   limit?: number
+}
+
+/**
+ * ReminderRuleLog.deal
+ */
+export type ReminderRuleLog$dealArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Deal
+   */
+  select?: Prisma.DealSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Deal
+   */
+  omit?: Prisma.DealOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DealInclude<ExtArgs> | null
+  where?: Prisma.DealWhereInput
 }
 
 /**
