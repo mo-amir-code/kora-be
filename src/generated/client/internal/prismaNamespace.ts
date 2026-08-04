@@ -2251,6 +2251,7 @@ export const ReminderRuleLogScalarFieldEnum = {
   dealId: 'dealId',
   triggerType: 'triggerType',
   resource: 'resource',
+  followUpIndex: 'followUpIndex',
   attempt: 'attempt',
   status: 'status',
   errorCode: 'errorCode',

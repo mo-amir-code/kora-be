@@ -510,6 +510,7 @@ model ReminderRuleLog {
   dealId            String?                 @map("deal_id") @db.Uuid
   triggerType       ReminderTriggerType     @map("trigger_type")
   resource          String?                 @map("resource")
+  followUpIndex     Int                     @default(-1) @map("follow_up_index")
   attempt           Int                     @default(1)
   status            ReminderExecutionStatus
   errorCode         String?                 @map("error_code")
@@ -524,7 +525,7 @@ model ReminderRuleLog {
   user              User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
   deal              Deal?                   @relation(fields: [dealId], references: [id], onDelete: SetNull)
 
-  @@index([userId, dealId, triggerType, resource])
+  @@index([userId, dealId, triggerType, resource, followUpIndex])
   @@map("reminder_rule_logs")
 }
 
