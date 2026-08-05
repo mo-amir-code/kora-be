@@ -26,6 +26,20 @@ function parseDurationToMinutes(durationStr: string): number {
   }
 }
 
+function sanitizeRecipients(triggerType: string, recipients?: string[]): string[] {
+  const normalizedTrigger = triggerType.toUpperCase();
+  const isPaymentTrigger = normalizedTrigger.includes("PAYMENT");
+  if (!recipients || recipients.length === 0) {
+    return ["me"];
+  }
+  if (!isPaymentTrigger) {
+    // Primary contact and all brand contacts are allowed ONLY for payment triggers
+    const filtered = recipients.filter(r => r !== "primary" && r !== "all");
+    return filtered.length > 0 ? filtered : ["me"];
+  }
+  return recipients;
+}
+
 export async function getReminderRules(userId: string) {
   return prisma.reminderRule.findMany({
     where: { userId },
@@ -58,6 +72,8 @@ export async function createReminderRule(userId: string, data: {
     }
   }
 
+  const finalRecipients = sanitizeRecipients(data.triggerType, data.recipients);
+
   return prisma.reminderRule.create({
     data: {
       userId,
@@ -66,7 +82,7 @@ export async function createReminderRule(userId: string, data: {
       offsetValue: data.offsetValue,
       offsetUnit: data.offsetUnit,
       nextFollowUps: data.nextFollowUps ?? [],
-      recipients: data.recipients ?? [],
+      recipients: finalRecipients,
       messageTemplate: data.templateId ? null : (data.messageTemplate ?? null),
       templateId: data.templateId ?? null,
       channelEmail: data.channelEmail ?? true,
@@ -130,6 +146,10 @@ export async function updateReminderRule(userId: string, ruleId: string, data: {
 
   if (!rule) throw AppError.notFound("Reminder rule not found");
 
+  const effectiveTriggerType = data.triggerType !== undefined ? data.triggerType : rule.triggerType;
+  const effectiveRawRecipients = data.recipients !== undefined ? data.recipients : rule.recipients;
+  const finalRecipients = sanitizeRecipients(effectiveTriggerType, effectiveRawRecipients);
+
   return prisma.reminderRule.update({
     where: { id: ruleId },
     data: {
@@ -138,7 +158,7 @@ export async function updateReminderRule(userId: string, ruleId: string, data: {
       offsetValue: data.offsetValue !== undefined ? data.offsetValue : rule.offsetValue,
       offsetUnit: data.offsetUnit !== undefined ? data.offsetUnit : rule.offsetUnit,
       nextFollowUps: data.nextFollowUps !== undefined ? data.nextFollowUps : rule.nextFollowUps,
-      recipients: data.recipients !== undefined ? data.recipients : rule.recipients,
+      recipients: finalRecipients,
       messageTemplate: data.templateId !== undefined
         ? (data.templateId ? null : (data.messageTemplate !== undefined ? data.messageTemplate : rule.messageTemplate))
         : (data.messageTemplate !== undefined ? data.messageTemplate : rule.messageTemplate),
