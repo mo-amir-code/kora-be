@@ -56,7 +56,10 @@ export function apiController<T = unknown>(handler: ControllerHandler<T>) {
           success: false,
           error: error.message,
         });
+        console.log(`[Error]: ${error.message}`);
         return;
+      } else {
+        console.log(`[Error]: ${error}`);
       }
 
       // Unexpected errors — pass to global error handler
